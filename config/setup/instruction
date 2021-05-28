@@ -12,5 +12,5 @@
 sudo -i -u postgres # switch to the user postgres
 psql #open postgres
 
-# For expressJS and ReactJS
+[NOT NOW ] # For expressJS and ReactJS
 npm init, at the time to install all dependencies with the package.json
