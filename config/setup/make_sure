@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+echo "Node : $(node --version)";
+echo "Npm : $(npm --version)";
+echo "postgres : $(psql -V)";
+echo "emacs : $(emacs --version)"

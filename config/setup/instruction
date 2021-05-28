@@ -1,0 +1,16 @@
+# Installation
+1 - create a folder in your computer and copy-paste the content of the VagrantFile in a new VagrantFile
+2 - vagrant up
+3 - vagrant ssh
+4 - git clone this repo
+5 - execute ./install
+6 - quit your vm and come back
+7 - execute the file ./make_sure, to be sure everything was install
+8 - You can start
+
+# To connect to postgresql ->
+sudo -i -u postgres # switch to the user postgres
+psql #open postgres
+
+# For expressJS and ReactJS
+npm init, at the time to install all dependencies with the package.json
