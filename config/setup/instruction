@@ -8,9 +8,17 @@
 7 - execute the file ./make_sure, to be sure everything was install
 8 - You can start
 
-# To connect to postgresql ->
-sudo -i -u postgres # switch to the user postgres
-psql #open postgres
+# POSTGRESQL
+	1 - sudo -u postgres psql -f setupdb.sql # Create db and tables
+	2 - sudo -u postgres psql -f populate.sql # Add data in db
+
+	# If you want to connect to postgres :
+	1 - sudo -i -u postgres psql
+	# Commands
+	Connect to a database : \c <database_name>;
+	Show tables in database : \dt;
+	Quit postgres : \q;
+
 
 [NOT NOW ] # For expressJS and ReactJS
 npm init, at the time to install all dependencies with the package.json
