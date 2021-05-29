@@ -1,5 +1,5 @@
 # Installation
-1 - create a folder in your computer and copy-paste the content of the VagrantFile in a new VagrantFile
+1 - create a folder in your computer and copy-paste the content of the Vagrantfile in a new Vagrantfile
 2 - vagrant up
 3 - vagrant ssh
 4 - git clone this repo
