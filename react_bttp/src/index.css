@@ -1,7 +1,11 @@
+:root {
+  --color-primary: #031026;
+  --color-secondary: #EC4E20;
+  --color-tertiary: #FFCA3A;
+  --color-neutral-w: #F0F3F5;
+  --color-neutral-b: #021312;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-.bg-primary-color {
-  background-color: blue;
-}
