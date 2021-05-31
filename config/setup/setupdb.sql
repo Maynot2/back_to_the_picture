@@ -7,6 +7,7 @@ CREATE TABLE users (
   created_at timestamp DEFAULT NOW(),
   updated_at timestamp DEFAULT NOW(),
   email varchar NOT NULL,
+  password varchar NOT NULL,
   role varchar
 );
 CREATE TABLE spots (
