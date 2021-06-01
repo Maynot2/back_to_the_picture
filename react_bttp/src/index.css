@@ -9,3 +9,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-nav-gradient {
+  background: rgb(3,16,38);
+  background: linear-gradient(180deg, rgba(3,16,38,1) 0%, rgba(3,16,38,1) 90%, rgba(255,202,58,1) 100%); 
+}
