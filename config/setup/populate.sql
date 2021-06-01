@@ -1,41 +1,52 @@
 \c back_to_the_pictures; 
 /** Create users **/
-INSERT INTO users(name, email, role) VALUES('Thibaut', 'thibaut@sfr.fr', 'admin');
-INSERT INTO users(name, email, role) VALUES('Franck', 'franck@google.fr', 'user');
-INSERT INTO users(name, email, role) VALUES('Huy', 'huy@google.fr', 'admin');
+INSERT INTO users(name, email, role, password) VALUES('Thibaut', 'thibaut@sfr.fr', 'admin', '1234');
+INSERT INTO users(name, email, role, password) VALUES('Franck', 'franck@google.fr', 'user', '1234');
+INSERT INTO users(name, email, role, password) VALUES('Huy', 'huy@google.fr', 'admin', '1234');
+INSERT INTO users(name, email, role, password) VALUES('Marc', 'marc@google.fr', 'user', '1234');
 /** Create spots ***/
-INSERT INTO spots(name, latitude, longitude) VALUES('Surf la caneau', '125.5544545', '3656454.4454');
-INSERT INTO spots(name, latitude, longitude) VALUES('Tour eiffel', '48.8584', '2.2945');
-INSERT INTO spots(name, latitude, longitude) VALUES('Champs-Elysées', '48.869745', '2.307946');
-INSERT INTO spots(name, latitude, longitude) VALUES('Montmartre', '48.8925', '2.3444');
+INSERT INTO spots(name, latitude, longitude) VALUES('Lacaneau', '125.5544545', '3656454.4454');
+INSERT INTO spots(name, latitude, longitude) VALUES('Le Louvre', '48.8612', '2.3359');
+INSERT INTO spots(name, latitude, longitude) VALUES('LBC', '48.8730', '2.3575');
 INSERT INTO spots(name, latitude, longitude) VALUES('Pont Neuf', '48.856750', '2.341033');
+INSERT INTO spots(name, latitude, longitude) VALUES('Palavas-les-Flots', '43.5339', '3.9289');
+INSERT INTO spots(name, latitude, longitude) VALUES('Nantes', '47.2089', '-1.5647');
+INSERT INTO spots(name, latitude, longitude) VALUES('Bordeaux', '44.8402', '-0.5775');
+INSERT INTO spots(name, latitude, longitude) VALUES('Alpes', '45.9113', '6.8343');
 /** Create albums **/
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(1, NOW(), 1);
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(1, NOW(), 1);
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 3);
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 3);
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 3);
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 3);
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 2);
-/** Create one album for Pont Neuf spot**/
-INSERT INTO albums(user_id, taken_at, spot_id) VALUES(3, NOW(), 5);
-
-/** Add pictures to album 5 for spot champs-elysées **/ 
-INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoChamp1', 'http://champ1');
-INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoChamp2', 'http://champ2');
-INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoChamp3', 'http://champ3');
-INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoChamp4', 'http://champ4');
-INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoChamp5', 'http://champ5');
-INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoChamp6', 'http://champ6');
-
-/** Add pictures to album 1 for spot 'Surf la caneau' **/ 
-INSERT INTO pictures(album_id, name, url) VALUES(1, 'photoCaneau1', 'http://caneau1');
-INSERT INTO pictures(album_id, name, url) VALUES(1, 'photoCaneau2', 'http://caneau2');
-INSERT INTO pictures(album_id, name, url) VALUES(1, 'photoCaneau3', 'http://caneau3');
-
-/** Add pictures to album 7 for spot 'Tour eiffel' **/ 
-INSERT INTO pictures(album_id, name, url) VALUES(1, 'photoEiffel1', 'http://eiffel1');
-
-/** Add pictures to album 8 for spot 'Pont Neuf' **/ 
-INSERT INTO pictures(album_id, name, url) VALUES(8, 'photoPontNeuf', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/anthony-delanoix-pt4j4bGSPmw-unsplash.jpg');
-
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 1);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 5);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 6);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(2, NOW(), 8);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(4, NOW(), 2);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(4, NOW(), 3);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(4, NOW(), 4);
+INSERT INTO albums(user_id, taken_at, spot_id) VALUES(4, NOW(), 7);
+/** Add pictures to album 7 for spot Bordeaux **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(7, 'photoBordx1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/istockphoto-1095826194-612x612.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(7, 'photoBordx2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/rich-smith-R1obAiNAD5Y-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(7, 'photoBordx2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/ryan-ancill-usWBr_oZt4w-unsplash.jpg');
+/** Add pictures to album 6 for spot Nantes **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(6, 'photoNantes1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/istockphoto-1097012310-612x612.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(6, 'photoNantes2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/istockphoto-1171570694-612x612.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoNantes3', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/istockphoto-1187975468-612x612.jpg');
+/** Add pictures to album 5 for spot Palavas-les-Flots **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoPLV1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/istockphoto-1178869864-612x612.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoPLV2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/istockphoto-912925002-612x612.jpg'); 
+INSERT INTO pictures(album_id, name, url) VALUES(5, 'photoPLV2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/mael-balland-1Uz89RFGMpY-unsplash.jpg'); 
+/** Add pictures to album 8 for spot 'Les Alples' **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(8, 'photoAlps1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/jorg-angeli-cCzeLwUCmnM-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(8, 'photoAlps2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/markos-mant-F2gTQRAwQ3k-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(8, 'photoAlps2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/visit-almaty-wN4D-mVR7fE-unsplash.jpg');
+/** Add pictures to album 1 for spot 'Surf lacanau' **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(1, 'photosurf1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/mathieu-chirico-JSEn2f96rzY-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(1, 'photosurf2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/mathieu-chirico-sFSZuKI2CvY-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(1, 'photosurf3', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/philipp-kammerer-thFqCz8cXu0-unsplash.jpg');
+/** Add pictures to album 2 for spot 'Le Louvre' **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(2, 'photoLouvre1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/irina-lediaeva-nHuHQyY0aB4-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(2, 'photoLouvre2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/sebastian-yepes-TwOCH0u-NnI-unsplash.jpg');
+/** Add pictures to album 3 for spot 'Le Bon Coin' **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(3, 'photoLBC1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/leboncoin.jpg');
+/** Add pictures to album 4 for spot 'Pont Neuf' **/ 
+INSERT INTO pictures(album_id, name, url) VALUES(4, 'photoPontNeuf1', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/anthony-delanoix-pt4j4bGSPmw-unsplash.jpg');
+INSERT INTO pictures(album_id, name, url) VALUES(4, 'photoPontNeuf2', 'https://hbnb-bttp-s3.s3.eu-west-3.amazonaws.com/bruno-abatti-mEfIhOTH27w-unsplash.jpg');
