@@ -1,16 +1,22 @@
-:root {
-  --color-primary: #031026;
-  --color-secondary: #EC4E20;
-  --color-tertiary: #FFCA3A;
-  --color-neutral-w: #F0F3F5;
-  --color-neutral-b: #021312;
-}
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --color-primary: #031026;
+  --color-secondary: #ec4e20;
+  --color-tertiary: #ffca3a;
+  --color-tertiary-dark: #ffbe0a;
+  --color-neutral-w: #f0f3f5;
+  --color-neutral-b: #021312;
+}
+
 .bg-nav-gradient {
-  background: rgb(3,16,38);
-  background: linear-gradient(180deg, rgba(3,16,38,1) 0%, rgba(3,16,38,1) 90%, rgba(255,202,58,1) 100%); 
+  background: rgb(3, 16, 38);
+  background: linear-gradient(
+    180deg,
+    rgba(3, 16, 38, 1) 0%,
+    rgba(3, 16, 38, 1) 90%,
+    rgba(255, 202, 58, 1) 100%
+  );
 }
