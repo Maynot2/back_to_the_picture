@@ -5,21 +5,21 @@ import React, { useRef, useState, useEffect } from "react";
 const DatePick = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <DatePicker className=" text-black  font-mono bg-white  font-semibold py-2 px-4 border  border-yellow-400 rounded shadow " selected={startDate} onChange={(date) => setStartDate(date)} />
+    <DatePicker showTimeSelect className=" text-black  font-mono bg-white  font-semibold py-2 px-4 border  border-yellow-400 rounded shadow " selected={startDate} onChange={(date) => {setStartDate(date); console.log(startDate)}} />
   );
 };
 
-function SearchBar(){
+function SearchBar(props){
   const placeInputRef = useRef(null);
   const [place, setPlace] = useState(null);
-  
-  useEffect(() => { initPlaceAPI() }, []);
+  useEffect(() => { initPlaceAPI(props) }, [props]);
  
   // initialize the google place autocomplete
-  const initPlaceAPI = () => {
+  const initPlaceAPI = (props) => {
     let autocomplete = new window.google.maps.places.Autocomplete(placeInputRef.current);
     new window.google.maps.event.addListener(autocomplete, "place_changed", function () {
       let place = autocomplete.getPlace();
+      props.setAdress(place);
       setPlace({
         address: place.formatted_address,
         lat: place.geometry.location.lat(),
@@ -41,10 +41,10 @@ function SearchBar(){
     
   );
 }
-function ButtonSearch(){
+function ButtonSearch(props){
   return (
     <div className="mt-10 ml-10 h-auto md:min-w-10">
-          <button className="shadow-2xl h-full w-44 transition duration-300 transform hover:scale-90 motion-reduce:transform-none font-mono bg-tertiary hover:bg-neutralW hover:text-tertiary border-tertiary border-2  text-primary font-semibold py-2 px-4 rounded">
+          <button onClick={() => { console.log(props.placeSelected)} } className="shadow-2xl h-full w-44 transition duration-300 transform hover:scale-90 motion-reduce:transform-none font-mono bg-tertiary hover:bg-neutralW hover:text-tertiary border-tertiary border-2  text-primary font-semibold py-2 px-4 rounded">
             Search
           </button>
     </div>
@@ -76,15 +76,15 @@ function FilterBar(){
     </div>
   )
 }
-function FilterSearch() {
+function FilterSearch(props) {
   return (
     <div className="m-20 bg-gray-200 pb-10 rounded max-w-full">
       <div className="flex">
         <div className="flex mt-10 flex-col">
-            <SearchBar />
+            <SearchBar setAdress={props.setAdressPlaceSelected}/>
             <FilterBar />
         </div>
-          <ButtonSearch />
+          <ButtonSearch placeSelected={props.adressPlaceSelected}/>
       </div>
     </div>
   );
