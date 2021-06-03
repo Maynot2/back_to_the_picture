@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import GMap from './components/GoogleMap';
 
 // API key of the google map
-const GOOGLE_MAP_API_KEY = '#';
+const GOOGLE_MAP_API_KEY = '';
  
 // load google map script
 const loadGoogleMapScript = (callback) => {
@@ -21,6 +21,7 @@ const loadGoogleMapScript = (callback) => {
 
 function App() {
   const [loadMap, setLoadMap] = useState(false);
+  const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
  
   useEffect(() => {
     loadGoogleMapScript(() => {
@@ -31,8 +32,8 @@ function App() {
   return (
     <>
       <NavBar />
-      <FilterSearch />
-      {!loadMap ? <div>Loading...</div> : <GMap />}
+      <FilterSearch setAddressPlaceSelected={setAddressPlaceSelected} addressPlaceSelected={addressPlaceSelected}/>
+      {!loadMap ? <div>Loading...</div> : <GMap place={addressPlaceSelected}/>}
     </>
   );
 }
