@@ -2,7 +2,7 @@ const uuid = require('uuid').v4
 const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 
-const DUMMY_SPOTS = [
+let DUMMY_SPOTS = [
   {
     id: 's1',
     name: 'Eiffel tower',
@@ -22,7 +22,7 @@ const getSpots = (req, res, next) => {
 };
 
 const getSpotById = (req, res, next) => {
-  const spotId = req.params.sid; // { id: 's1' }
+  const spotId = req.params.id; // { id: 's1' }
 
   const found = DUMMY_SPOTS.find(s => {
     return s.id === spotId;
@@ -83,7 +83,7 @@ const updateSpot = (req, res, next) => {
     throw new HttpError('Invalid inputs passed, please check your data.', 422);
   }
   const { name, latitude, longitude } = req.body;
-  const spotId = req.params.sid;
+  const spotId = req.params.id;
 
   const updatedSpot = { ...DUMMY_SPOTS.find(s => s.id === spotId) };
   const spotIndex = DUMMY_SPOTS.findIndex(s => s.id === spotId);
@@ -97,7 +97,7 @@ const updateSpot = (req, res, next) => {
 };
 
 const deleteSpot = (req, res, next) => {
-  const spotId = req.params.sid;
+  const spotId = req.params.id;
   DUMMY_SPOTS = DUMMY_SPOTS.find(s => s.id !== spotId);
   res.status(200).json({ message: 'Deleted spot.' });
 };

@@ -6,7 +6,7 @@ const usersControllers = require('../controllers/users-controllers');
 const router = express.Router();
 
 router.get('/', usersControllers.getUsers);
-router.get('/uid/:uid', usersControllers.getUserById);
+router.get('/id/:id', usersControllers.getUserById);
 router.get('/name/:name', usersControllers.getUserByName);
 
 router.post(
@@ -26,7 +26,7 @@ router.post(
 router.post('/login', usersControllers.login);
 
 router.put(
-  '/:uid',
+  '/:id',
   [
     check('name')
         .not()
@@ -39,6 +39,6 @@ router.put(
   usersControllers.updateUser
 );
 
-router.delete('/:uid', usersControllers.deleteUser);
+router.delete('/:id', usersControllers.deleteUser);
 
 module.exports = router;

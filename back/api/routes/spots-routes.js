@@ -6,7 +6,7 @@ const spotsControllers = require('../controllers/spots-controllers');
 const router = express.Router();
 
 router.get('/', spotsControllers.getSpots);
-router.get('/sid/:sid', spotsControllers.getSpotById);
+router.get('/id/:id', spotsControllers.getSpotById);
 router.get('/name/:name', spotsControllers.getSpotByName);
 
 router.post(
@@ -26,7 +26,7 @@ router.post(
   );
 
 router.put(
-  '/:sid',
+  '/:id',
   [
     check('name')
         .not()
@@ -41,6 +41,6 @@ router.put(
   spotsControllers.updateSpot
 );
 
-router.delete('/:sid', spotsControllers.deleteSpot);
+router.delete('/:id', spotsControllers.deleteSpot);
 
 module.exports = router;

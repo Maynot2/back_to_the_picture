@@ -2,7 +2,7 @@ const uuid = require('uuid').v4
 const { validationResult } = require('express-validator');
 const HttpError = require('../models/http-error');
 
-const DUMMY_USERS = [
+let DUMMY_USERS = [
   {
     id: 'u1',
     name: 'Melvin',
@@ -24,7 +24,7 @@ const getUsers = (req, res, next) => {
 };
 
 const getUserById = (req, res, next) => {
-  const userId = req.params.uid; // { id: 'u1' }
+  const userId = req.params.id; // { id: 'u1' }
 
   const found = DUMMY_USERS.find(u => {
     return u.id === userId;
@@ -97,7 +97,7 @@ const updateUser = (req, res, next) => {
     throw new HttpError('Invalid inputs passed, please check your data.', 422);
   }
   const { name, email, password, role } = req.body;
-  const userId = req.params.uid;
+  const userId = req.params.id;
 
   const updatedUser = { ...DUMMY_USERS.find(u => u.id === userId) };
   const userIndex = DUMMY_USERS.findIndex(u => u.id === userId);
@@ -112,7 +112,7 @@ const updateUser = (req, res, next) => {
 };
 
 const deleteUser = (req, res, next) => {
-  const userId = req.params.uid;
+  const userId = req.params.id;
   DUMMY_PLACES = DUMMY_USERS.find(u => u.id !== userId);
   res.status(200).json({ message: 'Deleted user.' });
 };
