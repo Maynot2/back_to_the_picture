@@ -3,6 +3,7 @@ const express = require('express');
 const usersRoutes = require('./routes/users-routes');
 const spotsRoutes = require('./routes/spots-routes');
 const albumsRoutes = require('./routes/albums-routes');
+const picsRoutes = require('./routes/pics-routes');
 
 const HttpError = require('./models/http-error');
 
@@ -13,6 +14,7 @@ app.use(express.json()); //Used to parse JSON bodies
 app.use('/api/users', usersRoutes); // => /api/users..
 app.use('/api/spots', spotsRoutes);
 app.use('/api/albums', albumsRoutes);
+app.use('/api/pics', picsRoutes);
 
 app.use((req, res, next) => {
   const error = new HttpError('Could not find this route.', 404);

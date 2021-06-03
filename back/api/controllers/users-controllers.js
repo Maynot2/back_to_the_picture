@@ -113,7 +113,7 @@ const updateUser = (req, res, next) => {
 
 const deleteUser = (req, res, next) => {
   const userId = req.params.id;
-  DUMMY_PLACES = DUMMY_USERS.find(u => u.id !== userId);
+  DUMMY_USERS = DUMMY_USERS.find(u => u.id !== userId);
   res.status(200).json({ message: 'Deleted user.' });
 };
 
