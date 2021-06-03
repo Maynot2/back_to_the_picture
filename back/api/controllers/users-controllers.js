@@ -32,7 +32,7 @@ const getUserById = (req, res, next) => {
 
   if (!found) {
     return next(
-      new HttpError('Could not find places for the provided id.', 404)
+      new HttpError('Could not find user for the provided id.', 404)
     );
   }
 
@@ -48,7 +48,7 @@ const getUserByName = (req, res, next) => {
   
     if (!found) {
       return next(
-        new HttpError('Could not find places for the provided name.', 404)
+        new HttpError('Could not find user for the provided name.', 404)
       );
     }
   
