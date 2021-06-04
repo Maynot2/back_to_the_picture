@@ -1,16 +1,18 @@
 import NavBar from "./components/NavBar";
 import FilterSearch from "./components/FilterSearch";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 function App() {
-  const [adressPlaceSelected, setAdressPlaceSelected] = useState(null);
+  // Adress selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
+  const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
+  // Two date selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
+  const datePicked = useRef([]);
 
   return (
     <>
       <NavBar />
-      <FilterSearch setAdressPlaceSelected={setAdressPlaceSelected} adressPlaceSelected={adressPlaceSelected}/>
+      <FilterSearch datePicked={datePicked} setAddressPlaceSelected={setAddressPlaceSelected} addressPlaceSelected={addressPlaceSelected}/>
     </>
   );
 }
-
 export default App;
