@@ -1,6 +1,6 @@
 import NavBar from "./components/NavBar";
 import FilterSearch from "./components/FilterSearch";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import GMap from './components/GoogleMap';
 
 // API key of the google map
@@ -21,8 +21,10 @@ const loadGoogleMapScript = (callback) => {
 
 function App() {
   const [loadMap, setLoadMap] = useState(false);
+  // Adress selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
   const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
- 
+  
+
   useEffect(() => {
     loadGoogleMapScript(() => {
       setLoadMap(true)
