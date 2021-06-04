@@ -1,61 +1,70 @@
 import React, { useEffect, useRef } from 'react';
- 
+
+var stylesArray = [
+  {
+    "stylers": [
+      { "hue": "#121054" },
+      { "saturation": -2 },
+      { "lightness": -5 }
+    ]
+  },
+{
+  featureType: 'poi.park',
+  elementType: 'geometry',
+  stylers: [
+    {color: '#00FF00'}
+  ]
+},
+{
+  featureType: 'water',
+  elementType: 'geometry',
+  stylers: [
+    {color: '#000000'}
+  ]
+}]; 
+
 const GMap = (props) => {
   const googleMapRef = useRef(null);
   let googleMap = useRef(null);
 
-  var stylesArray = [
-    {
-      "stylers": [
-        { "hue": "#121054" },
-        { "saturation": -2 },
-        { "lightness": -5 }
-      ]
-    },
-	{
-		featureType: 'poi.park',
-		elementType: 'geometry',
-		stylers: [
-			{color: '#00FF00'}
-		]
-	},
-	{
-		featureType: 'water',
-		elementType: 'geometry',
-		stylers: [
-			{color: '#000000'}
-		]
-	}
-];
+  /** Get spots and create cluster of markers */
+  function createMarkersCluster(apiUrl){
+    const spots = []
+    fetch(apiUrl)
+    .then((res) => res.json())
+    .then((response) => {
+      response.spots.map((obj, idx) => {
+        spots[idx] = obj;
+      })
+      const markers = spots.map((obj) => {
+        return new window.google.maps.Marker({
+          position: {lat: Number(obj.latitude),lng: Number(obj.longitude)},
+          map: googleMap.current
+        });
+      })
+      new window.MarkerClusterer(googleMap.current, markers, {
+        imagePath:
+          "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+      });
+    }).catch((error) => console.log(error));
+  }
+  
   useEffect(() => {
     googleMap.current = initGoogleMap(props);
-    createMarker(props);
-    //event zoom_changed
+
+    /** Event map changed by the user */
     window.google.maps.event.addListener(googleMap.current, 'bounds_changed', function() {
       const minLatitude = googleMap.current.getBounds().oc.g;
       const maxLatitude = googleMap.current.getBounds().oc.i;
       const minLongitude = googleMap.current.getBounds().Eb.g;
       const maxLongitude = googleMap.current.getBounds().Eb.i;
-      console.log(googleMap.current.getBounds());
+      createMarkersCluster('http://localhost:5000/api/spots');
       console.log('Min latitude = ', minLatitude, 'Max latitude = ', maxLatitude);
       console.log('Min longitude = ', minLongitude, 'Max longitude = ', maxLongitude);
-
-      // console.log('center->', googleMap.current.getCenter().lat());
     });
-
-
-    // googleMap.current.addListener("click", (mapsMouseEvent) => {
-    //     // Close the current InfoWindow.
-    //     // Create a new InfoWindow.
-    //     new window.google.maps.Marker({
-    //       position: { lat: mapsMouseEvent.latLng.lat(), lng: mapsMouseEvent.latLng.lng() },
-    //       map: googleMap.current
-    //     });
-       
-    // });
   }, [props]);
  
- 
+  
   // initialize the google map
   const initGoogleMap = (props) => {
     var latitude = 48.856614;
@@ -64,16 +73,12 @@ const GMap = (props) => {
       latitude = props.place.geometry.location.lat();
       longitude = props.place.geometry.location.lng();
     }
-
     return new window.google.maps.Map(googleMapRef.current, {
       center: { lat: latitude, lng: longitude },
       zoom: 8,
       styles: stylesArray
     });
   }
- 
- 
- 
   return <div
     ref={googleMapRef}
     style={{ width: 600, height: 500 }}

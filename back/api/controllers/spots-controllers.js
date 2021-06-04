@@ -14,6 +14,18 @@ let DUMMY_SPOTS = [
     name: 'Palais Ideal du Facteur Cheval',
     latitude: '45.256749045596464',
     longitude: '2.294449111834222'
+  },
+  {
+    id: 's3',
+    name: 'Test2',
+    latitude: '45.120053',
+    longitude: '2.793638'
+  },
+  {
+    id: 's4',
+    name: 'Test3',
+    latitude: '48.848451',
+    longitude: '2.425747'
   }
 ];
 
