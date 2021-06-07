@@ -13,7 +13,7 @@ function App() {
     <>
       <div className="bg-primary">
         <NavBar />
-        <main className="px-4">
+        <main className="px-4 mt-4 sm:mt-8">
           <div className="container bg-neutralW mx-auto p-4 md:p-8 border-2 border-secondary rounded font-mono">
             <FilterSearch datePicked={datePicked} setAddressPlaceSelected={setAddressPlaceSelected} addressPlaceSelected={addressPlaceSelected}/>
             <div className="lg:grid grid-cols-3 gap-8">

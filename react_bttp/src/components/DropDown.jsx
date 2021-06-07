@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export const DropDown = ({ isOpen, toggleMenu }) => {
   return (
-    <div className="absolute w-full">
+    <div className="absolute z-10 w-full">
       <nav
         className={
           isOpen

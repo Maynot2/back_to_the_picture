@@ -22,7 +22,7 @@ function NavBar() {
   }
 
   return (
-     <div className="fixed w-full">
+     <div className="">
       <nav className="bg-nav-gradient border-b-4  border-secondary">
         <div className="xl:max-w-7xl mx-auto p-4 flex justify-between items-center">
           <Link to='/' className="pr-4">
