@@ -1,8 +1,28 @@
 import {ReactComponent as ReactLogoFull} from './BTTP-logo-full-white.svg';
 import {ReactComponent as ReactLogoSmall} from './BTTP-logo-sm-white.svg';
 import { Link } from 'react-router-dom';
+import LoginButton from './login';
+import LogoutButton from './logout';
+import { useAuth0 } from "@auth0/auth0-react";
 
+function CheckConnected({user, isAuthenticated}){
+  if (isAuthenticated){
+    return <span>Welcome {user.name}</span>
+  } else {
+    return ('No connected yet')
+
+  }
+}
+
+function SignUP({user, isAuthenticated}){
+  if (isAuthenticated){
+    return <LogoutButton />
+  } else {
+    return (<LoginButton />)
+  }
+}
 function NavBar() {
+  const { user, isAuthenticated } = useAuth0();
   return (
     <div className="bg-nav-gradient border-b-4  border-secondary font-mono mb-12">
       <nav className="xl:max-w-7xl mx-auto p-4 flex justify-between items-center">
@@ -15,10 +35,10 @@ function NavBar() {
         </Link>
         <div className="hidden sm:flex ">
           <Link to='#' className="bg-transparent text-tertiary hover:text-tertiary-dark font-semibold hover:font-black py-2 px-4">
-            log-in
+            <CheckConnected user={user} isAuthenticated={isAuthenticated} />
           </Link>
           <Link to='#' className="bg-transparent text-tertiary border-tertiary border-2 hover:bg-tertiary hover:text-primary font-semibold ml-2 py-2 px-4 rounded">
-            sign-up
+            <SignUP user={user} isAuthenticated={isAuthenticated} />
           </Link>
         </div>
       </nav>
