@@ -12,15 +12,20 @@ export const DropDown = ({ isOpen, toggleMenu }) => {
         }
         onClick={toggleMenu}
       >
-        <Link to="" className="border-b-2 border-neutralW py-3">
+        <Link to="" className="border-b-2 border-neutralW font-semibold py-5">
           log-in
         </Link>
-        <Link to="" className="border-b-2 border-neutralW py-3">
+        <Link to="" className="border-b-2 border-neutralW font-semibold py-5">
           sign-up
         </Link>
-        <Link to="" className="border-b-2 border-neutralW py-3">
-          upload pic
-        </Link>
+        <div className="bg-nav-gradient border-b-4 border-secondary py-5">
+          <Link
+            to=""
+            className="bg-secondary border-2 border-neutralW text-neutralW py-2 px-6 rounded-full "
+          >
+            upload pic
+          </Link>
+        </div>
       </nav>
     </div>
   );
