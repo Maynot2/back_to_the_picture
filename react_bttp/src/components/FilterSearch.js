@@ -5,7 +5,7 @@ import React, { useRef, useState, useEffect } from "react";
 const DatePick = () => {
   const [startDate, setStartDate] = useState(new Date());
   return (
-    <DatePicker showTimeSelect className=" text-black  font-mono bg-white  font-semibold py-2 px-4 border  border-yellow-400 rounded shadow " selected={startDate} onChange={(date) => {setStartDate(date); console.log(startDate)}} />
+    <DatePicker showTimeSelect className="block text-neutralB bg-neutralW font-semibold py-2 px-4 border border-tertiary w-full rounded shadow " selected={startDate} onChange={(date) => {setStartDate(date); console.log(startDate)}} />
   );
 };
 
@@ -28,8 +28,8 @@ function SearchBar(props){
     });
   };
   return (
-    <div className="font-mono w-auto ml-32 search">
-      <input type="search" ref={placeInputRef} name="serch" placeholder="Search a spot..." className="min-w-full bg-white h-10 px-5 pr-10 rounded text-sm focus:outline-none w-92"></input>
+    <div className="w-auto search">
+      <input type="search" ref={placeInputRef} name="search" placeholder="Search a spot..." className="min-w-full bg-white h-10 px-5 pr-10 rounded text-sm focus:outline-none w-92"></input>
       <button type="submit" className="absolute right-0 top-0 mt-3 mr-4"></button>
       {place && <div style={{ marginTop: 20, lineHeight: '25px' }}>
         <div style={{ marginBottom: 10 }}><b>Selected Place</b></div>
@@ -43,8 +43,8 @@ function SearchBar(props){
 }
 function ButtonSearch(props){
   return (
-    <div className="mt-10 ml-10 h-auto md:min-w-10">
-          <button onClick={() => {props.setAddress(props.place)} } className="shadow-2xl h-full w-44 transition duration-300 transform hover:scale-90 motion-reduce:transform-none font-mono bg-tertiary hover:bg-neutralW hover:text-tertiary border-tertiary border-2  text-primary font-semibold py-2 px-4 rounded">
+    <div className="">
+          <button onClick={() => {props.setAddress(props.place)} } className="shadow-2xl h-full w-full transition duration-300 transform hover:scale-90 motion-reduce:transform-none bg-tertiary hover:bg-neutralW hover:text-tertiary border-tertiary border-2  text-primary font-semibold mt-5 md:mt-0 py-2 px-4 rounded">
             Search
           </button>
     </div>
@@ -52,27 +52,27 @@ function ButtonSearch(props){
 }
 function FilterBar(){
   return (
-    <div className="flex flex-row flex-wrap  mt-5 items-center  max-w-full ">
-            <div className="from ml-32">
-                <button className=" bg-secondary text-black w-20 font-mono bg-white  font-semibold py-2 px-4 border  border-yellow-400 rounded shadow">
+    <div className="lg:grid grid-cols-2 gap-4 mt-5 max-w-full ">
+        <div className="flex">
+            <div className="from">
+                <button className=" bg-secondary text-neutralB w-20 font-semibold py-2 px-4 border border-tertiary rounded shadow">
                   From
                 </button>
             </div>
-            <div className="from ml-2">
-              <div className="">
-                <DatePick  />
-              </div>
+            <div className="from ml-4 w-full">
+                <DatePick />
             </div>
-            <div className="from ml-10">
-                <button className=" bg-secondary text-black w-20 font-mono bg-white  font-semibold py-2 px-4 border  border-yellow-400 rounded shadow">
+        </div>
+        <div className="flex mt-5 lg:mt-0">
+            <div className="from">
+                <button className="bg-secondary text-neutralB w-20 font-semibold py-2 px-4 border border-tertiary rounded shadow">
                   To
                 </button>
             </div>
-            <div className="from ml-2">
-              <div className="">
+            <div className="from ml-4 w-full">
                 <DatePick  />
-              </div>
             </div>
+        </div>
     </div>
   )
 }
@@ -80,13 +80,13 @@ function FilterSearch(props) {
   const [place, setPlace] = useState(null);
 
   return (
-    <div className="m-20 bg-gray-200 pb-10 rounded max-w-full">
-      <div className="flex">
-        <div className="flex mt-10 flex-col">
+    <div className="mb-8 bg-gray-200 p-5 lg:p-10 rounded max-w-full border-2 border-tertiary">
+      <div className="md:grid grid-cols-6 gap-5 lg:gap-10">
+        <div className="col-span-5 flex flex-col">
             <SearchBar setPlace={setPlace}/>
             <FilterBar />
         </div>
-          <ButtonSearch setAddress={props.setAddressPlaceSelected} place={place}/>
+        <ButtonSearch className="col-span-5" setAddress={props.setAddressPlaceSelected} place={place}/>
       </div>
     </div>
   );

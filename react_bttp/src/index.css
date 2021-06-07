@@ -20,3 +20,14 @@
     rgba(255, 202, 58, 1) 100%
   );
 }
+
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+  display: block;
+  width: 100%;
+}
+
+.map > div {
+  width: 100% important!;
+}

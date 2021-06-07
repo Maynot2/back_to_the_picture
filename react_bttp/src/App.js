@@ -1,39 +1,27 @@
 import NavBar from "./components/NavBar";
 import FilterSearch from "./components/FilterSearch";
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import GMap from './components/GoogleMap';
 
-// API key of the google map
-const GOOGLE_MAP_API_KEY = '';
- 
-// load google map script
-const loadGoogleMapScript = (callback) => {
-  if (typeof window.google === 'object' && typeof window.google.maps === 'object') {
-    callback();
-  } else {
-    const googleMapScript = document.createElement("script");
-    googleMapScript.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_MAP_API_KEY}`;
-    window.document.body.appendChild(googleMapScript);
-    googleMapScript.addEventListener("load", callback);
-  }
-}
-
-
 function App() {
-  const [loadMap, setLoadMap] = useState(false);
   const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
- 
-  useEffect(() => {
-    loadGoogleMapScript(() => {
-      setLoadMap(true)
-    });
-  }, []);
 
   return (
     <>
-      <NavBar />
-      <FilterSearch setAddressPlaceSelected={setAddressPlaceSelected} addressPlaceSelected={addressPlaceSelected}/>
-      {!loadMap ? <div>Loading...</div> : <GMap place={addressPlaceSelected}/>}
+      <div className="bg-primary">
+        <NavBar />
+        <main className="px-4">
+          <div className="container bg-neutralW mx-auto p-4 md:p-8 border-2 border-secondary rounded font-mono">
+            <FilterSearch setAddressPlaceSelected={setAddressPlaceSelected} addressPlaceSelected={addressPlaceSelected}/>
+            <div className="lg:grid grid-cols-3 gap-8">
+              <div className="map col-span-2 bg-secondary">
+                <GMap place={addressPlaceSelected}/>
+              </div>
+              <div className="bg-tertiary">albums</div>
+            </div>
+          </div>
+        </main>
+      </div>
     </>
   );
 }

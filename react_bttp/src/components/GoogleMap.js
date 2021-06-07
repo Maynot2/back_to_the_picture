@@ -19,7 +19,7 @@ var stylesArray = [
   featureType: 'water',
   elementType: 'geometry',
   stylers: [
-    {color: '#000000'}
+    {color: '#031026'}
   ]
 }]; 
 
@@ -58,11 +58,14 @@ const GMap = (props) => {
       const maxLatitude = googleMap.current.getBounds().oc.i;
       const minLongitude = googleMap.current.getBounds().Eb.g;
       const maxLongitude = googleMap.current.getBounds().Eb.i;
-      createMarkersCluster('http://localhost:5000/api/spots');
+      // createMarkersCluster('http://localhost:5000/api/spots');
       console.log('Min latitude = ', minLatitude, 'Max latitude = ', maxLatitude);
       console.log('Min longitude = ', minLongitude, 'Max longitude = ', maxLongitude);
     });
   }, [props]);
+
+  // Temp location | Cf above don't burn Tibo' CB!!!
+  createMarkersCluster('http://localhost:5000/api/spots');
  
   
   // initialize the google map
@@ -81,7 +84,7 @@ const GMap = (props) => {
   }
   return <div
     ref={googleMapRef}
-    style={{ width: 600, height: 500 }}
+    style={{ width: '100%', height: 500 }}
   />
 }
  
