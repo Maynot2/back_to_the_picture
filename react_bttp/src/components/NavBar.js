@@ -4,10 +4,30 @@ import {ReactComponent as ReactLogoSmall} from './BTTP-logo-sm-white.svg';
 import { TiThMenuOutline } from "react-icons/ti";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { Link } from 'react-router-dom';
+import LoginButton from './login';
+import LogoutButton from './logout';
+import { useAuth0 } from "@auth0/auth0-react";
 import { DropDown } from './DropDown';
 
+function CheckConnected({user, isAuthenticated}){
+  if (isAuthenticated){
+    return <span>Welcome {user.name}</span>
+  } else {
+    return ('No connected yet')
+
+  }
+}
+
+function SignUP({user, isAuthenticated}){
+  if (isAuthenticated){
+    return <LogoutButton />
+  } else {
+    return (<LoginButton />)
+  }
+}
 function NavBar() {
   const [isOpen, setIsOpen] = useState(false);
+  const { user, isAuthenticated } = useAuth0();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -34,10 +54,10 @@ function NavBar() {
           </Link>
           <div className="hidden sm:flex ">
             <Link to='#' className="bg-transparent text-tertiary hover:text-neutralW font-semibold hover:font-black py-2 px-4">
-              log-in
+              <CheckConnected user={user} isAuthenticated={isAuthenticated} />
             </Link>
             <Link to='#' className="bg-transparent text-tertiary border-tertiary border-2 hover:bg-tertiary hover:text-primary font-semibold ml-2 py-2 px-4 rounded">
-              sign-up
+              <SignUP user={user} isAuthenticated={isAuthenticated} />
             </Link>
           </div>
           <button className="sm:hidden" onClick={toggleMenu}>
