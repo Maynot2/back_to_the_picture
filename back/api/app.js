@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 
 const usersRoutes = require('./routes/users-routes');
 const spotsRoutes = require('./routes/spots-routes');
@@ -10,6 +11,7 @@ const HttpError = require('./models/http-error');
 const app = express();
 
 app.use(express.json()); //Used to parse JSON bodies
+app.use(cors());
 
 app.use('/api/users', usersRoutes); // => /api/users..
 app.use('/api/spots', spotsRoutes);

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function NavBar() {
   return (
-    <div className="bg-nav-gradient border-b-4  border-secondary">
+    <div className="bg-nav-gradient border-b-4  border-secondary font-mono mb-12">
       <nav className="xl:max-w-7xl mx-auto p-4 flex justify-between items-center">
         <Link to='/' className="pr-4">
           <ReactLogoFull className="hidden sm:block w-52"/>
