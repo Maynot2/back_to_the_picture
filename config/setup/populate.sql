@@ -5,14 +5,14 @@ INSERT INTO users(name, email, role, password) VALUES('Franck', 'franck@google.f
 INSERT INTO users(name, email, role, password) VALUES('Huy', 'huy@google.fr', 'admin', '1234');
 INSERT INTO users(name, email, role, password) VALUES('Marc', 'marc@google.fr', 'user', '1234');
 /** Create spots ***/
-INSERT INTO spots(name, latitude, longitude) VALUES('Lacaneau', '125.5544545', '3656454.4454');
-INSERT INTO spots(name, latitude, longitude) VALUES('Le Louvre', '48.8612', '2.3359');
-INSERT INTO spots(name, latitude, longitude) VALUES('LBC', '48.8730', '2.3575');
-INSERT INTO spots(name, latitude, longitude) VALUES('Pont Neuf', '48.856750', '2.341033');
-INSERT INTO spots(name, latitude, longitude) VALUES('Palavas-les-Flots', '43.5339', '3.9289');
-INSERT INTO spots(name, latitude, longitude) VALUES('Nantes', '47.2089', '-1.5647');
-INSERT INTO spots(name, latitude, longitude) VALUES('Bordeaux', '44.8402', '-0.5775');
-INSERT INTO spots(name, latitude, longitude) VALUES('Alpes', '45.9113', '6.8343');
+INSERT INTO spots(name, latitude, longitude) VALUES('Lacaneau', 125.5544545, 3656454.4454);
+INSERT INTO spots(name, latitude, longitude) VALUES('Le Louvre', 48.8612, 2.3359);
+INSERT INTO spots(name, latitude, longitude) VALUES('LBC', 48.8730, 2.3575);
+INSERT INTO spots(name, latitude, longitude) VALUES('Pont Neuf', 48.856750, 2.341033);
+INSERT INTO spots(name, latitude, longitude) VALUES('Palavas-les-Flots', 43.5339, 3.9289);
+INSERT INTO spots(name, latitude, longitude) VALUES('Nantes', 47.2089, -1.5647);
+INSERT INTO spots(name, latitude, longitude) VALUES('Bordeaux', 44.8402, -0.5775);
+INSERT INTO spots(name, latitude, longitude) VALUES('Alpes', 45.9113, 6.8343);
 /** Create albums **/
 INSERT INTO albums(user_id, name, taken_at, spot_id) VALUES(2, 'Lacanau1', NOW(), 1);
 INSERT INTO albums(user_id, name, taken_at, spot_id) VALUES(4, 'Louvre1', NOW(), 2);
