@@ -15,8 +15,8 @@ CREATE TABLE spots (
   name varchar NOT NULL,
   created_at timestamp DEFAULT NOW(),
   updated_at timestamp DEFAULT NOW(),
-  latitude varchar NOT NULL,
-  longitude varchar NOT NULL
+  latitude float NOT NULL,
+  longitude float NOT NULL
 );
 CREATE TABLE albums (
   id SERIAL PRIMARY KEY,
