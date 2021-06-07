@@ -20,6 +20,7 @@ CREATE TABLE spots (
 );
 CREATE TABLE albums (
   id SERIAL PRIMARY KEY,
+  name varchar NOT NULL,
   user_id int NOT NULL,
   created_at timestamp DEFAULT NOW(),
   updated_at timestamp DEFAULT NOW(),
@@ -33,7 +34,6 @@ CREATE TABLE pictures (
   created_at timestamp DEFAULT NOW(),
   updated_at timestamp DEFAULT NOW(),
   url varchar NOT NULL,
-  name varchar NOT NULL,
   album_id int NOT NULL,
   FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE
 );
