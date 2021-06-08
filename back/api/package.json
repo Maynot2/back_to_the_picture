@@ -4,8 +4,14 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
+    "dev": "nodemon -r dotenv/config app.js",
+    "down": "node_modules/.bin/sequelize db:migrate:undo",
+    "migrate": "node_modules/.bin/sequelize db:migrate",
+    "make-seed": "node_modules/.bin/sequelize seed:generate --name init",
+    "seed": "node_modules/.bin/sequelize db:seed:all --debug",
+    "unseed": "node_modules/.bin/sequelize db:seed:undo:all --debug",
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +19,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
