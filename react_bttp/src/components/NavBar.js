@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import {ReactComponent as ReactLogoFull} from './BTTP-logo-full-white.svg';
 import {ReactComponent as ReactLogoSmall} from './BTTP-logo-sm-white.svg';
 import { TiThMenuOutline } from "react-icons/ti";
@@ -43,15 +43,12 @@ function NavBar() {
 
   return (
      <div className="">
-      <nav className="bg-nav-gradient border-b-4  border-secondary">
-        <div className="xl:max-w-7xl mx-auto p-4 flex justify-between items-center">
+      <nav className="bg-nav-gradient border-b-4 px-4 border-secondary">
+        <div className="container mx-auto py-4 flex justify-between items-center">
           <Link to='/' className="pr-4">
             <ReactLogoFull className="hidden sm:block w-52"/>
             <ReactLogoSmall className="sm:hidden w-36"/>
           </Link> 
-          <Link to='#' className="hidden sm:block bg-secondary border-2 border-neutralW text-neutralW hover:bg-neutralW hover:text-secondary hover:border-secondary font-bold py-4 px-10 rounded-full transition duration-300">
-            upload pic
-          </Link>
           <div className="hidden sm:flex ">
             <Link to='/' className="bg-transparent text-tertiary hover:text-neutralW font-semibold hover:font-black py-2 px-4">
               <CheckConnected user={user} isAuthenticated={isAuthenticated} />

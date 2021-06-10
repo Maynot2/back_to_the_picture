@@ -31,3 +31,15 @@
 .map > div {
   width: 100% important!;
 }
+
+.outer {
+  position: relative;
+}
+
+.inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
