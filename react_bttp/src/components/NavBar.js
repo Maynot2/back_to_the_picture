@@ -53,7 +53,7 @@ function NavBar() {
             upload pic
           </Link>
           <div className="hidden sm:flex ">
-            <Link to='#' className="bg-transparent text-tertiary hover:text-neutralW font-semibold hover:font-black py-2 px-4">
+            <Link to='/' className="bg-transparent text-tertiary hover:text-neutralW font-semibold hover:font-black py-2 px-4">
               <CheckConnected user={user} isAuthenticated={isAuthenticated} />
             </Link>
             <Link to='#' className="bg-transparent text-tertiary border-tertiary border-2 hover:bg-tertiary hover:text-primary font-semibold ml-2 py-2 px-4 rounded">

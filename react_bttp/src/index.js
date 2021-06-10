@@ -2,8 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Auth0Provider } from "@auth0/auth0-react";
+import Albums from "./components/Albums/Index";
 
 ReactDOM.render(
   <React.StrictMode>
@@ -13,7 +14,14 @@ ReactDOM.render(
     redirectUri="http://localhost:3000"
   >
     <BrowserRouter >
-      <App />
+      <Switch>
+            <Route exact path="/">
+              <App />            
+            </Route>
+            <Route path="/albums">
+                <Albums />
+            </Route>
+        </Switch>
     </BrowserRouter>
   </Auth0Provider>
   </React.StrictMode>,
