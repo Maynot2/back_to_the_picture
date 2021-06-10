@@ -22,6 +22,7 @@ function FilterSearch({ datePicked, setAddressPlaceSelected, isSearchPic }) {
           setPlace={setPlace}
         />
         <SearchButton
+          isSearchPic={isSearchPic}
           datePicked={datePicked}
           dateList={dateList}
           setAddress={setAddressPlaceSelected}

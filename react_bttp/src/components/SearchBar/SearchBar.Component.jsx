@@ -28,7 +28,9 @@ function SearchBar(props) {
         ref={placeInputRef}
         name="search"
         placeholder="Search a spot..."
-        className="min-w-full bg-white h-10 px-5 pr-10 rounded text-sm focus:outline-none w-92"
+        className={`w-full bg-neutralW h-10 px-5 border-2 rounded ${
+          props.isSearchPic ? "border-tertiary" : "border-secondary"
+        } text-sm focus:outline-none`}
       ></input>
       <button
         type="submit"

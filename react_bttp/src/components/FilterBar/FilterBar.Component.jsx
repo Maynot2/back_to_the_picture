@@ -8,8 +8,14 @@ function FilterBar({ dateList, setPlace, isSearchPic }) {
     if (isSearchPic) {
       return (
         <div className="lg:grid grid-cols-2 gap-4 mt-5 max-w-full ">
-          <DatePick dateList={dateList} label="to" />
-          <DatePick dateList={dateList} label="from" />
+          <DatePick dateList={dateList} isSearchPic={isSearchPic} label="to" />
+          <div className="mt-5 lg:mt-0">
+            <DatePick
+              dateList={dateList}
+              isSearchPic={isSearchPic}
+              label="from"
+            />
+          </div>
         </div>
       );
     } else {
@@ -23,7 +29,7 @@ function FilterBar({ dateList, setPlace, isSearchPic }) {
 
   return (
     <div className="col-span-5 flex flex-col">
-      <SearchBar setPlace={setPlace} />
+      <SearchBar setPlace={setPlace} isSearchPic={isSearchPic} />
       {displayDatePick(isSearchPic)}
     </div>
   );

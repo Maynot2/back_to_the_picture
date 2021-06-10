@@ -1,6 +1,12 @@
 import React from "react";
 
-function SearchButton({ setAddress, datePicked, dateList, place }) {
+function SearchButton({
+  isSearchPic,
+  setAddress,
+  datePicked,
+  dateList,
+  place,
+}) {
   return (
     <div>
       <button
@@ -11,7 +17,11 @@ function SearchButton({ setAddress, datePicked, dateList, place }) {
           datePicked.current = dateList.current;
           console.log(datePicked.current);
         }}
-        className="shadow-2xl w-full h-full transition duration-300 transform hover:scale-90 motion-reduce:transform-none font-mono bg-tertiary hover:bg-neutralW hover:text-tertiary border-tertiary border-2  text-primary font-semibold py-2 px-4 mt-5 md:mt-0 rounded"
+        className={`w-full h-full transition duration-300 transform hover:scale-105 ${
+          isSearchPic
+            ? "bg-tertiary border-tertiary hover:text-tertiary"
+            : "bg-secondary border-secondary hover:text-secondary"
+        } hover:bg-neutralW border-2 text-neutralW font-semibold py-2 px-4 mt-5 md:mt-0 rounded`}
       >
         Search
       </button>
