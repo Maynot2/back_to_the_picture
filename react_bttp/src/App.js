@@ -8,7 +8,7 @@ function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
   const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
   // Two date selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
-  const datePicked = useRef([]);
+  const datePicked = useRef({});
 
   // Decides if user in is in search or upload picture mode
   const [isSearchPic, setIsSearchPic] = useState(true); // defaults to search mode

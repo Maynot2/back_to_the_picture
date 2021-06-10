@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
-function DatePick({ dateList, label, isSearchPic }) {
+function DatePick({ datePicked, label, isSearchPic }) {
   const [startDate, setStartDate] = useState(new Date());
 
   return (
@@ -19,17 +19,14 @@ function DatePick({ dateList, label, isSearchPic }) {
       </div>
       <div className="ml-4 w-full">
         <DatePicker
+          id={label}
           className={`text-neutralB bg-neutralW font-semibold py-2 px-4 border ${
             isSearchPic ? "border-tertiary" : "border-secondary"
           } rounded shadow`}
           selected={startDate}
           onChange={(date) => {
             setStartDate(date);
-            // check if array of dateList is full (two dates has already been saved)
-            if (dateList.current.length >= 2) {
-              dateList.current.length = [];
-            }
-            dateList.current.push(date);
+            datePicked.current[label] = date;
           }}
         />
       </div>
