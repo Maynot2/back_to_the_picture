@@ -2,7 +2,7 @@
   "development": {
     "username": "postgres",
     "password": "password",
-    "database": "back_to_the_picture",
+    "database": "back_to_the_pictures",
     "host": "127.0.0.1",
     "dialect": "postgres"
   },

@@ -4,13 +4,10 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "nodemon -r dotenv/config app.js",
-    "down": "node_modules/.bin/sequelize db:migrate:undo",
-    "migrate": "node_modules/.bin/sequelize db:migrate",
-    "make-seed": "node_modules/.bin/sequelize seed:generate --name init",
-    "seed": "node_modules/.bin/sequelize db:seed:all --debug",
-    "unseed": "node_modules/.bin/sequelize db:seed:undo:all --debug",
     "start": "nodemon app.js",
+    "migrate": "npx sequelize-cli db:migrate",
+    "make-seed": "npx sequelize-cli seed:generate --name init",
+    "seed": "npx sequelize-cli db:seed:all",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -22,8 +19,7 @@
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
-    "sequelize-cli": "^6.2.0",
-    "uuid": "^8.3.2"
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
