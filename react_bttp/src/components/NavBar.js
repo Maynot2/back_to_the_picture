@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState } from 'react';
 import {ReactComponent as ReactLogoFull} from './BTTP-logo-full-white.svg';
 import {ReactComponent as ReactLogoSmall} from './BTTP-logo-sm-white.svg';
 import { TiThMenuOutline } from "react-icons/ti";
