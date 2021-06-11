@@ -3,6 +3,7 @@ import FilterSearch from "./components/FilterSearch/FilterSearch.Component";
 import React, { useState, useRef } from "react";
 import GMap from "./components/GoogleMap";
 import ModeChoice from "./components/ModeChoice/ModeChoice.Component";
+import { Link } from "react-router-dom"
 
 function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
@@ -52,7 +53,11 @@ function App() {
               <div className={`map col-span-2 bg-secondary rounded border-2 ${isSearchPic ? "border-tertiary" : "border-secondary"}`}>
                 <GMap place={addressPlaceSelected} />
               </div>
-              <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>albums</div>
+              <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
+                <Link to="/albums">
+                  albums
+                </Link>
+              </div>
             </div>
           </div>
         </main>
