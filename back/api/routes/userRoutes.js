@@ -11,7 +11,7 @@ module.exports = function(router) {
       const users = await User.findAll({
         limit: 10,
         order: [
-          ['name', 'ASC']
+          ['id', 'ASC']
         ]
       });
       res.json(users);
@@ -58,6 +58,7 @@ module.exports = function(router) {
       throw Error;
     }
     const { name, email, password, role } = req.body; 
+    console.log(req.body);
     await User.sync();
     try {
       const createdUser = await User.create({

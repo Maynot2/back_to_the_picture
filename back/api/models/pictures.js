@@ -23,18 +23,18 @@ module.exports = (sequelize, DataTypes) => {
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
           },
-          createdAt: {
-            type: DataTypes.DATE,
-            // field: 'created_at',
-            defaultValue: new Date(),
-            allowNull: false,
-          },
-          updatedAt: {
-            type: DataTypes.DATE,
-            // field: 'updated_at',
-            defaultValue: new Date(),
-            allowNull: false,
-          }
+          // createdAt: {
+          //   type: DataTypes.DATE,
+          //   // field: 'created_at',
+          //   defaultValue: new Date(),
+          //   allowNull: false,
+          // },
+          // updatedAt: {
+          //   type: DataTypes.DATE,
+          //   // field: 'updated_at',
+          //   defaultValue: new Date(),
+          //   allowNull: false,
+          // }
   }, 
   {
     freezeTableName: true,

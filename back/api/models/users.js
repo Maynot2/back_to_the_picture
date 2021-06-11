@@ -25,20 +25,20 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING
     },
-    createdAt: {
-      type: DataTypes.DATE,
-      // field: 'created_at',
-      allowNull: false,
-      defaultValue: new Date(),
-      // name: 'createdAt',
-    },
-    updatedAt: {
-      type: DataTypes.DATE,
-      // name: 'updatedAt',
-      // field: 'updated_at',
-      defaultValue: new Date(),
-      allowNull: false,
-    }
+    // createdAt: {
+    //   type: DataTypes.DATE,
+    //   // field: 'created_at',
+    //   allowNull: false,
+    //   defaultValue: new Date(),
+    //   // name: 'createdAt',
+    // },
+    // updatedAt: {
+    //   type: DataTypes.DATE,
+    //   // name: 'updatedAt',
+    //   // field: 'updated_at',
+    //   defaultValue: new Date(),
+    //   allowNull: false,
+    // }
   },
   {
     freezeTableName: true,

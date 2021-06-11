@@ -21,18 +21,18 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.FLOAT,
         allowNull: false,
       },
-      createdAt: {
-        type: DataTypes.DATE,
-        defaultValue: new Date(),
-        // field: 'created_at',
-        allowNull: false,
-      },
-      updatedAt: {
-        type: DataTypes.DATE,
-        defaultValue: new Date(),
-        // field: 'updated_at',
-        allowNull: false,
-      }
+      // createdAt: {
+      //   type: DataTypes.DATE,
+      //   defaultValue: new Date(),
+      //   // field: 'created_at',
+      //   allowNull: false,
+      // },
+      // updatedAt: {
+      //   type: DataTypes.DATE,
+      //   defaultValue: new Date(),
+      //   // field: 'updated_at',
+      //   allowNull: false,
+      // }
   },
   {
     freezeTableName: true,
