@@ -1,34 +1,20 @@
-const express = require('express');
+const express = require("express");
 const cors = require('cors')
+// const db = require('./models');
 
-const usersRoutes = require('./routes/users-routes');
-const spotsRoutes = require('./routes/spots-routes');
-const albumsRoutes = require('./routes/albums-routes');
-const picsRoutes = require('./routes/pics-routes');
-
-const HttpError = require('./models/http-error');
+const port = process.env.PORT || 5000;
 
 const app = express();
 
+app.use(express.urlencoded({extended: true})); //Parse URL-encoded bodies
 app.use(express.json()); //Used to parse JSON bodies
 app.use(cors());
 
-app.use('/api/users', usersRoutes); // => /api/users..
-app.use('/api/spots', spotsRoutes);
-app.use('/api/albums', albumsRoutes);
-app.use('/api/pics', picsRoutes);
+require("./routes/userRoutes")(app);
+require("./routes/spotRoutes")(app);
+require("./routes/albumRoutes")(app);
+require("./routes/pictureRoutes")(app);
 
-app.use((req, res, next) => {
-  const error = new HttpError('Could not find this route.', 404);
-  throw error;
-});
-
-app.use((error, req, res, next) => {
-  if (res.headerSent) {
-    return next(error);
-  }
-  res.status(error.code || 500)
-  res.json({message: error.message || 'An unknown error occurred!'});
-});
-
-app.listen(5000);
+// db.sequelize.sync().then((res) => {
+    app.listen(port, () => console.log(`Server started on ${port}`));
+// })
