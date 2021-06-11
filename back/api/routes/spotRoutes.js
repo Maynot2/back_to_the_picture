@@ -7,8 +7,8 @@ const Op = Sequelize.Op;
 module.exports = function(router) {
 
   router.get("/api/spots", async (req, res) => {
-    // const { min_latitude,  max_latitude, min_longitude, max_longitude, min_date, max_date } = req.body; 
-    const { min_latitude, max_latitude, min_longitude, max_longitude, min_date, max_date } = req.query; 
+    // min/max date format: yyyy-mm-dd
+    const { min_latitude, max_latitude, min_longitude, max_longitude, min_date, max_date } = req.query;
     try {
       const spots = await Spot.findAll({
         where: {
@@ -21,7 +21,7 @@ module.exports = function(router) {
         },
         include: { model: Album, where: {
           takenAt: {
-            [Op.between]: [min_date, max_date],
+            [Op.between]: [new Date(min_date), new Date(max_date)],
           }
         }}
       });
