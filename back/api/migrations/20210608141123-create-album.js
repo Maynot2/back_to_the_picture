@@ -11,13 +11,14 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      user_id: {
+      userId: {
+        type: Sequelize.INTEGER,
+        // field: 'userId'
+      },
+      spotId: {
         type: Sequelize.INTEGER
       },
-      spot_id: {
-        type: Sequelize.INTEGER
-      },
-      taken_at: {
+      takenAt: {
         type: Sequelize.DATE
       },
       createdAt: {

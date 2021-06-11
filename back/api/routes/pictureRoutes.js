@@ -10,7 +10,7 @@ module.exports = function(router) {
       const pictures = await Picture.findAll({
         limit: 10,
         order: [
-          ['album_id', 'ASC']
+          ['albumId', 'ASC']
         ]
       });
       res.json(pictures);
@@ -39,10 +39,10 @@ module.exports = function(router) {
     if (!errors.isEmpty()) {
       throw Error;
     }
-    const { album_id, url } = req.body; 
+    const { albumId, url } = req.body; 
     try {
       const createdPicture = await Picture.create({
-        album_id,
+        albumId,
         url
       });
       res.status(201).json({picture: createdPicture});
@@ -55,14 +55,14 @@ module.exports = function(router) {
     });
 
     router.put('/api/pictures/:id', async (req, res) => {
-      const { album_id, url } = req.body; 
+      const { albumId, url } = req.body; 
       try {
         const updatedPicture = await Picture.findByPk(req.params.id);
         if (!updatedPicture) {
           res.send('Picture not found');
         } else {
           await updatedPicture.update({
-            album_id,
+            albumId,
             url
           });
           res.status(201).json({place: updatedPicture});

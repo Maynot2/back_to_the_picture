@@ -11,7 +11,7 @@ module.exports = {
       url: {
         type: Sequelize.STRING
       },
-      album_id: {
+      albumId: {
         type: Sequelize.INTEGER
       },
       createdAt: {

@@ -58,13 +58,14 @@ module.exports = function(router) {
     if (!errors.isEmpty()) {
       throw Error;
     }
-    const { user_id, name, taken_at, spot_id } = req.body; 
+    const { userId, name, takenAt, spotId } = req.body; 
+    console.log(req.body);
     try {
       const createdAlbum = await Album.create({
-        user_id,
+        userId,
         name,
-        taken_at,
-        spot_id
+        takenAt,
+        spotId
       });
       res.status(201).json({spot: createdAlbum});
     } catch (error) {
@@ -78,9 +79,9 @@ module.exports = function(router) {
   // router.post("/api/albums/create", (req, res) => {
   //   Album.create({
   //     name: req.body.name,
-  //     user_id: req.body.user_id,
-  //     spot_id: req.body.spot_id,
-  //     taken_at: req.body.taken_at
+  //     userId: req.body.userId,
+  //     spotId: req.body.spotId,
+  //     takenAt: req.body.takenAt
   //   })
   //     .then(res => {
   //       res.json(res);
@@ -89,17 +90,17 @@ module.exports = function(router) {
   // });
 
   router.put('/api/albums/:id', async (req, res) => {
-    const { user_id, name, taken_at, spot_id } = req.body; 
+    const { userId, name, takenAt, spotId } = req.body; 
     try {
       const updatedAlbum = await Album.findByPk(req.params.id);
       if (!updatedAlbum) {
         res.send('Album not found');
       } else {
         await updatedAlbum.update({
-          user_id,
+          userId,
           name,
-          taken_at,
-          spot_id
+          takenAt,
+          spotId
         });
         res.status(201).json({place: updatedAlbum});
       }
@@ -114,9 +115,9 @@ module.exports = function(router) {
   // router.put("/api/albums/:id", (req, res) => {
   //   Album.update({
   //       name: req.body.name,
-  //       user_id: req.body.user_id,
-  //       spot_id: req.body.spot_id,
-  //       taken_at: req.body.taken_at },
+  //       userId: req.body.userId,
+  //       spotId: req.body.spotId,
+  //       takenAt: req.body.takenAt },
   //       { where: { id: req.params.id } }
   //   )
   //     .then(updatedAlbum => {

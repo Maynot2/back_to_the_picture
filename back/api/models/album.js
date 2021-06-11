@@ -1,7 +1,7 @@
 'use strict';
 const Sequelize = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  const albums = sequelize.define("albums",
+const albums = sequelize.define("albums",
   {
         // id: {
         //     allowNull: false,
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
           },
-          user_id: {
+          userId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
           },
-          spot_id: {
+          spotId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             references: {
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
             onUpdate: 'CASCADE',
             onDelete: 'SET NULL',
           },
-          taken_at: {
+          takenAt: {
             allowNull: false,
             type: DataTypes.DATE
           },
