@@ -1,4 +1,5 @@
 const Album = require("../models").albums;
+const Picture = require("../models").pictures;
 const { validationResult } = require('express-validator');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -52,14 +53,14 @@ module.exports = function(router) {
     }
   });
 
-  router.post("/api/albums/create", async (req, res) => {
+  router.post("/api/albums", async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       throw Error;
     }
     const { name, userId, spotId, takenAt } = req.body; 
     console.log(req.body);
-    await Spot.sync();
+    await Album.sync();
     try {
       const createdAlbum = await Album.create({
         name,
@@ -108,5 +109,29 @@ module.exports = function(router) {
         res.status(201).json({ message: 'Deleted album.' });
       })
       .catch(err => res.json(err));
+  });
+
+  router.get("/api/albums/:id/pictures", async (req, res) => {
+    await Album.sync();
+    await Picture.sync();
+    try {
+        const album = await Album.findOne({
+          where: {
+            id: {
+              [Op.eq]: req.params.id
+            }
+          },
+          include: Picture
+        });
+        if (!album) {
+          throw Error;
+        }
+        res.json(album.pictures);
+    } catch (error) {
+      res.status(404).send(
+        {
+          "message": error.message || "Could not find album for the provided id."
+        });
+    }
   });
 };
