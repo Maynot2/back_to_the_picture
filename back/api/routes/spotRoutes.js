@@ -1,4 +1,5 @@
 const Spot = require("../models").spots;
+const Album = require("../models").albums;
 const { validationResult } = require('express-validator');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -6,19 +7,31 @@ const Op = Sequelize.Op;
 module.exports = function(router) {
 
   router.get("/api/spots", async (req, res) => {
+    // const { min_latitude,  max_latitude, min_longitude, max_longitude, min_date, max_date } = req.body; 
+    const { min_latitude, max_latitude, min_longitude, max_longitude, min_date, max_date } = req.query; 
     try {
       const spots = await Spot.findAll({
-        limit: 10,
-        order: [
-          ['name', 'ASC']
-        ]
+        where: {
+          latitude: {
+             [Op.between]: [Number(min_latitude), Number(max_latitude)],
+          },
+          longitude: {
+            [Op.between]: [Number(min_longitude), Number(max_longitude)],
+         },
+        },
+        include: { model: Album, where: {
+          takenAt: {
+            [Op.between]: [min_date, max_date],
+          }
+        }}
       });
+
       res.json(spots);
     } catch (error) {
       res.json(error);
     }
   });
-
+  
   router.get("/api/spots/:id", async (req, res) => {
     try {
         const spot = await Spot.findByPk(req.params.id);
@@ -52,18 +65,23 @@ module.exports = function(router) {
     }
   });
 
+  
+
   router.post("/api/spots/create", async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw Error;
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   throw Error;
+    // }
     const { name, latitude, longitude } = req.body; 
+    await Spot.sync();
     try {
+      console.log(name, latitude, longitude);
       const createdSpot = await Spot.create({
         name,
         latitude,
         longitude
       });
+      console.log(createdSpot);
       res.status(201).json({spot: createdSpot});
     } catch (error) {
       res.status(422).send(

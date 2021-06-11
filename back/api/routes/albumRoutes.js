@@ -59,6 +59,7 @@ module.exports = function(router) {
     }
     const { name, userId, spotId, takenAt } = req.body; 
     console.log(req.body);
+    await Spot.sync();
     try {
       const createdAlbum = await Album.create({
         name,

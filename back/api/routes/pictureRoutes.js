@@ -41,6 +41,7 @@ module.exports = function(router) {
     }
     const { albumId, url } = req.body;
     console.log(req.body);
+    await Spot.sync();
     try {
       const createdPicture = await Picture.create({
         albumId,
