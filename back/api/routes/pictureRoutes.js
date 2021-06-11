@@ -39,7 +39,8 @@ module.exports = function(router) {
     if (!errors.isEmpty()) {
       throw Error;
     }
-    const { albumId, url } = req.body; 
+    const { albumId, url } = req.body;
+    console.log(req.body);
     try {
       const createdPicture = await Picture.create({
         albumId,
