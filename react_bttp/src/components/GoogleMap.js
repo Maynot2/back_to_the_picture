@@ -60,9 +60,8 @@ const GMap = (props) => {
       const maxLongitude = googleMap.current.getBounds().Eb.i;
       console.log('->', props.datePicked)
       // createMarkersCluster('http://localhost:5000/api/spots');
-      const tmp = new Date(props.datePicked.current.to)
-      const minDate = '' + tmp.getFullYear() + '-' + tmp.getMonth() + tmp.getDay()//2021-06-10
-      const maxDate = new Date(props.datePicked.current.from)//2021-06-10
+      const minDate = '2021-06-10' //2021-06-10 // ' + tmp.getFullYear() + '-' + tmp.getMonth() + tmp.getDay()
+      const maxDate = '2021-06-30'//2021-06-10
       console.log(minDate)
       console.log(maxDate)
       createMarkersCluster('http://localhost:5000/api/spots?min_latitude=' + minLatitude + '&max_latitude=' + maxLatitude + '&min_longitude=' + minLongitude + '&max_longitude=' + maxLongitude + '&min_date=' + minDate + '&max_date=' + maxDate);
