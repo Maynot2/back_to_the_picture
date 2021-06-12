@@ -58,10 +58,8 @@ const GMap = (props) => {
       const maxLatitude = googleMap.current.getBounds().lc.i;
       const minLongitude = googleMap.current.getBounds().Eb.g;
       const maxLongitude = googleMap.current.getBounds().Eb.i;
-      console.log('->', props.datePicked)
-      // createMarkersCluster('http://localhost:5000/api/spots');
-      const minDate = '2021-06-10' //2021-06-10 // ' + tmp.getFullYear() + '-' + tmp.getMonth() + tmp.getDay()
-      const maxDate = '2021-06-30'//2021-06-10
+      const minDate = props.datePicked.from.toISOString().split('T')[0];
+      const maxDate = props.datePicked.to.toISOString().split('T')[0];
       console.log(minDate)
       console.log(maxDate)
       createMarkersCluster('http://localhost:5000/api/spots?min_latitude=' + minLatitude + '&max_latitude=' + maxLatitude + '&min_longitude=' + minLongitude + '&max_longitude=' + maxLongitude + '&min_date=' + minDate + '&max_date=' + maxDate);
@@ -72,7 +70,7 @@ const GMap = (props) => {
   }, [props]);
 
   // Temp location | Cf above don't burn Tibo' CB!!!
-  createMarkersCluster('http://localhost:5000/api/spots');
+  // createMarkersCluster('http://localhost:5000/api/spots');
  
   
   // initialize the google map

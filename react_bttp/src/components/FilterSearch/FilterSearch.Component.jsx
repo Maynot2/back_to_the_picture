@@ -3,7 +3,12 @@ import SearchButton from "../SearchButton/SearchButton.Component";
 import FilterBar from "../FilterBar/FilterBar.Component";
 import "react-datepicker/dist/react-datepicker.css";
 
-function FilterSearch({ datePicked, setAddressPlaceSelected, isSearchPic }) {
+function FilterSearch({
+  datePicked,
+  setAddressPlaceSelected,
+  isSearchPic,
+  setDate,
+}) {
   // Store the place selected by the user
   const [place, setPlace] = useState(null);
   // Store in an array the two date selected by the user
@@ -26,6 +31,7 @@ function FilterSearch({ datePicked, setAddressPlaceSelected, isSearchPic }) {
           datePicked={datePicked}
           setAddress={setAddressPlaceSelected}
           place={place}
+          setDate={setDate}
         />
       </div>
     </div>

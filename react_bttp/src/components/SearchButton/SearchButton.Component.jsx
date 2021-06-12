@@ -1,6 +1,6 @@
 import React from "react";
 
-function SearchButton({ isSearchPic, setAddress, datePicked, place }) {
+function SearchButton({ isSearchPic, setAddress, datePicked, place, setDate }) {
   return (
     <div>
       <button
@@ -8,7 +8,8 @@ function SearchButton({ isSearchPic, setAddress, datePicked, place }) {
           // update variable from App.js to give the address selected
           setAddress(place);
           // update variable from App.js to give the two date selected
-          console.log(datePicked.current);
+          setDate(datePicked.current);
+          // console.log(datePicked.current);
         }}
         className={`w-full h-full transition duration-300 transform hover:scale-105 ${
           isSearchPic
