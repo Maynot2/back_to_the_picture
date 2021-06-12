@@ -22,6 +22,8 @@ function App() {
   const [isSearchPic, setIsSearchPic] = useState(true); // defaults to search mode
   const [isUploadPic, setIsUploadPic] = useState(false);
 
+  const [albums, setAlbums] = useState([]);
+
   // Helper function to change mode
   function updateSetSearchPic() {
     if (!isSearchPic) {
@@ -68,10 +70,16 @@ function App() {
                   isSearchPic ? "border-tertiary" : "border-secondary"
                 }`}
               >
-                <GMap place={addressPlaceSelected} datePicked={datePicked} />
+                <GMap place={addressPlaceSelected} datePicked={datePicked} setAlbums={setAlbums}/>
               </div>
               <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
-                <Link to="/albums">albums</Link>
+                {albums.map((album) => {
+                  return (
+                    <Link to="/albums" >
+                      <div>{album.name}</div>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
