@@ -70,7 +70,7 @@ function App() {
                   isSearchPic ? "border-tertiary" : "border-secondary"
                 }`}
               >
-                <GMap place={addressPlaceSelected} datePicked={datePicked} setAlbums={setAlbums}/>
+                <GMap place={addressPlaceSelected} setAddressPlaceSelected={setAddressPlaceSelected} datePicked={datePicked} setAlbums={setAlbums}/>
               </div>
               <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
                 {albums.map((album) => {

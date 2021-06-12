@@ -43,6 +43,11 @@ const GMap = (props) => {
         });
         markers.forEach((marker) => {
           marker.addListener("click", function () {
+            const tmpObjPositionMarker = {}
+            tmpObjPositionMarker['lat'] = this.position.lat()
+            tmpObjPositionMarker['lng'] = this.position.lng()
+            // Update latitude - Longitude of the map to center on the marker selected to overwrite the search bar entered
+            props.setAddressPlaceSelected(tmpObjPositionMarker)
             props.setAlbums(this.albums);
           });
         });
@@ -58,6 +63,7 @@ const GMap = (props) => {
       googleMap.current,
       "bounds_changed",
       function () {
+        // props.setAddressPlaceSelected({})
         const minLatitude = googleMap.current.getBounds().lc.g;
         const maxLatitude = googleMap.current.getBounds().lc.i;
         const minLongitude = googleMap.current.getBounds().Eb.g;
@@ -104,10 +110,16 @@ const GMap = (props) => {
   const initGoogleMap = (props) => {
     var latitude = 48.856614;
     var longitude = 2.3522219;
-    if (props.place) {
+    // Case move the map
+    if (props.place && Object.keys(props.place).length > 2) {
       latitude = props.place.geometry.location.lat();
       longitude = props.place.geometry.location.lng();
+    // case spot clicked
+    } else if (props.place && Object.keys(props.place).length === 2) {
+        latitude = props.place.lat;
+        longitude = props.place.lng;
     }
+    
     return new window.google.maps.Map(googleMapRef.current, {
       center: { lat: latitude, lng: longitude },
       zoom: 8,
