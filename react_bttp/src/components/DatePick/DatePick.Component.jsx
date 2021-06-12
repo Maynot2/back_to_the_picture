@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 
-function DatePick({ datePicked, label, isSearchPic }) {
-  const [startDate, setStartDate] = useState(new Date());
+function DatePick({ date, datePicked, label, isSearchPic }) {
+  const [startDate, setStartDate] = useState(datePicked[label]);
 
   return (
     <div className="flex">
@@ -24,9 +24,9 @@ function DatePick({ datePicked, label, isSearchPic }) {
             isSearchPic ? "border-tertiary" : "border-secondary"
           } rounded shadow`}
           selected={startDate}
-          onChange={(date) => {
-            setStartDate(date);
-            datePicked.current[label] = date;
+          onChange={(selectedDate) => {
+            setStartDate(selectedDate);
+            date.current[label] = selectedDate;
           }}
         />
       </div>

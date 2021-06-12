@@ -9,12 +9,14 @@ function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
   const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
   // Two date selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
-  const datePicked = useRef({});
-  const today = new Date();
-  const [date, setDate] = useState({
+  const today = new Date()
+  const dateObject = {
     from: new Date(new Date().setDate(today.getDate() - 30)),
     to: today
-  });
+  }
+
+  const date = useRef(dateObject);
+  const [datePicked, setDatePicked] = useState(dateObject);
 
   // Decides if user in is in search or upload picture mode
   const [isSearchPic, setIsSearchPic] = useState(true); // defaults to search mode
@@ -54,8 +56,9 @@ function App() {
             />
             <FilterSearch
               isSearchPic={isSearchPic}
+              date={date}
               datePicked={datePicked}
-              setDate={setDate}
+              setDatePicked={setDatePicked}
               setAddressPlaceSelected={setAddressPlaceSelected}
               addressPlaceSelected={addressPlaceSelected}
             />
@@ -65,7 +68,7 @@ function App() {
                   isSearchPic ? "border-tertiary" : "border-secondary"
                 }`}
               >
-                <GMap place={addressPlaceSelected} datePicked={date} />
+                <GMap place={addressPlaceSelected} datePicked={datePicked} />
               </div>
               <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
                 <Link to="/albums">albums</Link>

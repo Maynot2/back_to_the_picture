@@ -4,10 +4,11 @@ import FilterBar from "../FilterBar/FilterBar.Component";
 import "react-datepicker/dist/react-datepicker.css";
 
 function FilterSearch({
-  datePicked,
   setAddressPlaceSelected,
   isSearchPic,
-  setDate,
+  date,
+  datePicked,
+  setDatePicked,
 }) {
   // Store the place selected by the user
   const [place, setPlace] = useState(null);
@@ -23,15 +24,16 @@ function FilterSearch({
       <div className="md:grid grid-cols-6 gap-5 lg:gap-10">
         <FilterBar
           isSearchPic={isSearchPic}
-          datePicked={datePicked}
+          date={date}
           setPlace={setPlace}
+          datePicked={datePicked}
         />
         <SearchButton
           isSearchPic={isSearchPic}
-          datePicked={datePicked}
+          date={date}
           setAddress={setAddressPlaceSelected}
           place={place}
-          setDate={setDate}
+          setDatePicked={setDatePicked}
         />
       </div>
     </div>
