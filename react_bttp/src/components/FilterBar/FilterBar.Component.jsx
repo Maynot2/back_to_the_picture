@@ -11,13 +11,13 @@ function FilterBar({ datePicked, setPlace, isSearchPic }) {
           <DatePick
             datePicked={datePicked}
             isSearchPic={isSearchPic}
-            label="to"
+            label="from"
           />
           <div className="mt-5 lg:mt-0">
             <DatePick
               datePicked={datePicked}
               isSearchPic={isSearchPic}
-              label="from"
+              label="to"
             />
           </div>
         </div>

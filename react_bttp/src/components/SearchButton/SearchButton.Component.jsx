@@ -7,9 +7,9 @@ function SearchButton({ isSearchPic, setAddress, datePicked, place, setDate }) {
         onClick={() => {
           // update variable from App.js to give the address selected
           setAddress(place);
-          // update variable from App.js to give the two date selected
-          setDate(datePicked.current);
-          // console.log(datePicked.current);
+          // Shallow copy of date object to force rerendering because original passed object comes from useRef()
+          const dateCopy = Object.assign({}, datePicked.current);
+          setDate(dateCopy);
         }}
         className={`w-full h-full transition duration-300 transform hover:scale-105 ${
           isSearchPic
