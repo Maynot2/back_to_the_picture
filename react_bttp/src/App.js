@@ -51,7 +51,7 @@ function App() {
             />
             <div className="lg:grid grid-cols-3 gap-8">
               <div className={`map col-span-2 bg-secondary rounded border-2 ${isSearchPic ? "border-tertiary" : "border-secondary"}`}>
-                <GMap place={addressPlaceSelected} />
+                <GMap place={addressPlaceSelected} datePicked={datePicked} />
               </div>
               <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
                 <Link to="/albums">

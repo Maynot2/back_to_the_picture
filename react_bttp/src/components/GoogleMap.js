@@ -33,7 +33,7 @@ const GMap = (props) => {
     fetch(apiUrl)
     .then((res) => res.json())
     .then((response) => {
-      response.spots.map((obj, idx) => {
+      response.map((obj, idx) => {
         spots[idx] = obj;
       })
       const markers = spots.map((obj) => {
@@ -54,11 +54,19 @@ const GMap = (props) => {
 
     /** Event map changed by the user */
     window.google.maps.event.addListener(googleMap.current, 'bounds_changed', function() {
-      const minLatitude = googleMap.current.getBounds().oc.g;
-      const maxLatitude = googleMap.current.getBounds().oc.i;
+      const minLatitude = googleMap.current.getBounds().lc.g;
+      const maxLatitude = googleMap.current.getBounds().lc.i;
       const minLongitude = googleMap.current.getBounds().Eb.g;
       const maxLongitude = googleMap.current.getBounds().Eb.i;
+      console.log('->', props.datePicked)
       // createMarkersCluster('http://localhost:5000/api/spots');
+      const tmp = new Date(props.datePicked.current.to)
+      const minDate = '' + tmp.getFullYear() + '-' + tmp.getMonth() + tmp.getDay()//2021-06-10
+      const maxDate = new Date(props.datePicked.current.from)//2021-06-10
+      console.log(minDate)
+      console.log(maxDate)
+      createMarkersCluster('http://localhost:5000/api/spots?min_latitude=' + minLatitude + '&max_latitude=' + maxLatitude + '&min_longitude=' + minLongitude + '&max_longitude=' + maxLongitude + '&min_date=' + minDate + '&max_date=' + maxDate);
+
       console.log('Min latitude = ', minLatitude, 'Max latitude = ', maxLatitude);
       console.log('Min longitude = ', minLongitude, 'Max longitude = ', maxLongitude);
     });
