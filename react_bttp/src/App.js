@@ -75,7 +75,7 @@ function App() {
               <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
                 {albums.map((album) => {
                   return (
-                    <Link to="/albums" >
+                    <Link to={`album/${album.id}`} >
                       <div>{album.name}</div>
                     </Link>
                   );

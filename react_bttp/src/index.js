@@ -18,8 +18,10 @@ ReactDOM.render(
             <Route exact path="/">
               <App />            
             </Route>
-            <Route path="/albums">
-                <Albums />
+            <Route path="/album/:id" render={(props) => {
+              return <Albums id={props.match.params.id}/>;
+              }
+            } > 
             </Route>
         </Switch>
     </BrowserRouter>

@@ -19,11 +19,11 @@ const ImageSlider = ({ pictures }) => {
             <FaArrowAltCircleLeft onClick={prevSlide} className="absolute z-10 top-60 left-5"/>
             <FaArrowAltCircleRight onClick={nextSlide} className="absolute z-10 top-60 right-5"/>
             {
-                pictures.map((slide, index) => {
+                pictures.map((url, index) => {
                     return (
                         <div>
                             {index === current && (
-                                <img className=" border-2 rounded hover:scale-150 m-2 border-2 border-tertiary " src={slide.image}></img>
+                                <img className=" border-2 rounded hover:scale-150 m-2 border-2 border-tertiary " src={url}></img>
                             )}
                         </div>
                     )
