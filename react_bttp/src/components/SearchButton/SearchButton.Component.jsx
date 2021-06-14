@@ -1,6 +1,13 @@
 import React from "react";
 
-function SearchButton({ isSearchPic, setAddress, date, place, setDatePicked }) {
+function SearchButton({
+  isSearchPic,
+  setAddress,
+  date,
+  place,
+  setDatePicked,
+  setAlbums,
+}) {
   return (
     <div>
       <button
@@ -9,7 +16,9 @@ function SearchButton({ isSearchPic, setAddress, date, place, setDatePicked }) {
           setAddress(place);
           // Shallow copy of date object to force rerendering because original passed object comes from useRef()
           const dateCopy = Object.assign({}, date.current);
+          console.log(dateCopy);
           setDatePicked(dateCopy);
+          setAlbums([]);
         }}
         className={`w-full h-full transition duration-300 transform hover:scale-105 ${
           isSearchPic

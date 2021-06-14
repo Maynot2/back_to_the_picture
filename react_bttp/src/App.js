@@ -9,11 +9,14 @@ function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
   const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
   // Two date selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
-  const today = new Date()
+  const today = new Date();
   const dateObject = {
     from: new Date(new Date().setDate(today.getDate() - 30)),
-    to: today
-  }
+    to: today,
+    taken: today,
+  };
+
+  console.log(dateObject);
 
   const date = useRef(dateObject);
   const [datePicked, setDatePicked] = useState(dateObject);
@@ -55,6 +58,7 @@ function App() {
               updateSetIsUploadPic={updateSetIsUploadPic}
               isSearchPic={isSearchPic}
               isUploadPic={isUploadPic}
+              setAlbums={setAlbums}
             />
             <FilterSearch
               isSearchPic={isSearchPic}
@@ -63,6 +67,7 @@ function App() {
               setDatePicked={setDatePicked}
               setAddressPlaceSelected={setAddressPlaceSelected}
               addressPlaceSelected={addressPlaceSelected}
+              setAlbums={setAlbums}
             />
             <div className="lg:grid grid-cols-3 gap-8">
               <div
@@ -70,15 +75,30 @@ function App() {
                   isSearchPic ? "border-tertiary" : "border-secondary"
                 }`}
               >
-                <GMap place={addressPlaceSelected} setAddressPlaceSelected={setAddressPlaceSelected} datePicked={datePicked} setAlbums={setAlbums}/>
+                <GMap
+                  place={addressPlaceSelected}
+                  setAddressPlaceSelected={setAddressPlaceSelected}
+                  datePicked={datePicked}
+                  setAlbums={setAlbums}
+                  isSearchPic={isSearchPic}
+                />
               </div>
-              <div className={`${isSearchPic ? "bg-tertiary" : "bg-secondary"} flex flex-wrap p-4 content-between`}>
+              <div
+                className={`${
+                  isSearchPic ? "bg-tertiary" : "bg-secondary"
+                } flex flex-wrap p-4 content-between`}
+              >
                 {albums.map((album) => {
                   console.log("album: ", album);
                   return (
-                    <Link to={`album/${album.id}`} className="w-5/12 border border-neutralB rounded py-8">
+                    <Link
+                      to={`album/${album.id}`}
+                      className="w-5/12 border border-neutralB rounded py-8"
+                    >
                       <div className="text-center w-full">{album.name}</div>
-                      <div className="text-center w-full">{album.takenAt.split("T")[0]}</div>
+                      <div className="text-center w-full">
+                        {album.takenAt.split("T")[0]}
+                      </div>
                     </Link>
                   );
                 })}

@@ -9,6 +9,7 @@ function FilterSearch({
   date,
   datePicked,
   setDatePicked,
+  setAlbums,
 }) {
   // Store the place selected by the user
   const [place, setPlace] = useState(null);
@@ -34,6 +35,7 @@ function FilterSearch({
           setAddress={setAddressPlaceSelected}
           place={place}
           setDatePicked={setDatePicked}
+          setAlbums={setAlbums}
         />
       </div>
     </div>

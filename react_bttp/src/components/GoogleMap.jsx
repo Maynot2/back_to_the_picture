@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 var stylesArray = [
   {
@@ -30,7 +30,6 @@ const GMap = (props) => {
           spots[idx] = obj;
         });
         const markers = spots.map((obj) => {
-          console.log(obj);
           return new window.google.maps.Marker({
             position: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
             map: googleMap.current,
@@ -43,12 +42,29 @@ const GMap = (props) => {
         });
         markers.forEach((marker) => {
           marker.addListener("click", function () {
-            const tmpObjPositionMarker = {}
-            tmpObjPositionMarker['lat'] = this.position.lat()
-            tmpObjPositionMarker['lng'] = this.position.lng()
+            const tmpObjPositionMarker = {};
+            tmpObjPositionMarker["lat"] = this.position.lat();
+            tmpObjPositionMarker["lng"] = this.position.lng();
             // Update latitude - Longitude of the map to center on the marker selected to overwrite the search bar entered
-            props.setAddressPlaceSelected(tmpObjPositionMarker)
-            props.setAlbums(this.albums);
+            props.setAddressPlaceSelected(tmpObjPositionMarker);
+            console.log("marker:", this);
+            if (props.isSearchPic) {
+              props.setAlbums(this.albums);
+            } else {
+              const takenAt = props.datePicked.taken;
+              const albums = [];
+              this.albums.forEach((album) => {
+                // Add condition for user here
+                if (
+                  takenAt.toISOString().split("T")[0] ===
+                  album.takenAt.split("T")[0]
+                ) {
+                  albums.push(album);
+                }
+              });
+              console.log(albums);
+              props.setAlbums(albums);
+            }
           });
         });
       })
@@ -68,37 +84,20 @@ const GMap = (props) => {
         const maxLatitude = googleMap.current.getBounds().lc.i;
         const minLongitude = googleMap.current.getBounds().Eb.g;
         const maxLongitude = googleMap.current.getBounds().Eb.i;
-        const minDate = props.datePicked.from.toISOString().split("T")[0];
-        const maxDate = props.datePicked.to.toISOString().split("T")[0];
-        console.log(minDate);
-        console.log(maxDate);
-        createMarkersCluster(
-          "http://localhost:5000/api/spots?min_latitude=" +
-            minLatitude +
-            "&max_latitude=" +
-            maxLatitude +
-            "&min_longitude=" +
-            minLongitude +
-            "&max_longitude=" +
-            maxLongitude +
-            "&min_date=" +
-            minDate +
-            "&max_date=" +
-            maxDate
-        );
+        let minDate;
+        let maxDate;
+        if (props.isSearchPic) {
+          minDate = props.datePicked.from.toISOString().split("T")[0];
+          maxDate = props.datePicked.to.toISOString().split("T")[0];
+        } else {
+          minDate = new Date(0).toISOString().split("T")[0];
+          maxDate = new Date().toISOString().split("T")[0];
+        }
+        const takenAt = props.datePicked.taken.toISOString().split("T")[0];
 
-        console.log(
-          "Min latitude = ",
-          minLatitude,
-          "Max latitude = ",
-          maxLatitude
-        );
-        console.log(
-          "Min longitude = ",
-          minLongitude,
-          "Max longitude = ",
-          maxLongitude
-        );
+        const url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
+
+        createMarkersCluster(url);
       }
     );
   }, [props]);
@@ -114,12 +113,12 @@ const GMap = (props) => {
     if (props.place && Object.keys(props.place).length > 2) {
       latitude = props.place.geometry.location.lat();
       longitude = props.place.geometry.location.lng();
-    // case spot clicked
+      // case spot clicked
     } else if (props.place && Object.keys(props.place).length === 2) {
-        latitude = props.place.lat;
-        longitude = props.place.lng;
+      latitude = props.place.lat;
+      longitude = props.place.lng;
     }
-    
+
     return new window.google.maps.Map(googleMapRef.current, {
       center: { lat: latitude, lng: longitude },
       zoom: 8,

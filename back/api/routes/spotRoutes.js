@@ -52,7 +52,6 @@ module.exports = function(router) {
       const spots = await Spot.findAll({
         where: { name: req.params.name }
       });
-      console.log(spots.lenght);
       if (spots.length === 0) {
         throw Error;
       }
@@ -75,13 +74,11 @@ module.exports = function(router) {
     const { name, latitude, longitude } = req.body; 
     await Spot.sync();
     try {
-      console.log(name, latitude, longitude);
       const createdSpot = await Spot.create({
         name,
         latitude,
         longitude
       });
-      console.log(createdSpot);
       res.status(201).json({spot: createdSpot});
     } catch (error) {
       res.status(422).send(

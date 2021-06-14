@@ -5,6 +5,7 @@ function ModeChoice({
   isSearchPic,
   updateSetIsUploadPic,
   isUploadPic,
+  setAlbums,
 }) {
   return (
     <div className="w-full mb-8">
@@ -15,7 +16,10 @@ function ModeChoice({
               ? "bg-tertiary border-tertiary text-neutralW shadow-2xl"
               : "transform scale-90 border-primary text-primary bg-neutral hover:scale-100 hover:shadow-2xl"
           }`}
-          onClick={updateSetSearchPic}
+          onClick={() => {
+            updateSetSearchPic();
+            setAlbums([]);
+          }}
         >
           Search Pictures
         </button>
@@ -25,7 +29,10 @@ function ModeChoice({
               ? "bg-secondary border-secondary text-neutralW shadow-2xl"
               : "transform scale-90 border-primary text-primary bg-neutralW hover:scale-100 hover:shadow-2xl"
           }`}
-          onClick={updateSetIsUploadPic}
+          onClick={() => {
+            updateSetIsUploadPic();
+            setAlbums([]);
+          }}
         >
           Upload Pictures
         </button>
