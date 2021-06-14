@@ -1,4 +1,6 @@
 import React from "react";
+import { useAuth0 } from "@auth0/auth0-react";
+import  { Redirect } from 'react-router-dom'
 
 function ModeChoice({
   updateSetSearchPic,
@@ -7,6 +9,7 @@ function ModeChoice({
   isUploadPic,
   setAlbums,
 }) {
+  const { isAuthenticated } = useAuth0();
   return (
     <div className="w-full mb-8">
       <div className="grid grid-cols-2 gap-4 h-20 text-neutralW">
@@ -30,8 +33,13 @@ function ModeChoice({
               : "transform scale-90 border-primary text-primary bg-neutralW hover:scale-100 hover:shadow-2xl"
           }`}
           onClick={() => {
-            updateSetIsUploadPic();
-            setAlbums([]);
+            if (!isAuthenticated) {
+              alert("Please connect")
+            } else {
+              updateSetIsUploadPic();
+              setAlbums([]);
+            }
+            
           }}
         >
           Upload Pictures
