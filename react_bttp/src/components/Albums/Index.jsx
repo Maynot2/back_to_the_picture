@@ -6,7 +6,7 @@ function Albums({ id }) {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
-    (async function fetchData() {
+    async function fetchData() {
       try {
         const res = await fetch(
           `http://localhost:5000/api/albums/${id}/pictures`
@@ -16,8 +16,9 @@ function Albums({ id }) {
       } catch (err) {
         console.log(err);
       }
-    })();
-  }, [pictures]);
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="h-auto bg-primary w-full text-white">
