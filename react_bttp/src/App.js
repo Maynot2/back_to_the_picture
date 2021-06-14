@@ -72,11 +72,13 @@ function App() {
               >
                 <GMap place={addressPlaceSelected} setAddressPlaceSelected={setAddressPlaceSelected} datePicked={datePicked} setAlbums={setAlbums}/>
               </div>
-              <div className={isSearchPic ? "bg-tertiary" : "bg-secondary"}>
+              <div className={`${isSearchPic ? "bg-tertiary" : "bg-secondary"} flex flex-wrap p-4 content-between`}>
                 {albums.map((album) => {
+                  console.log("album: ", album);
                   return (
-                    <Link to={`album/${album.id}`} >
-                      <div>{album.name}</div>
+                    <Link to={`album/${album.id}`} className="w-5/12 border border-neutralB rounded py-8">
+                      <div className="text-center w-full">{album.name}</div>
+                      <div className="text-center w-full">{album.takenAt.split("T")[0]}</div>
                     </Link>
                   );
                 })}
