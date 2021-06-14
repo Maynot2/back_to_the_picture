@@ -175,8 +175,8 @@ module.exports = {
         {
           id: 7,
           name: 'Alpes1',
-          userId: 4,
-          spotId: 5,
+          userId: 2,
+          spotId: 6,
           takenAt: new Date(),
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -184,8 +184,8 @@ module.exports = {
         {
           id: 8,
           name: 'PLF1',
-          userId: 4,
-          spotId: 5,
+          userId: 3,
+          spotId: 7,
           takenAt: new Date(),
           createdAt: new Date(),
           updatedAt: new Date(),
