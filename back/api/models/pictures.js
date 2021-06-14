@@ -19,9 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             references: {
               model: 'albums',
               key: 'id',
-            },
-            onUpdate: 'CASCADE',
-            onDelete: 'SET NULL',
+            }
           },
           // createdAt: {
           //   type: DataTypes.DATE,
@@ -44,7 +42,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   );
   pictures.associate = (models) => {
-    pictures.belongsTo(models.albums);
+    pictures.belongsTo(models.albums, {
+      foreignKey: 'albumId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
 };
   return pictures;
 };

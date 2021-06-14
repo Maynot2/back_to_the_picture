@@ -1,137 +1,51 @@
-const Album = require("../models").albums;
-const Picture = require("../models").pictures;
-const { validationResult } = require('express-validator');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const express = require('express');
+const { check } = require('express-validator');
 
-module.exports = function(router) {
+const albumControllers = require('../controllers/albumControllers');
 
-  router.get("/api/albums", async (req, res) => {
-    try {
-      const albums = await Album.findAll({
-        limit: 10,
-        order: [
-          ['name', 'DESC']
-        ]
-      });
-      res.json(albums);
-    } catch (error) {
-      res.json(error);
-    }
-  });
+const router = express.Router();
 
-  router.get("/api/albums/:id", async (req, res) => {
-    try {
-        const album = await Album.findByPk(req.params.id);
-        if (!album) {
-          throw Error;
-        }
-        res.json(album);
-    } catch (error) {
-      res.status(404).send(
-        {
-          "message": error.message || "Could not find album for the provided id."
-        });
-    }
-  });
+router.get('/', albumControllers.getAlbums);
+router.get('/:id', albumControllers.getAlbumById);
+router.get('/name/:name', albumControllers.getAlbumByName);
+router.post(
+  '/create',
+  [
+    check('user_id')
+      .not()
+      .isEmpty(),
+    check('name')
+      .not()
+      .isEmpty(),
+    check('taken_at')
+      .not()
+      .isEmpty(),
+    check('spot_id')
+      .not()
+      .isEmpty(),
+  ],
+  albumControllers.createAlbum);
 
-  router.get("/api/albums/name/:name", async (req, res) => {
-    try {
-      const albums = await Album.findAll({
-        where: { name: req.params.name }
-      });
-      console.log(albums.lenght);
-      if (albums.length === 0) {
-        throw Error;
-      }
-      res.json(albums);
-    } catch (error) {
-      res.status(404).send(
-        {
-          "message": error.message || "Could not find album for the provided name."
-        });
-    }
-  });
+router.put(
+  '/:id',
+  [
+    check('user_id')
+      .not()
+      .isEmpty(),
+    check('name')
+      .not()
+      .isEmpty(),
+    check('taken_at')
+      .not()
+      .isEmpty(),
+    check('spot_id')
+      .not()
+      .isEmpty(),
+  ],
+  albumControllers.updateAlbum);
 
-  router.post("/api/albums", async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw Error;
-    }
-    const { name, userId, spotId, takenAt } = req.body; 
-    console.log(req.body);
-    await Album.sync();
-    try {
-      const createdAlbum = await Album.create({
-        name,
-        userId,
-        spotId,
-        takenAt
-      });
-      res.status(201).json({album: createdAlbum});
-    } catch (error) {
-      res.status(422).send(
-        {
-          "message": error.message || "Could not create album."
-        });
-      }
-    });
+router.delete('/:id', albumControllers.deleteAlbum);
 
+router.get(':id/pictures', albumControllers.getAlbumByIdPic);
 
-  router.put('/api/albums/:id', async (req, res) => {
-    const { name, userId, spotId, takenAt } = req.body; 
-    try {
-      const updatedAlbum = await Album.findByPk(req.params.id);
-      if (!updatedAlbum) {
-        res.send('Album not found');
-      } else {
-        await updatedAlbum.update({
-          name,
-          userId,
-          spotId,
-          takenAt
-        });
-        res.status(201).json({place: updatedAlbum});
-      }
-    } catch(error) {
-      res.status(422).send(
-        {
-          "message": error.message || "Invalid inputs passed, please check your data."
-        });
-    }
-  });
-
-  router.delete("/api/albums/:id", (req, res) => {
-    Album.destroy({
-      where: { id: req.params.id }
-    })
-      .then(album => {
-        res.status(201).json({ message: 'Deleted album.' });
-      })
-      .catch(err => res.json(err));
-  });
-
-  router.get("/api/albums/:id/pictures", async (req, res) => {
-    await Album.sync();
-    await Picture.sync();
-    try {
-        const album = await Album.findOne({
-          where: {
-            id: {
-              [Op.eq]: req.params.id
-            }
-          },
-          include: Picture
-        });
-        if (!album) {
-          throw Error;
-        }
-        res.json(album.pictures);
-    } catch (error) {
-      res.status(404).send(
-        {
-          "message": error.message || "Could not find album for the provided id."
-        });
-    }
-  });
-};
+module.exports = router;

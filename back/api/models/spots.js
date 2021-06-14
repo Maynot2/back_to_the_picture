@@ -43,7 +43,9 @@ module.exports = (sequelize, DataTypes) => {
   }
   );
   spots.associate = (models) => {
-    spots.hasMany(models.albums);
+    spots.hasMany(models.albums, {
+      foreignKey: 'spotId'
+    });
   };
   return spots;
 };

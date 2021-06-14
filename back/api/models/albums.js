@@ -19,9 +19,7 @@ const albums = sequelize.define("albums",
             references: {
               model: 'users',
               key: 'id',
-            },
-            onUpdate: 'CASCADE',
-            onDelete: 'SET NULL',
+            }
           },
           spotId: {
             type: DataTypes.INTEGER,
@@ -29,9 +27,7 @@ const albums = sequelize.define("albums",
             references: {
               model: 'spots',
               key: 'id',
-            },
-            onUpdate: 'CASCADE',
-            onDelete: 'SET NULL',
+            }
           },
           takenAt: {
             allowNull: false,
@@ -58,9 +54,19 @@ const albums = sequelize.define("albums",
   }
   );
   albums.associate = (models) => {
-    albums.belongsTo(models.users);
-    albums.belongsTo(models.spots);
-    albums.hasMany(models.pictures);
+    albums.belongsTo(models.users, {
+      foreignKey: 'userId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+    albums.belongsTo(models.spots, {
+      foreignKey: 'spotId',
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    });
+    albums.hasMany(models.pictures, {
+      foreignKey: 'albumId'
+    });
 };
   return albums;
 };
