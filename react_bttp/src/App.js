@@ -45,7 +45,7 @@ function App() {
   const [albums, setAlbums] = useState([]);
 
   // On upload 2 possibilities are given create new spot or use existing
-  const [isExistingSpot, setIsExistingSpot] = useState(true);
+  const [isExistingSpot, setIsExistingSpot] = useState(false);
   const [isNewSpot, setIsNewSpot] = useState(false);
 
   // Helper function to change Spot mode
@@ -60,11 +60,15 @@ function App() {
     setIsExistingSpot(false);
   }
 
-  // Google Map spot-marker-created state in upload mode
+  // Google Map spot-marker object created in upload mode
   const spotCreated = useRef(null);
 
   // Spot ID for newly created spot in upload mode
   const spotID = useRef(null);
+
+  // Spot id of the selected marker in upload mode
+  const spotSelectedID = useRef(null)
+
 
   return (
     <>
@@ -114,6 +118,9 @@ function App() {
                     isExistingSpot={isExistingSpot}
                     isNewSpot={isNewSpot}
                     spotCreated={spotCreated}
+                    isUploadPic={isUploadPic}
+                    spotID={spotID}
+                    spotSelectedID={spotSelectedID}
                   />
                 </div>
               </div>
@@ -124,6 +131,9 @@ function App() {
                   updateSetExistingSpot={updateSetExistingSpot}
                   updateSetNewSpot={updateSetNewSpot}
                   isExistingSpot={isExistingSpot}
+                  spotID={spotID}
+                  spotSelectedID={spotSelectedID}
+                  datePicked={datePicked}
                 />
               )}
             </div>

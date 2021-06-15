@@ -3,29 +3,66 @@ const Album = require("../models").albums;
 const { validationResult } = require('express-validator');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+// http://localhost:5000/api/spots?min_latitude=48&max_latitude=50&min_longitude=4.8&max_longitude=1&min_date=2021-06-10&max_date=2021-06-30
+// http://localhost:5000/api/spots?min_latitude=41.11&max_latitude=55.58&min_longitude=-11.32&max_longitude=16.04&min_date=2021-06-10&max_date=2021-06-30
 
 module.exports = function(router) {
 
+  router.get("/api/spots/test", async (req, res) => {
+    // min/max date format: yyyy-mm-dd
+    await Spot.sync();
+
+    try {
+      const spots = await Spot.findAll();
+      res.json(spots);
+    } catch (error) {
+      res.json(error);
+    }
+  });
   router.get("/api/spots", async (req, res) => {
     // min/max date format: yyyy-mm-dd
-    const { min_latitude, max_latitude, min_longitude, max_longitude, min_date, max_date } = req.query;
-    try {
-      const spots = await Spot.findAll({
+
+    await Spot.sync(); 
+    let args = req.query
+    let conditionQuery = {}
+    if ('min_date' in req.query && 'max_date' in req.query)
+    {
+      conditionQuery = {
         where: {
           latitude: {
-             [Op.between]: [Number(min_latitude), Number(max_latitude)],
+             [Op.between]: [Number(args.min_latitude), Number(args.max_latitude)],
           },
           longitude: {
-            [Op.between]: [Number(min_longitude), Number(max_longitude)],
+            [Op.between]: [Number(args.min_longitude), Number(args.max_longitude)],
          },
         },
-        include: { model: Album, where: {
-          takenAt: {
-            [Op.between]: [new Date(min_date), new Date(max_date)],
+        include: { 
+          model: Album,
+          where: {
+            takenAt: {
+              [Op.between]: [new Date(args.min_date), new Date(args.max_date)],
+            }
           }
-        }}
-      });
+        }
+      }
+    } else {
+      conditionQuery = {
+        where: {
+          latitude: {
+             [Op.between]: [Number(args.min_latitude), Number(args.max_latitude)],
+          },
+          longitude: {
+            [Op.between]: [Number(args.min_longitude), Number(args.max_longitude)],
+         },
+        },
+        include: { 
+          model: Album
+        }
+      }
 
+    }
+    try {
+      const spots = await Spot.findAll(conditionQuery);
       res.json(spots);
     } catch (error) {
       res.json(error);

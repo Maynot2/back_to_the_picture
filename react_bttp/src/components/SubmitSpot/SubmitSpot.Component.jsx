@@ -13,20 +13,23 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
           if (spotCreated.current && spotName) {
             const lat = spotCreated.current.internalPosition.lat();
             const lng = spotCreated.current.internalPosition.lng();
+            console.log('lat marker :', Number(lat.toFixed(4)))
+            console.log('lng marker :', lng)
+
             const requestOptions = {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                latitude: lat.toFixed(4),
-                longitude: lng.toFixed(4),
+                latitude: Number(lat.toFixed(4)),
+                longitude: Number(lng.toFixed(4)),
                 name: spotName,
               }),
             };
             fetch("http://localhost:5000/api/spots", requestOptions)
               .then((response) => response.json())
               .then((newSpot) => {
-                console.log(newSpot);
-                spotID.current = newSpot.id;
+                spotCreated.current = null
+                spotID.current = newSpot.spot.id;
                 updateSetExistingSpot();
               });
           } else {
