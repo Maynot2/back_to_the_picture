@@ -20,7 +20,6 @@ var stylesArray = [
 const GMap = (props) => {
   const googleMapRef = useRef(null);
   let googleMap = useRef(null);
-  const [spotCreated, setSpotCreated] = useState(null)
   /** Get spots and create cluster of markers */
   const { user } = useAuth0();
 
@@ -35,30 +34,32 @@ const GMap = (props) => {
         let albums;
         const takenAt = props.datePicked.taken;
         // Initialize markers
-        console.log(user)
+        console.log(user);
         const markers = spots.map((obj) => {
           obj.albums.forEach((album) => {
-            albums = []
+            albums = [];
             if (
               takenAt.toISOString().split("T")[0] ===
               album.takenAt.split("T")[0]
             ) {
               albums.push(album);
             }
-          })
+          });
           let marker = {
             position: { lat: Number(obj.latitude), lng: Number(obj.longitude) },
             map: googleMap.current,
             albums: obj.albums,
             icon: {
-              url : undefined
-            }
+              url: undefined,
+            },
           };
           // Case there is albums for the spot at the date picked
-          if (albums.length > 0 && !props.isSearchPic){
-             marker["icon"]["url"] = "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"
-          } else if (!props.isSearchPic){
-             marker["icon"]["url"] = "http://maps.google.com/mapfiles/ms/icons/blue-dot.png"
+          if (albums.length > 0 && !props.isSearchPic) {
+            marker["icon"]["url"] =
+              "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
+          } else if (!props.isSearchPic) {
+            marker["icon"]["url"] =
+              "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
           }
           return new window.google.maps.Marker(marker);
         });
@@ -127,26 +128,28 @@ const GMap = (props) => {
       }
     );
     // Event on click on map to create marker
-      window.google.maps.event.addListener(googleMap.current, 'click', function(event) {
-        if (!props.isSearchPic && !spotCreated){
-          var marker = new window.google.maps.Marker({
-            position: event.latLng, 
-            map: googleMap.current
-          });
-          
-          marker.addListener("click", function () {
-            setSpotCreated(null)
-            marker.setMap(null)
-            console.log(spotCreated)
-          });
-          setSpotCreated(marker)
-        } else {
-          alert("Error")
-        }
-      });
+    if (!props.isSearchPic && props.isNewSpot) {
+      window.google.maps.event.addListener(
+        googleMap.current,
+        "click",
+        function (event) {
+          if (!props.isSearchPic && !props.spotCreated.current) {
+            var marker = new window.google.maps.Marker({
+              position: event.latLng,
+              map: googleMap.current,
+            });
 
-    
-    
+            marker.addListener("click", function () {
+              props.spotCreated.current = null;
+              marker.setMap(null);
+            });
+            props.spotCreated.current = marker;
+          } else {
+            alert("Error");
+          }
+        }
+      );
+    }
   }, [props]);
 
   // Temp location | Cf above don't burn Tibo' CB!!!

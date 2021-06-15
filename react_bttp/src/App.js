@@ -3,7 +3,9 @@ import FilterSearch from "./components/FilterSearch/FilterSearch.Component";
 import React, { useState, useRef } from "react";
 import GMap from "./components/GoogleMap";
 import ModeChoice from "./components/ModeChoice/ModeChoice.Component";
-import { Link } from "react-router-dom";
+import ViewAlbums from "./components/viewAlbums/viewAlbums.Component";
+import UploadPictures from "./components/UploadPictures/UploadPictures.Component";
+import { FaArrowCircleUp } from "react-icons/fa";
 
 function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
@@ -16,8 +18,6 @@ function App() {
     taken: today,
   };
 
-  console.log(dateObject);
-
   const date = useRef(dateObject);
   const [datePicked, setDatePicked] = useState(dateObject);
 
@@ -25,9 +25,7 @@ function App() {
   const [isSearchPic, setIsSearchPic] = useState(true); // defaults to search mode
   const [isUploadPic, setIsUploadPic] = useState(false);
 
-  const [albums, setAlbums] = useState([]);
-
-  // Helper function to change mode
+  // Helper function to change Picture mode
   function updateSetSearchPic() {
     if (!isSearchPic) {
       setIsSearchPic(true);
@@ -35,13 +33,35 @@ function App() {
     setIsUploadPic(false);
   }
 
-  // Helper function to change mode
+  // Helper function to change Picture mode
   function updateSetIsUploadPic() {
     if (!isUploadPic) {
       setIsUploadPic(true);
     }
     setIsSearchPic(false);
   }
+
+  // Initializes albums for searchPic state
+  const [albums, setAlbums] = useState([]);
+
+  // On upload 2 possibilities are given create new spot or use existing
+  const [isExistingSpot, setIsExistingSpot] = useState(true);
+  const [isNewSpot, setIsNewSpot] = useState(false);
+
+  // Helper function to change Spot mode
+  function updateSetExistingSpot() {
+    setIsExistingSpot(true);
+    setIsNewSpot(false);
+  }
+
+  // Helper function to change Spot mode
+  function updateSetNewSpot() {
+    setIsNewSpot(true);
+    setIsExistingSpot(false);
+  }
+
+  // Google Map spot-marker-created state in upload mode
+  const spotCreated = useRef(null);
 
   return (
     <>
@@ -75,34 +95,34 @@ function App() {
                   isSearchPic ? "border-tertiary" : "border-secondary"
                 }`}
               >
-                <GMap
-                  place={addressPlaceSelected}
-                  setAddressPlaceSelected={setAddressPlaceSelected}
-                  datePicked={datePicked}
-                  setAlbums={setAlbums}
-                  isSearchPic={isSearchPic}
+                <div className="absolute-btn-wrapper">
+                  <div className={`${isNewSpot ? "horizontal-center-btn z-10" : "hidden"}`}>
+                    <button className="bg-secondary py-4 px-8 rounded font-semibold text-neutralW">
+                      Save Spot
+                    </button>
+                    <FaArrowCircleUp size="3em" className="text-secondary mt-2 mx-auto animate-pulse"/>
+                  </div>
+                  <GMap
+                    place={addressPlaceSelected}
+                    setAddressPlaceSelected={setAddressPlaceSelected}
+                    datePicked={datePicked}
+                    setAlbums={setAlbums}
+                    isSearchPic={isSearchPic}
+                    isExistingSpot={isExistingSpot}
+                    isNewSpot={isNewSpot}
+                    spotCreated={spotCreated}
+                  />
+                </div>
+              </div>
+              {isSearchPic ? (
+                <ViewAlbums albums={albums} />
+              ) : (
+                <UploadPictures
+                  updateSetExistingSpot={updateSetExistingSpot}
+                  updateSetNewSpot={updateSetNewSpot}
+                  isExistingSpot={isExistingSpot}
                 />
-              </div>
-              <div
-                className={`${
-                  isSearchPic ? "bg-tertiary" : "bg-secondary"
-                } flex flex-wrap p-4 content-between`}
-              >
-                {albums.map((album) => {
-                  console.log("album: ", album);
-                  return (
-                    <Link
-                      to={`album/${album.id}`}
-                      className="w-5/12 border border-neutralB rounded py-8"
-                    >
-                      <div className="text-center w-full">{album.name}</div>
-                      <div className="text-center w-full">
-                        {album.takenAt.split("T")[0]}
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
+              )}
             </div>
           </div>
         </main>

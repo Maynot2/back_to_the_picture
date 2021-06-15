@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import  { Redirect } from 'react-router-dom'
+// import  { Redirect } from 'react-router-dom'
 
 function ModeChoice({
   updateSetSearchPic,
@@ -34,12 +34,11 @@ function ModeChoice({
           }`}
           onClick={() => {
             if (!isAuthenticated) {
-              alert("Please connect")
+              alert("Please connect");
             } else {
               updateSetIsUploadPic();
               setAlbums([]);
             }
-            
           }}
         >
           Upload Pictures
