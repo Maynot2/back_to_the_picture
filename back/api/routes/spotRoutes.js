@@ -66,7 +66,7 @@ module.exports = function(router) {
 
   
 
-  router.post("/api/spots/create", async (req, res) => {
+  router.post("/api/spots", async (req, res) => {
     // const errors = validationResult(req);
     // if (!errors.isEmpty()) {
     //   throw Error;
@@ -77,8 +77,9 @@ module.exports = function(router) {
       const createdSpot = await Spot.create({
         name,
         latitude,
-        longitude
+        longitude,
       });
+      console.log('->', createdSpot)
       res.status(201).json({spot: createdSpot});
     } catch (error) {
       res.status(422).send(

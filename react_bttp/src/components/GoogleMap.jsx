@@ -122,7 +122,7 @@ const GMap = (props) => {
         }
         const takenAt = props.datePicked.taken.toISOString().split("T")[0];
 
-        const url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
+        const url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${"2021-06-16"}`;
 
         createMarkersCluster(url);
       }

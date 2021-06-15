@@ -5,7 +5,7 @@ import GMap from "./components/GoogleMap";
 import ModeChoice from "./components/ModeChoice/ModeChoice.Component";
 import ViewAlbums from "./components/viewAlbums/viewAlbums.Component";
 import UploadPictures from "./components/UploadPictures/UploadPictures.Component";
-import { FaArrowCircleUp } from "react-icons/fa";
+import SubmitSpot from "./components/SubmitSpot/SubmitSpot.Component";
 
 function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
@@ -63,6 +63,9 @@ function App() {
   // Google Map spot-marker-created state in upload mode
   const spotCreated = useRef(null);
 
+  // Spot ID for newly created spot in upload mode
+  const spotID = useRef(null);
+
   return (
     <>
       <div className="bg-primary">
@@ -96,12 +99,12 @@ function App() {
                 }`}
               >
                 <div className="absolute-btn-wrapper">
-                  <div className={`${isNewSpot ? "horizontal-center-btn z-10" : "hidden"}`}>
-                    <button className="bg-secondary py-4 px-8 rounded font-semibold text-neutralW">
-                      Save Spot
-                    </button>
-                    <FaArrowCircleUp size="3em" className="text-secondary mt-2 mx-auto animate-pulse"/>
-                  </div>
+                  <SubmitSpot
+                    isNewSpot={isNewSpot}
+                    spotCreated={spotCreated}
+                    spotID={spotID}
+                    updateSetExistingSpot={updateSetExistingSpot}
+                  />
                   <GMap
                     place={addressPlaceSelected}
                     setAddressPlaceSelected={setAddressPlaceSelected}
