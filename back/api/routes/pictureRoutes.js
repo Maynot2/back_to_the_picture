@@ -1,4 +1,5 @@
 const Picture = require("../models").pictures;
+const Spot = require("../models").spots;
 const { validationResult } = require('express-validator');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;

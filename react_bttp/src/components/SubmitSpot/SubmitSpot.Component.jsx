@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import SubmitForm from "../SubmitForm/SubmitForm.Component";
 // import { FaArrowCircleUp } from "react-icons/fa";
 
 function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
@@ -13,8 +14,8 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
           if (spotCreated.current && spotName) {
             const lat = spotCreated.current.internalPosition.lat();
             const lng = spotCreated.current.internalPosition.lng();
-            console.log('lat marker :', Number(lat.toFixed(4)))
-            console.log('lng marker :', lng)
+            console.log("lat marker :", Number(lat.toFixed(4)));
+            console.log("lng marker :", lng);
 
             const requestOptions = {
               method: "POST",
@@ -28,7 +29,7 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
             fetch("http://localhost:5000/api/spots", requestOptions)
               .then((response) => response.json())
               .then((newSpot) => {
-                spotCreated.current = null
+                spotCreated.current = null;
                 spotID.current = newSpot.spot.id;
                 updateSetExistingSpot();
               });
@@ -39,19 +40,7 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
           }
         }}
       >
-        <input
-          className="rounded mb-2 border-solid border-2 border-neutralB"
-          type="text"
-          placeholder="spot name"
-          value={spotName}
-          onChange={(e) => setSpotName(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="mx-auto bg-secondary py-4 px-8 rounded font-semibold text-neutralW"
-        >
-          Save Spot
-        </button>
+        <SubmitForm name={spotName} set={setSpotName} label={"spot"} />
       </form>
       {/* <FaArrowCircleUp size="3em" className="text-secondary mt-2 mx-auto animate-pulse"/> */}
     </div>

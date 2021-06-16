@@ -45,8 +45,8 @@ function App() {
   const [albums, setAlbums] = useState([]);
 
   // On upload 2 possibilities are given create new spot or use existing
-  const [isExistingSpot, setIsExistingSpot] = useState(false);
-  const [isNewSpot, setIsNewSpot] = useState(false);
+  const [isExistingSpot, setIsExistingSpot] = useState(null);
+  const [isNewSpot, setIsNewSpot] = useState(null);
 
   // Helper function to change Spot mode
   function updateSetExistingSpot() {
@@ -128,8 +128,8 @@ function App() {
                 <ViewAlbums albums={albums} />
               ) : (
                 <UploadPictures
-                  updateSetExistingSpot={updateSetExistingSpot}
-                  updateSetNewSpot={updateSetNewSpot}
+                  setIsExistingSpot={setIsExistingSpot}
+                  setIsNewSpot={setIsNewSpot}
                   isExistingSpot={isExistingSpot}
                   spotID={spotID}
                   spotSelectedID={spotSelectedID}
