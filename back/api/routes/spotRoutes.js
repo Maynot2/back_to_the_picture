@@ -13,7 +13,9 @@ module.exports = function(router) {
     await Spot.sync();
 
     try {
-      const spots = await Spot.findAll();
+      const spots = await Spot.findAll({
+        include: Album
+      });
       res.json(spots);
     } catch (error) {
       res.json(error);
@@ -22,7 +24,7 @@ module.exports = function(router) {
   router.get("/api/spots", async (req, res) => {
     // min/max date format: yyyy-mm-dd
 
-    await Spot.sync(); 
+    await Spot.sync();
     let args = req.query
     let conditionQuery = {}
     if ('min_date' in req.query && 'max_date' in req.query)

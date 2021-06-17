@@ -67,13 +67,14 @@ function App() {
   const spotID = useRef(null);
 
   // Spot id of the selected marker in upload mode
-  const spotSelectedID = useRef(null)
+  const spotSelectedObject = useRef({})
 
   // Image upload states
   const [imgUrl, setImgUrl] = useState("");
   const [imgUrlSuccess, setImgUrlSuccess] = useState(false);
-
-
+  if (isSearchPic) {
+    spotID.current = null;
+  }
   return (
     <>
       <div className="bg-primary">
@@ -90,6 +91,7 @@ function App() {
               isSearchPic={isSearchPic}
               isUploadPic={isUploadPic}
               setAlbums={setAlbums}
+              spotSelectedObject={spotSelectedObject}
             />
             <FilterSearch
               isSearchPic={isSearchPic}
@@ -124,7 +126,7 @@ function App() {
                     spotCreated={spotCreated}
                     isUploadPic={isUploadPic}
                     spotID={spotID}
-                    spotSelectedID={spotSelectedID}
+                    spotSelectedObject={spotSelectedObject}
                   />
                 </div>
               </div>
@@ -136,7 +138,7 @@ function App() {
                   setIsNewSpot={setIsNewSpot}
                   isExistingSpot={isExistingSpot}
                   spotID={spotID}
-                  spotSelectedID={spotSelectedID}
+                  spotSelectedObject={spotSelectedObject}
                   datePicked={datePicked}
                   isNewSpot={isNewSpot}
                   imgUrl={imgUrl}

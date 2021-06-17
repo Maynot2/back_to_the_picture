@@ -28,15 +28,11 @@ function Uploader({ url, success, setUrl, setSuccess }) {
         setUrl(url);
         console.log("Recieved a signed request " + signedRequest);
 
-        console.log(file);
-
         const requestOptions = {
           method: "PUT",
           headers: { "Content-Type": fileType },
           body: file,
         };
-
-        console.log(requestOptions);
 
         fetch(signedRequest, requestOptions)
           .then(() => {
@@ -48,7 +44,6 @@ function Uploader({ url, success, setUrl, setSuccess }) {
           });
       })
       .catch((error) => {
-        console.log(error);
         alert(JSON.stringify(error));
       });
   }

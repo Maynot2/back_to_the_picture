@@ -50,6 +50,7 @@ const GMap = (props) => {
             map: googleMap.current,
             albums: obj.albums,
             id: obj.id,
+            name: obj.name,
             icon: {
               url: undefined,
             },
@@ -87,7 +88,9 @@ const GMap = (props) => {
               // Save the id of the selected spot in upload mode
               if (props.isExistingSpot){
                  console.log('Spot selected id', this.id)
-                 props.spotSelectedID.current = this.id
+                 props.spotSelectedObject.current['id'] = this.id
+                 props.spotSelectedObject.current['name'] = this.name
+
               }
               const takenAt = props.datePicked.taken;
               const albums = [];
@@ -109,7 +112,6 @@ const GMap = (props) => {
 
   useEffect(() => {
     googleMap.current = initGoogleMap(props);
-
     /** Event map changed by the user */
     window.google.maps.event.addListener(
       googleMap.current,
@@ -125,17 +127,19 @@ const GMap = (props) => {
         if (props.isSearchPic) {
           minDate = props.datePicked.from.toISOString().split("T")[0];
           maxDate = props.datePicked.to.toISOString().split("T")[0];
-        } else {
-          minDate = new Date(0).toISOString().split("T")[0];
-          maxDate = new Date().toISOString().split("T")[0];
+          console.log(maxDate)
         }
+          // } else {
+        //   minDate = new Date(0).toISOString().split("T")[0];
+        //   maxDate = new Date().toISOString().split("T")[0];
+        // }
         const takenAt = props.datePicked.taken.toISOString().split("T")[0];
         let url;
         // the case in upload mode, fetch all spots without filtering with date
         if (props.isUploadPic) {
           url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}`;
         } else {
-          url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${"2021-06-16"}`;
+          url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
         }
   
         createMarkersCluster(url);

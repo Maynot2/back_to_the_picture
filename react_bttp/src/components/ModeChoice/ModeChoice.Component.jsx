@@ -8,6 +8,7 @@ function ModeChoice({
   updateSetIsUploadPic,
   isUploadPic,
   setAlbums,
+  spotSelectedObject
 }) {
   const { isAuthenticated } = useAuth0();
   return (
@@ -38,6 +39,7 @@ function ModeChoice({
             } else {
               updateSetIsUploadPic();
               setAlbums([]);
+              spotSelectedObject.current = {};
             }
           }}
         >

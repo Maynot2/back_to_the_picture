@@ -16,7 +16,7 @@ function SearchButton({
           setAddress(place);
           // Shallow copy of date object to force rerendering because original passed object comes from useRef()
           const dateCopy = Object.assign({}, date.current);
-          console.log(dateCopy);
+          // console.log(dateCopy);
           setDatePicked(dateCopy);
           setAlbums([]);
         }}

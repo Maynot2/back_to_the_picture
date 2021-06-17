@@ -5,7 +5,7 @@ function ViewAlbums({ albums }) {
   return (
     <div className={"bg-tertiary flex flex-wrap p-4 content-between"}>
       {albums.map((album) => {
-        console.log("album: ", album);
+        // console.log("album: ", album);
         return (
           <Link
             to={`album/${album.id}`}

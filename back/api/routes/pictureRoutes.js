@@ -36,10 +36,10 @@ module.exports = function(router) {
   });
 
   router.post("/api/pictures/upload", async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw Error;
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   throw Error;
+    // }
     const { albumId, url } = req.body;
     await Spot.sync();
     try {

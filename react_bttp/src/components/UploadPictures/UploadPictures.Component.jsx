@@ -38,7 +38,7 @@ function UploadMode({ setIsNewSpot, setIsExistingSpot, isExistingSpot }) {
 function AddPictures({
   setIsNewSpot,
   setIsExistingSpot,
-  spotSelectedID,
+  spotSelectedObject,
   datePicked,
   imgUrl,
   imgUrlSuccess,
@@ -61,8 +61,8 @@ function AddPictures({
         </button>
         Create album and add picture
         <div>
-          {spotSelectedID.current
-            ? `Spot ${spotSelectedID.current} selected`
+          {spotSelectedObject.current['id'] !== undefined
+            ? `Spot ${spotSelectedObject.current['name']} selected`
             : "No spot selected"}
           <Uploader
             url={imgUrl}
@@ -75,44 +75,58 @@ function AddPictures({
             onSubmit={(e) => {
               e.preventDefault();
               const dateTakenAtAlbum = datePicked.taken;
-              if (!spotSelectedID.current) {
+              if (spotSelectedObject.current['id'] == undefined) {
                 alert("Please select a spot to create an album");
               } else {
-                const requestOptions = {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    name: albumName,
-                    userId: 1,
-                    spotId: spotSelectedID.current,
-                    takenAt: dateTakenAtAlbum.toISOString().split("T")[0],
-                  }),
-                };
-                // Create album
-                fetch("http://localhost:5000/api/albums", requestOptions)
-                  .then((response) => {
-                    return response.json();
-                  })
-                  .then((res) => {
-                    albumIdCreated.current = res.album.id;
-                  });
-                const options = {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    albumId: albumIdCreated.current,
-                    url: imgUrl,
-                  }),
-                };
-                // Add picture to album created
-                fetch(
-                  "http://localhost:5000/api/pictures/upload",
-                  options
-                ).then((response) => {
-                  return response.json();
-                });
-                setIsNewSpot(null);
-                setIsExistingSpot(null);
+                /// Create album and add image only if the user has uploaded the picture
+                if (imgUrlSuccess) {
+                  // Check an album name has been send
+                  if (albumName) {
+                    const requestOptions = {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        name: albumName,
+                        userId: 1,
+                        spotId: spotSelectedObject.current['id'],
+                        takenAt: dateTakenAtAlbum.toISOString().split("T")[0],
+                      }),
+                    };
+                    // Create album
+                    fetch("http://localhost:5000/api/albums", requestOptions)
+                      .then((response) => {
+                        return response.json();
+                      })
+                      .then((res) => {
+                        albumIdCreated.current = res.album.id;
+                        const options = {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({
+                            albumId: albumIdCreated.current,
+                            url: imgUrl,
+                          }),
+                        };
+                        // Add picture to album created
+                        fetch(
+                          "http://localhost:5000/api/pictures/upload",
+                          options
+                        ).then((response) => {
+                          return response.json();
+                        }).catch((err) => {
+                          alert(err)
+                        });
+                        setIsNewSpot(null);
+                        setIsExistingSpot(null);
+                        setImgUrl("");
+                        setImgUrlSuccess(false);
+                      });
+                  } else {
+                    alert('please enter an album name')
+                  }
+                } else {
+                  alert('please upload a picture before')
+                }
               }
             }}
           >
@@ -128,7 +142,7 @@ function UploadPictures({
   setIsNewSpot,
   isExistingSpot,
   spotID,
-  spotSelectedID,
+  spotSelectedObject,
   datePicked,
   imgUrl,
   imgUrlSuccess,
@@ -140,7 +154,7 @@ function UploadPictures({
       {isExistingSpot || (isExistingSpot && spotID.current) ? (
         <AddPictures
           datePicked={datePicked}
-          spotSelectedID={spotSelectedID}
+          spotSelectedObject={spotSelectedObject}
           setIsExistingSpot={setIsExistingSpot}
           setIsNewSpot={setIsNewSpot}
           imgUrl={imgUrl}
