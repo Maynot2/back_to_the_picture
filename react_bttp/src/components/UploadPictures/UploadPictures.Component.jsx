@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import SubmitForm from "../SubmitForm/SubmitForm.Component";
+import Uploader from "./Uploader.Component";
 
 function UploadMode({ setIsNewSpot, setIsExistingSpot, isExistingSpot }) {
   return (
@@ -39,6 +40,10 @@ function AddPictures({
   setIsExistingSpot,
   spotSelectedID,
   datePicked,
+  imgUrl,
+  imgUrlSuccess,
+  setImgUrl,
+  setImgUrlSuccess,
 }) {
   const [albumName, setAlbumName] = useState(null);
   let albumIdCreated = useRef(null);
@@ -59,6 +64,12 @@ function AddPictures({
           {spotSelectedID.current
             ? `Spot ${spotSelectedID.current} selected`
             : "No spot selected"}
+          <Uploader
+            url={imgUrl}
+            success={imgUrlSuccess}
+            setSuccess={setImgUrlSuccess}
+            setUrl={setImgUrl}
+          />
           <form
             className="flex flex-col bg-gray-500 rounded p-2 border-solid border-2 border-neutralB"
             onSubmit={(e) => {
@@ -90,7 +101,7 @@ function AddPictures({
                   headers: { "Content-Type": "application/json" },
                   body: JSON.stringify({
                     albumId: albumIdCreated.current,
-                    url: "https://images.unsplash.com/photo-1622601803978-1addc5aa109a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=376&q=80",
+                    url: imgUrl,
                   }),
                 };
                 // Add picture to album created
@@ -119,6 +130,10 @@ function UploadPictures({
   spotID,
   spotSelectedID,
   datePicked,
+  imgUrl,
+  imgUrlSuccess,
+  setImgUrl,
+  setImgUrlSuccess,
 }) {
   return (
     <>
@@ -128,6 +143,10 @@ function UploadPictures({
           spotSelectedID={spotSelectedID}
           setIsExistingSpot={setIsExistingSpot}
           setIsNewSpot={setIsNewSpot}
+          imgUrl={imgUrl}
+          setImgUrl={setImgUrl}
+          setImgUrlSuccess={setImgUrlSuccess}
+          imgUrlSuccess={imgUrlSuccess}
         />
       ) : (
         <UploadMode

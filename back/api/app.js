@@ -14,6 +14,7 @@ require("./routes/userRoutes")(app);
 require("./routes/spotRoutes")(app);
 require("./routes/albumRoutes")(app);
 require("./routes/pictureRoutes")(app);
+require("./routes/s3BucketRoute")(app);
 
 // db.sequelize.sync().then((res) => {
     app.listen(port, () => console.log(`Server started on ${port}`));

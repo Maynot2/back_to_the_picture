@@ -69,6 +69,10 @@ function App() {
   // Spot id of the selected marker in upload mode
   const spotSelectedID = useRef(null)
 
+  // Image upload states
+  const [imgUrl, setImgUrl] = useState("");
+  const [imgUrlSuccess, setImgUrlSuccess] = useState(false);
+
 
   return (
     <>
@@ -134,6 +138,11 @@ function App() {
                   spotID={spotID}
                   spotSelectedID={spotSelectedID}
                   datePicked={datePicked}
+                  isNewSpot={isNewSpot}
+                  imgUrl={imgUrl}
+                  setImgUrl={setImgUrl}
+                  imgUrlSuccess={imgUrlSuccess}
+                  setImgUrlSuccess={setImgUrlSuccess}
                 />
               )}
             </div>
