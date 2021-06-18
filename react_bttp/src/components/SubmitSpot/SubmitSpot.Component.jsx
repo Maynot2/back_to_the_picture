@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import SubmitForm from "../SubmitForm/SubmitForm.Component";
+import SubmitFormSpot from "./SubmitFormSpot.Component";
 // import { FaArrowCircleUp } from "react-icons/fa";
 
 function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
@@ -40,7 +40,7 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
           }
         }}
       >
-        <SubmitForm name={spotName} set={setSpotName} label={"spot"} />
+        <SubmitFormSpot name={spotName} set={setSpotName} />
       </form>
       {/* <FaArrowCircleUp size="3em" className="text-secondary mt-2 mx-auto animate-pulse"/> */}
     </div>

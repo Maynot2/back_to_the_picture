@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import SubmitForm from "../SubmitForm/SubmitForm.Component";
+import SubmitFormAlbum from "./SubmitFormAlbum.Component";
 import Uploader from "./Uploader.Component";
 
 function UploadMode({ setIsNewSpot, setIsExistingSpot, isExistingSpot }) {
@@ -58,8 +58,10 @@ function AddPictures({
         <div className="flex mb-4">
           <button
             className={`${
-              isAddPicture ? "scale-110" : ""
-            } flex-1 p-2 bg-primary text-neutralW text-center font-semibold rounded mr-2 transform`}
+              isAddPicture
+                ? "scale-100 bg-primary text-neutralW shadow-xl"
+                : "border-solid border-4 border-neutralW scale-90 text-neutralW hover:scale-100 hover:shadow-xl"
+            } flex-1 p-2 text-center font-semibold rounded mr-2 transform transition duration-300`}
             onClick={() => {
               setIsNewAlbum(false);
               setIsAddPicture(true);
@@ -69,8 +71,10 @@ function AddPictures({
           </button>
           <button
             className={`${
-              isNewAlbum ? "scale-110" : ""
-            } flex-1 p-2 bg-primary text-neutralW text-center font-semibold rounded mr-2 transform`}
+              isNewAlbum
+                ? "scale-100 bg-primary text-neutralW shadow-xl"
+                : "border-solid border-4 border-neutralW scale-90 text-neutralW hover:scale-100 hover:shadow-xl"
+            } flex-1 p-2 text-center font-semibold rounded mr-2 transform transition duration-300`}
             onClick={() => {
               setIsNewAlbum(true);
               setIsAddPicture(false);
@@ -91,11 +95,11 @@ function AddPictures({
         <div>
           <div className="mb-4">
             {spotSelectedObject.current["id"] !== undefined
-              ? `Spot ${spotSelectedObject.current["name"]} selected`
+              ? `${spotSelectedObject.current["name"]} selected`
               : "No spot selected"}
           </div>
           <select
-            className={`${isNewAlbum ? "hidden" : "visible"}`}
+            className={`${isNewAlbum ? "hidden" : "visible p-4 rounded-full"}`}
             name="albums"
             id="album-select"
             value={selectedAlbum}
@@ -118,7 +122,7 @@ function AddPictures({
             setUrl={setImgUrl}
           />
           <form
-            className="flex flex-col bg-gray-500 rounded p-2 border-solid border-2 border-neutralB"
+            className="flex flex-col bg-primary rounded p-2 border-solid border-2 border-neutralB"
             onSubmit={(e) => {
               e.preventDefault();
               const dateTakenAtAlbum = datePicked.taken;
@@ -202,10 +206,9 @@ function AddPictures({
               }
             }}
           >
-            <SubmitForm
+            <SubmitFormAlbum
               name={albumName}
               set={setAlbumName}
-              label={"album"}
               isNewAlbum={isNewAlbum}
             />
           </form>
