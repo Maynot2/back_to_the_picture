@@ -70,8 +70,9 @@ function App() {
   const spotSelectedObject = useRef({})
 
   // Image upload states
-  const [imgUrl, setImgUrl] = useState("");
+  const imgUrl = useRef([]);
   const [imgUrlSuccess, setImgUrlSuccess] = useState(false);
+  console.log(imgUrl.current)
   if (isSearchPic) {
     spotID.current = null;
   }
@@ -142,7 +143,6 @@ function App() {
                   datePicked={datePicked}
                   isNewSpot={isNewSpot}
                   imgUrl={imgUrl}
-                  setImgUrl={setImgUrl}
                   imgUrlSuccess={imgUrlSuccess}
                   setImgUrlSuccess={setImgUrlSuccess}
                   albums={albums}

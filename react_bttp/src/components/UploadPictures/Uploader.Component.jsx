@@ -57,24 +57,27 @@ function Uploader({ url, success, setSuccess }) {
       <div className="">
         <h3>Upload a picture here</h3>
         {success ? <SuccessMsg url={url} /> : null}
-        <input
-          className="mt-4"
-          onChange={() => {
-            url.current = []
-            setSuccess(false);
-          }}
-          ref={(ref) => {
-            setUploadInput(ref);
-          }}
-          type="file"
-          multiple
-        />
-        <button
-          className="py-2 px-5 mt-4 border-solid border-2 border-neutralB rounded-full"
-          onClick={handleUpload}
-        >
-          UPLOAD
-        </button>
+        <div className="mt-4 overflow-x-hidden">
+          <input
+            onChange={() => {
+              url.current = [];
+              setSuccess(false);
+            }}
+            ref={(ref) => {
+              setUploadInput(ref);
+            }}
+            type="file"
+            multiple
+          />
+        </div>
+        <div>
+          <button
+            className="py-2 px-5 mt-4 font-semibold border-solid border-2 border-neutralB rounded-full"
+            onClick={handleUpload}
+          >
+            Upload
+          </button>
+        </div>
       </div>
     </div>
   );
