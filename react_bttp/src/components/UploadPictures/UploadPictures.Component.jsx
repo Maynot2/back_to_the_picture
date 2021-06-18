@@ -42,9 +42,8 @@ function AddPictures({
   datePicked,
   imgUrl,
   imgUrlSuccess,
-  setImgUrl,
   setImgUrlSuccess,
-  albums,
+  albums
 }) {
   const [albumName, setAlbumName] = useState(null);
   let albumIdCreated = useRef(null);
@@ -115,7 +114,6 @@ function AddPictures({
             url={imgUrl}
             success={imgUrlSuccess}
             setSuccess={setImgUrlSuccess}
-            setUrl={setImgUrl}
           />
           <form
             className="flex flex-col bg-gray-500 rounded p-2 border-solid border-2 border-neutralB"
@@ -147,51 +145,59 @@ function AddPictures({
                       })
                       .then((res) => {
                         albumIdCreated.current = res.album.id;
-                        const options = {
-                          method: "POST",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({
-                            albumId: albumIdCreated.current,
-                            url: imgUrl,
-                          }),
-                        };
+                        imgUrl.current.map((url) => {
+                          const options = {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                              albumId: albumIdCreated.current,
+                              url: url,
+                            }),
+                          };
+                          
+                            // Add picture to album created
+                            fetch(
+                              "http://localhost:5000/api/pictures/upload",
+                              options
+                            ).then((response) => {
+                              return response.json();
+                            }).catch((err) => {
+                              alert(err)
+                            });
+                            setIsNewSpot(null);
+                            setIsExistingSpot(null);
+                            // setImgUrl("");
+                            setImgUrlSuccess(false);
+                            imgUrl.current = [];
+                          });
+                        });
+                  } else if (isAddPicture) {
+                    console.log("rentre stp!!!");
+                    imgUrl.current.map((url) => {
+                      const options = {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                          albumId: selectedAlbum,
+                          url: url,
+                        }),
+                      };
+                      
                         // Add picture to album created
                         fetch(
                           "http://localhost:5000/api/pictures/upload",
                           options
-                        )
-                          .then((response) => {
-                            return response.json();
-                          })
-                          .catch((err) => {
-                            alert(err);
-                          });
-                        setIsNewSpot(null);
-                        setIsExistingSpot(null);
-                        setImgUrl("");
-                        setImgUrlSuccess(false);
-                      });
-                  } else if (isAddPicture) {
-                    console.log("rentre stp!!!");
-                    const options = {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        albumId: selectedAlbum,
-                        url: imgUrl,
-                      }),
-                    };
-                    // Add picture to album created
-                    fetch("http://localhost:5000/api/pictures/upload", options)
-                      .then((response) => {
-                        return response.json();
-                      })
-                      .catch((err) => {
-                        alert(err);
-                      });
+                        ).then((response) => {
+                          return response.json();
+                        }).catch((err) => {
+                          alert(err)
+                        });
+                        
+                    });
                     setIsNewSpot(null);
                     setIsExistingSpot(null);
-                    setImgUrl("");
+                    imgUrl.current = [];
+                    // setImgUrl("");
                     setImgUrlSuccess(false);
                   } else {
                     alert("please enter an album name");
@@ -223,9 +229,8 @@ function UploadPictures({
   datePicked,
   imgUrl,
   imgUrlSuccess,
-  setImgUrl,
   setImgUrlSuccess,
-  albums,
+  albums
 }) {
   return (
     <>
@@ -236,7 +241,6 @@ function UploadPictures({
           setIsExistingSpot={setIsExistingSpot}
           setIsNewSpot={setIsNewSpot}
           imgUrl={imgUrl}
-          setImgUrl={setImgUrl}
           setImgUrlSuccess={setImgUrlSuccess}
           imgUrlSuccess={imgUrlSuccess}
           albums={albums}

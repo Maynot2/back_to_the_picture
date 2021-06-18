@@ -1,51 +1,55 @@
 import React, { useState } from "react";
 import SuccessMsg from "./SuccessMsg.Component";
 
-function Uploader({ url, success, setUrl, setSuccess }) {
+function Uploader({ url, success, setSuccess }) {
   const [uploadInput, setUploadInput] = useState(null);
 
   function handleUpload() {
-    let file = uploadInput.files[0];
-    // Split the filename to get the name and type
-    let fileParts = uploadInput.files[0].name.split(".");
-    let fileName = fileParts[0];
-    let fileType = fileParts[1];
-    console.log("Preparing the upload");
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fileName: fileName + "." + fileType,
-        fileType: fileType,
-      }),
-    };
-    fetch("http://localhost:5000/api/sign_s3", requestOptions)
-      .then((res) => res.json())
-      .then((response) => {
-        var returnData = response.data.returnData;
-        var signedRequest = returnData.signedRequest;
-        var url = returnData.url;
-        setUrl(url);
-        console.log("Recieved a signed request " + signedRequest);
+    // Loop on all pictures added
+    for (const [key, value] of Object.entries(uploadInput.files)) {
+      let file = value;
+      // Split the filename to get the name and type
+      let fileParts = value.name.split(".");
+      let fileName = fileParts[0];
+      let fileType = fileParts[1];
+      console.log("Preparing the upload");
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fileName: fileName + "." + fileType,
+          fileType: fileType,
+        }),
+      };
+      fetch("http://localhost:5000/api/sign_s3", requestOptions)
+        .then((res) => res.json())
+        .then((response) => {
+          var returnData = response.data.returnData;
+          var signedRequest = returnData.signedRequest;
+          var imgUrl = returnData.url;
+          url.current.push(imgUrl);
+          //setUrl(url);
+          console.log("Recieved a signed request " + signedRequest);
 
-        const requestOptions = {
-          method: "PUT",
-          headers: { "Content-Type": fileType },
-          body: file,
-        };
+          const requestOptions = {
+            method: "PUT",
+            headers: { "Content-Type": fileType },
+            body: file,
+          };
 
-        fetch(signedRequest, requestOptions)
-          .then(() => {
-            console.log("Response from s3");
-            setSuccess(true);
-          })
-          .catch((error) => {
-            alert("ERROR " + JSON.stringify(error));
-          });
-      })
-      .catch((error) => {
-        alert(JSON.stringify(error));
-      });
+          fetch(signedRequest, requestOptions)
+            .then(() => {
+              console.log("Response from s3");
+              setSuccess(true);
+            })
+            .catch((error) => {
+              alert("ERROR " + JSON.stringify(error));
+            });
+        })
+        .catch((error) => {
+          alert(JSON.stringify(error));
+        });
+    }
   }
 
   return (
@@ -56,13 +60,14 @@ function Uploader({ url, success, setUrl, setSuccess }) {
         <input
           className="mt-4"
           onChange={() => {
-            setUrl("");
+            url.current = []
             setSuccess(false);
           }}
           ref={(ref) => {
             setUploadInput(ref);
           }}
           type="file"
+          multiple
         />
         <button
           className="py-2 px-5 mt-4 border-solid border-2 border-neutralB rounded-full"
