@@ -3,17 +3,20 @@ import FilterSearch from "./components/FilterSearch/FilterSearch.Component";
 import React, { useState, useRef } from "react";
 import GMap from "./components/GoogleMap";
 import ModeChoice from "./components/ModeChoice/ModeChoice.Component";
-import { Link } from "react-router-dom";
+import ViewAlbums from "./components/viewAlbums/viewAlbums.Component";
+import UploadPictures from "./components/UploadPictures/UploadPictures.Component";
+import SubmitSpot from "./components/SubmitSpot/SubmitSpot.Component";
 
 function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
   const [addressPlaceSelected, setAddressPlaceSelected] = useState(null);
   // Two date selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
-  const today = new Date()
+  const today = new Date();
   const dateObject = {
     from: new Date(new Date().setDate(today.getDate() - 30)),
-    to: today
-  }
+    to: today,
+    taken: today,
+  };
 
   const date = useRef(dateObject);
   const [datePicked, setDatePicked] = useState(dateObject);
@@ -22,9 +25,7 @@ function App() {
   const [isSearchPic, setIsSearchPic] = useState(true); // defaults to search mode
   const [isUploadPic, setIsUploadPic] = useState(false);
 
-  const [albums, setAlbums] = useState([]);
-
-  // Helper function to change mode
+  // Helper function to change Picture mode
   function updateSetSearchPic() {
     if (!isSearchPic) {
       setIsSearchPic(true);
@@ -32,7 +33,7 @@ function App() {
     setIsUploadPic(false);
   }
 
-  // Helper function to change mode
+  // Helper function to change Picture mode
   function updateSetIsUploadPic() {
     if (!isUploadPic) {
       setIsUploadPic(true);
@@ -40,6 +41,41 @@ function App() {
     setIsSearchPic(false);
   }
 
+  // Initializes albums for searchPic state
+  const [albums, setAlbums] = useState([]);
+
+  // On upload 2 possibilities are given create new spot or use existing
+  const [isExistingSpot, setIsExistingSpot] = useState(null);
+  const [isNewSpot, setIsNewSpot] = useState(null);
+
+  // Helper function to change Spot mode
+  function updateSetExistingSpot() {
+    setIsExistingSpot(true);
+    setIsNewSpot(false);
+  }
+
+  // Helper function to change Spot mode
+  function updateSetNewSpot() {
+    setIsNewSpot(true);
+    setIsExistingSpot(false);
+  }
+
+  // Google Map spot-marker object created in upload mode
+  const spotCreated = useRef(null);
+
+  // Spot ID for newly created spot in upload mode
+  const spotID = useRef(null);
+
+  // Spot id of the selected marker in upload mode
+  const spotSelectedObject = useRef({})
+
+  // Image upload states
+  const imgUrl = useRef([]);
+  const [imgUrlSuccess, setImgUrlSuccess] = useState(false);
+  console.log(imgUrl.current)
+  if (isSearchPic) {
+    spotID.current = null;
+  }
   return (
     <>
       <div className="bg-primary">
@@ -55,6 +91,8 @@ function App() {
               updateSetIsUploadPic={updateSetIsUploadPic}
               isSearchPic={isSearchPic}
               isUploadPic={isUploadPic}
+              setAlbums={setAlbums}
+              spotSelectedObject={spotSelectedObject}
             />
             <FilterSearch
               isSearchPic={isSearchPic}
@@ -63,6 +101,7 @@ function App() {
               setDatePicked={setDatePicked}
               setAddressPlaceSelected={setAddressPlaceSelected}
               addressPlaceSelected={addressPlaceSelected}
+              setAlbums={setAlbums}
             />
             <div className="lg:grid grid-cols-3 gap-8">
               <div
@@ -70,19 +109,45 @@ function App() {
                   isSearchPic ? "border-tertiary" : "border-secondary"
                 }`}
               >
-                <GMap place={addressPlaceSelected} setAddressPlaceSelected={setAddressPlaceSelected} datePicked={datePicked} setAlbums={setAlbums}/>
+                <div className="absolute-btn-wrapper">
+                  <SubmitSpot
+                    isNewSpot={isNewSpot}
+                    spotCreated={spotCreated}
+                    spotID={spotID}
+                    updateSetExistingSpot={updateSetExistingSpot}
+                  />
+                  <GMap
+                    place={addressPlaceSelected}
+                    setAddressPlaceSelected={setAddressPlaceSelected}
+                    datePicked={datePicked}
+                    setAlbums={setAlbums}
+                    isSearchPic={isSearchPic}
+                    isExistingSpot={isExistingSpot}
+                    isNewSpot={isNewSpot}
+                    spotCreated={spotCreated}
+                    isUploadPic={isUploadPic}
+                    spotID={spotID}
+                    spotSelectedObject={spotSelectedObject}
+                  />
+                </div>
               </div>
-              <div className={`${isSearchPic ? "bg-tertiary" : "bg-secondary"} flex flex-wrap p-4 content-between`}>
-                {albums.map((album) => {
-                  console.log("album: ", album);
-                  return (
-                    <Link to={`album/${album.id}`} className="w-5/12 border border-neutralB rounded py-8">
-                      <div className="text-center w-full">{album.name}</div>
-                      <div className="text-center w-full">{album.takenAt.split("T")[0]}</div>
-                    </Link>
-                  );
-                })}
-              </div>
+              {isSearchPic ? (
+                <ViewAlbums albums={albums} />
+              ) : (
+                <UploadPictures
+                  setIsExistingSpot={setIsExistingSpot}
+                  setIsNewSpot={setIsNewSpot}
+                  isExistingSpot={isExistingSpot}
+                  spotID={spotID}
+                  spotSelectedObject={spotSelectedObject}
+                  datePicked={datePicked}
+                  isNewSpot={isNewSpot}
+                  imgUrl={imgUrl}
+                  imgUrlSuccess={imgUrlSuccess}
+                  setImgUrlSuccess={setImgUrlSuccess}
+                  albums={albums}
+                />
+              )}
             </div>
           </div>
         </main>

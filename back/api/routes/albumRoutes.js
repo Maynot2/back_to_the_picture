@@ -40,7 +40,6 @@ module.exports = function(router) {
       const albums = await Album.findAll({
         where: { name: req.params.name }
       });
-      console.log(albums.lenght);
       if (albums.length === 0) {
         throw Error;
       }
@@ -59,7 +58,6 @@ module.exports = function(router) {
       throw Error;
     }
     const { name, userId, spotId, takenAt } = req.body; 
-    console.log(req.body);
     await Album.sync();
     try {
       const createdAlbum = await Album.create({

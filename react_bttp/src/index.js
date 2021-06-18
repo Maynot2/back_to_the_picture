@@ -18,6 +18,7 @@ ReactDOM.render(
             <Route exact path="/">
               <App />            
             </Route>
+            
             <Route path="/album/:id" render={(props) => {
               return <Albums id={props.match.params.id}/>;
               }

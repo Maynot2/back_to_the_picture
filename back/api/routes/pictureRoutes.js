@@ -1,4 +1,5 @@
 const Picture = require("../models").pictures;
+const Spot = require("../models").spots;
 const { validationResult } = require('express-validator');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
@@ -35,12 +36,11 @@ module.exports = function(router) {
   });
 
   router.post("/api/pictures/upload", async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw Error;
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   throw Error;
+    // }
     const { albumId, url } = req.body;
-    console.log(req.body);
     await Spot.sync();
     try {
       const createdPicture = await Picture.create({

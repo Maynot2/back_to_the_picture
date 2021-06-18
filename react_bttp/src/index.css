@@ -43,3 +43,14 @@
   left: 0;
   right: 0;
 }
+
+.absolute-btn-wrapper {
+  position: relative;
+}
+
+.horizontal-center-btn {
+  position: absolute;
+  top: 13.5%;
+  right: 50%;
+  transform: translate(50%, -50%);
+}
