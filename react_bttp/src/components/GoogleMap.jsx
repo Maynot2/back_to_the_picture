@@ -35,7 +35,7 @@ const GMap = (props) => {
         // Initialize markers
         const markers = spots.map((obj) => {
           let albums = [];
-          //Check albums for each spot 
+          //Check albums for each spot
           obj.albums.forEach((album) => {
             albums = [];
             if (
@@ -59,11 +59,14 @@ const GMap = (props) => {
           if (albums.length > 0 && !props.isSearchPic) {
             marker["icon"]["url"] =
               "http://maps.google.com/mapfiles/ms/icons/yellow-dot.png";
-          } else if (!props.isSearchPic && !(props.spotID.current === marker.id)) {
+          } else if (
+            !props.isSearchPic &&
+            !(props.spotID.current === marker.id)
+          ) {
             marker["icon"]["url"] =
               "http://maps.google.com/mapfiles/ms/icons/blue-dot.png";
             // Marker purple for the new marker created in upload mode
-          } else if (props.spotID.current === marker.id){
+          } else if (props.spotID.current === marker.id) {
             marker["icon"]["url"] =
               "http://maps.google.com/mapfiles/ms/icons/purple.png";
           }
@@ -81,16 +84,15 @@ const GMap = (props) => {
             tmpObjPositionMarker["lng"] = this.position.lng();
             // Update latitude - Longitude of the map to center on the marker selected to overwrite the search bar entered
             props.setAddressPlaceSelected(tmpObjPositionMarker);
-            // SearchMode 
+            // SearchMode
             if (props.isSearchPic) {
               props.setAlbums(this.albums);
             } else {
               // Save the id of the selected spot in upload mode
-              if (props.isExistingSpot){
-                 console.log('Spot selected id', this.id)
-                 props.spotSelectedObject.current['id'] = this.id
-                 props.spotSelectedObject.current['name'] = this.name
-
+              if (props.isExistingSpot) {
+                console.log("Spot selected id", this.id);
+                props.spotSelectedObject.current["id"] = this.id;
+                props.spotSelectedObject.current["name"] = this.name;
               }
               const takenAt = props.datePicked.taken;
               const albums = [];
@@ -127,9 +129,9 @@ const GMap = (props) => {
         if (props.isSearchPic) {
           minDate = props.datePicked.from.toISOString().split("T")[0];
           maxDate = props.datePicked.to.toISOString().split("T")[0];
-          console.log(maxDate)
+          console.log(maxDate);
         }
-          // } else {
+        // } else {
         //   minDate = new Date(0).toISOString().split("T")[0];
         //   maxDate = new Date().toISOString().split("T")[0];
         // }
@@ -141,7 +143,7 @@ const GMap = (props) => {
         } else {
           url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
         }
-  
+
         createMarkersCluster(url);
       }
     );

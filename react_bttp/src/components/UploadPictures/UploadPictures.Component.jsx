@@ -44,26 +44,73 @@ function AddPictures({
   imgUrlSuccess,
   setImgUrl,
   setImgUrlSuccess,
+  albums,
 }) {
   const [albumName, setAlbumName] = useState(null);
   let albumIdCreated = useRef(null);
+  const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const [isNewAlbum, setIsNewAlbum] = useState(false);
+  const [isAddPicture, setIsAddPicture] = useState(true);
+
   return (
     <>
       <div className={"bg-secondary flex flex-col p-4 content-between"}>
-        <button
-          className="bg-primary text-neutralW"
-          onClick={() => {
-            setIsNewSpot(null);
-            setIsExistingSpot(null);
-          }}
-        >
-          Back
-        </button>
-        Create album and add picture
+        <div className="flex mb-4">
+          <button
+            className={`${
+              isAddPicture ? "scale-110" : ""
+            } flex-1 p-2 bg-primary text-neutralW text-center font-semibold rounded mr-2 transform`}
+            onClick={() => {
+              setIsNewAlbum(false);
+              setIsAddPicture(true);
+            }}
+          >
+            Add Picture to Album
+          </button>
+          <button
+            className={`${
+              isNewAlbum ? "scale-110" : ""
+            } flex-1 p-2 bg-primary text-neutralW text-center font-semibold rounded mr-2 transform`}
+            onClick={() => {
+              setIsNewAlbum(true);
+              setIsAddPicture(false);
+            }}
+          >
+            Create Album
+          </button>
+          <button
+            className="flex-1 p-2 bg-neutralW border-solid border-4 border-primary text-primary text-center font-semibold rounded-full mr-2"
+            onClick={() => {
+              setIsNewSpot(null);
+              setIsExistingSpot(null);
+            }}
+          >
+            Back
+          </button>
+        </div>
         <div>
-          {spotSelectedObject.current['id'] !== undefined
-            ? `Spot ${spotSelectedObject.current['name']} selected`
-            : "No spot selected"}
+          <div className="mb-4">
+            {spotSelectedObject.current["id"] !== undefined
+              ? `Spot ${spotSelectedObject.current["name"]} selected`
+              : "No spot selected"}
+          </div>
+          <select
+            className={`${isNewAlbum ? "hidden" : "visible"}`}
+            name="albums"
+            id="album-select"
+            value={selectedAlbum}
+            onChange={(e) => {
+              setSelectedAlbum(e.target.value);
+            }}
+          >
+            <option disabled selected value>
+              {" "}
+              -- select an album --{" "}
+            </option>
+            {albums.map((album) => {
+              return <option value={album.id}>{album.name}</option>;
+            })}
+          </select>
           <Uploader
             url={imgUrl}
             success={imgUrlSuccess}
@@ -75,20 +122,21 @@ function AddPictures({
             onSubmit={(e) => {
               e.preventDefault();
               const dateTakenAtAlbum = datePicked.taken;
-              if (spotSelectedObject.current['id'] == undefined) {
+              if (spotSelectedObject.current["id"] == undefined) {
                 alert("Please select a spot to create an album");
               } else {
                 /// Create album and add image only if the user has uploaded the picture
                 if (imgUrlSuccess) {
                   // Check an album name has been send
-                  if (albumName) {
+                  if (albumName && isNewAlbum) {
+                    console.log("rentre pas stp!");
                     const requestOptions = {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({
                         name: albumName,
                         userId: 1,
-                        spotId: spotSelectedObject.current['id'],
+                        spotId: spotSelectedObject.current["id"],
                         takenAt: dateTakenAtAlbum.toISOString().split("T")[0],
                       }),
                     };
@@ -111,26 +159,55 @@ function AddPictures({
                         fetch(
                           "http://localhost:5000/api/pictures/upload",
                           options
-                        ).then((response) => {
-                          return response.json();
-                        }).catch((err) => {
-                          alert(err)
-                        });
+                        )
+                          .then((response) => {
+                            return response.json();
+                          })
+                          .catch((err) => {
+                            alert(err);
+                          });
                         setIsNewSpot(null);
                         setIsExistingSpot(null);
                         setImgUrl("");
                         setImgUrlSuccess(false);
                       });
+                  } else if (isAddPicture) {
+                    console.log("rentre stp!!!");
+                    const options = {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        albumId: selectedAlbum,
+                        url: imgUrl,
+                      }),
+                    };
+                    // Add picture to album created
+                    fetch("http://localhost:5000/api/pictures/upload", options)
+                      .then((response) => {
+                        return response.json();
+                      })
+                      .catch((err) => {
+                        alert(err);
+                      });
+                    setIsNewSpot(null);
+                    setIsExistingSpot(null);
+                    setImgUrl("");
+                    setImgUrlSuccess(false);
                   } else {
-                    alert('please enter an album name')
+                    alert("please enter an album name");
                   }
                 } else {
-                  alert('please upload a picture before')
+                  alert("please upload a picture before");
                 }
               }
             }}
           >
-            <SubmitForm name={albumName} set={setAlbumName} label={"album"} />
+            <SubmitForm
+              name={albumName}
+              set={setAlbumName}
+              label={"album"}
+              isNewAlbum={isNewAlbum}
+            />
           </form>
         </div>
       </div>
@@ -148,6 +225,7 @@ function UploadPictures({
   imgUrlSuccess,
   setImgUrl,
   setImgUrlSuccess,
+  albums,
 }) {
   return (
     <>
@@ -161,6 +239,7 @@ function UploadPictures({
           setImgUrl={setImgUrl}
           setImgUrlSuccess={setImgUrlSuccess}
           imgUrlSuccess={imgUrlSuccess}
+          albums={albums}
         />
       ) : (
         <UploadMode

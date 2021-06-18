@@ -145,6 +145,7 @@ function App() {
                   setImgUrl={setImgUrl}
                   imgUrlSuccess={imgUrlSuccess}
                   setImgUrlSuccess={setImgUrlSuccess}
+                  albums={albums}
                 />
               )}
             </div>
