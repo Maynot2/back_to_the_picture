@@ -1,6 +1,5 @@
 const { validationResult } = require('express-validator');
-const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+// const Sequelize = require('sequelize');
 
 const User = require("../models").users;
 
@@ -12,21 +11,22 @@ const getUsers = async (req, res) => {
           ['id', 'ASC']
         ]
       });
-      res.json(users);
+      return res.json(users);
     } catch (error) {
-        res.json(error);
+        return res.json(error);
     }
   }
 
 const getUserById = async (req, res) => {
       try {
-          const user = await User.findByPk(req.params.id);
+          const { id } = req.params;
+          const user = await User.findByPk(id);
           if (!user) {
             throw Error;
           }
-          res.json(user);
+          return res.json(user);
       } catch (error) {
-        res.status(404).send(
+          return res.status(404).send(
           {
             "message": error.message || "Could not find user for the provided id."
           });
@@ -35,15 +35,16 @@ const getUserById = async (req, res) => {
 
 const getUserByName = async (req, res) => {
       try {
+        const { name } = req.params;
         const users = await User.findAll({
-          where: { name: req.params.name }
+          where: { name: name }
         });
         if (users.length === 0) {
           throw Error;
         }
-        res.json(users);
+        return res.json(users);
       } catch (error) {
-        res.status(404).send(
+          return res.status(404).send(
           {
             "message": error.message || "Could not find user for the provided name."
           });
@@ -51,13 +52,12 @@ const getUserByName = async (req, res) => {
 }
 
 const signup = async (req, res) => {
+      const { name, email, password, role } = req.body; 
+      await User.sync();
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        throw Error;
+        return res.status(400).json({ errors: errors.array() });
       }
-      const { name, email, password, role } = req.body; 
-      console.log(req.body);
-      await User.sync();
       try {
         const createdUser = await User.create({
           name,
@@ -65,14 +65,17 @@ const signup = async (req, res) => {
           password,
           role
         });
-        res.status(201).json(createdUser);
+        if (!createdUser) {
+          throw Error;
+        }
+        return res.status(201).json({user: createdUser});
       } catch (error) {
-        res.status(422).send(
+           return res.status(422).send(
           {
             "message": error.message || "Could not create user, invalid input."
           });
         }
-      }
+}
 
 const login = async (req, res) => {
       const { email, password } = req.body;
@@ -81,25 +84,28 @@ const login = async (req, res) => {
           where: { email: email, password: password }
         });
         if (!user) {
-          res.status(401).send({
-            "message": 'Incorrect credentials'
-          });
+          throw Error;
         }
-        res.json({message: 'Logged in!'});
+        return res.json({message: 'Logged in!'});
       } catch (error) {
-        res.status(401).send(
+          return res.status(401).send(
           {
-            "message": error.message || "Could not identify user, either email or password are missing."
+            "message": error.message || "Incorrect credentials."
           });
         }
       }
 
 const updateUser = async (req, res) => {
-        const { name, email, password, role } = req.body; 
+        const { name, email, password, role } = req.body;
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+        }
         try {
-          const updatedUser = await User.findByPk(req.params.id);
+          const { id } = req.params;
+          const updatedUser = await User.findByPk(id);
           if (!updatedUser) {
-            res.send('User not found');
+            throw new Error("User not found.");
           } else {
             await updatedUser.update({
               name,
@@ -107,25 +113,30 @@ const updateUser = async (req, res) => {
               password,
               role
             });
-            res.status(201).json({place: updatedUser});
+            return res.status(201).json({place: updatedUser});
           }
         } catch(error) {
-          res.status(422).send(
+            return res.status(422).send(
             {
               "message": error.message || "Invalid inputs passed, please check your data."
             });
         }
 }
 
-const deleteUser = (req, res) => {
-        User.destroy({
-          where: { id: req.params.id }
-        })
-        .then(user => {
-          res.status(201).json({ message: 'Deleted user.' });
-        })
-        .catch(err => res.json(err));
-}
+const deleteUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedUser = await User.destroy({
+          where: { id: id }
+        });
+        if (deletedUser) {
+          return res.status(201).json({message: 'User deleted!'});
+        }
+        throw new Error("User not found.");
+    } catch (error) {
+        return res.status(422).send(error.message);
+    }
+};
 
 module.exports = {
     getUsers,

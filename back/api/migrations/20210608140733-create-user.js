@@ -12,7 +12,8 @@ module.exports = {
         type: Sequelize.STRING
       },
       email: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        unique: true
       },
       password: {
         type: Sequelize.STRING
@@ -30,6 +31,9 @@ module.exports = {
         type: Sequelize.DATE,
         // field: 'updated_at'
       }
+    });
+    await queryInterface.addIndex("users", ["email"], {
+      unique: true
     });
   },
   down: async (queryInterface, Sequelize) => {

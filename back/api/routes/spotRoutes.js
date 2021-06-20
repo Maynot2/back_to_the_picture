@@ -5,6 +5,7 @@ const spotControllers = require('../controllers/spotControllers');
 
 const router = express.Router();
 
+router.get('/test', spotControllers.getSpotsT);
 router.get('/', spotControllers.getSpots);
 router.get('/:id', spotControllers.getSpotById);
 router.get('/name/:name', spotControllers.getSpotByName);

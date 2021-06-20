@@ -13,21 +13,22 @@ const getAlbums = async (req, res) => {
           ['id', 'ASC']
         ]
       });
-      res.json(albums);
+      return res.json(albums);
     } catch (error) {
-      res.json(error);
+        return res.json(error);
     }
 }
 
 const getAlbumById = async (req, res) => {
     try {
-        const album = await Album.findByPk(req.params.id);
+        const { id } = req.params;
+        const album = await Album.findByPk(id);
         if (!album) {
           throw Error;
         }
-        res.json(album);
+        return res.json(album);
     } catch (error) {
-      res.status(404).send(
+      return res.status(404).send(
         {
           "message": error.message || "Could not find album for the provided id."
         });
@@ -36,16 +37,17 @@ const getAlbumById = async (req, res) => {
 
 const getAlbumByName =   async (req, res) => {
     try {
+      const { name } = req.params;
       const albums = await Album.findAll({
-        where: { name: req.params.name }
+        where: { name: name }
       });
       console.log(albums.lenght);
       if (albums.length === 0) {
         throw Error;
       }
-      res.json(albums);
+      return res.json(albums);
     } catch (error) {
-      res.status(404).send(
+        return res.status(404).send(
         {
           "message": error.message || "Could not find album for the provided name."
         });
@@ -53,13 +55,12 @@ const getAlbumByName =   async (req, res) => {
 }
 
 const createAlbum = async (req, res) => {
-    // const errors = validationResult(req);
-    // if (!errors.isEmpty()) {
-    //   throw Error;
-    // }
     const { name, userId, spotId, takenAt } = req.body; 
-    console.log(req.body);
     await Album.sync();
+    // const errors = validationResult(req);
+    //   if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    //   }
     try {
       const createdAlbum = await Album.create({
         name,
@@ -67,9 +68,12 @@ const createAlbum = async (req, res) => {
         spotId,
         takenAt
       });
-      res.status(201).json({album: createdAlbum});
+      if (!createdAlbum) {
+        throw Error;
+      }
+      return res.status(201).json({album: createdAlbum});
     } catch (error) {
-      res.status(422).send(
+        return res.status(422).send(
         {
           "message": error.message || "Could not create album."
         });
@@ -78,10 +82,15 @@ const createAlbum = async (req, res) => {
 
 const updateAlbum = async (req, res) => {
     const { name, userId, spotId, takenAt } = req.body; 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     try {
-      const updatedAlbum = await Album.findByPk(req.params.id);
+      const { id } = req.params;
+      const updatedAlbum = await Album.findByPk(id);
       if (!updatedAlbum) {
-        res.send('Album not found');
+        throw Error;
       } else {
         await updatedAlbum.update({
           name,
@@ -89,34 +98,40 @@ const updateAlbum = async (req, res) => {
           spotId,
           takenAt
         });
-        res.status(201).json({place: updatedAlbum});
+        return res.status(201).json({place: updatedAlbum});
       }
     } catch(error) {
-      res.status(422).send(
+      return res.status(422).send(
         {
           "message": error.message || "Invalid inputs passed, please check your data."
         });
     }
 }
 
-const deleteAlbum = (req, res) => {
-    Album.destroy({
-      where: { id: req.params.id }
-    })
-      .then(album => {
-        res.status(201).json({ message: 'Deleted album.' });
-      })
-      .catch(err => res.json(err));
-}
+const deleteAlbum = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const deletedAlbum = await Album.destroy({
+        where: { id: id }
+      });
+      if (deletedAlbum) {
+        return res.status(201).json({message: 'Album deleted!'});
+      }
+      throw new Error("Album not found.");
+  } catch (error) {
+      return res.status(422).send(error.message);
+  }
+};
 
 const getAlbumByIdPic = async (req, res) => {
     await Album.sync();
     await Picture.sync();
     try {
+        const { id } = req.params;
         const album = await Album.findOne({
           where: {
             id: {
-              [Op.eq]: req.params.id
+              [Op.eq]: id
             }
           },
           include: Picture
@@ -124,9 +139,9 @@ const getAlbumByIdPic = async (req, res) => {
         if (!album) {
           throw Error;
         }
-        res.json(album.pictures);
+        return res.json(album.pictures);
     } catch (error) {
-      res.status(404).send(
+        return res.status(404).send(
         {
           "message": error.message || "Could not find album for the provided id."
         });

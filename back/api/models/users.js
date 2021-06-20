@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
+      validate: { isEmail: true },
       allowNull: false,
       unique: true,
     },
@@ -45,7 +46,13 @@ module.exports = (sequelize, DataTypes) => {
     // underscored: true,
     // createdAt: 'created_at',
     // updatedAt: 'updated_at',
-    // timestamps: true
+    // timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ["email"] // Whatever other field you need to make unique
+      }
+    ]
   }
   );
   users.associate = (models) => {

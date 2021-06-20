@@ -4,25 +4,32 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "start": "env NODE_ENV=test nodemon app.js",
     "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
     "make-seed": "npx sequelize-cli seed:generate --name init",
     "migrate": "npx sequelize-cli db:migrate",
     "seed": "npx sequelize-cli db:seed:all",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha **/**.test.js --timeout 10000 --exit"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-validator": "^6.11.1",
+    "morgan": "^1.10.0",
     "pg": "^8.6.0",
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
     "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "chai": "^4.3.4",
+    "chai-http": "^4.3.0",
+    "jest": "^27.0.4",
+    "mocha": "^9.0.0",
+    "nodemon": "^2.0.7",
+    "supertest": "^6.1.3"
   }
 }

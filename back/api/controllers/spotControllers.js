@@ -5,41 +5,75 @@ const Op = Sequelize.Op;
 const Spot = require("../models").spots;
 const Album = require("../models").albums;
 
+const getSpotsT = async (req, res) => {
+  await Spot.sync();
+
+    try {
+      const spots = await Spot.findAll();
+      return res.json(spots);
+    } catch (error) {
+        return res.json(error);
+    }
+}
+
 const getSpots = async (req, res) => {
     // min/max date format: yyyy-mm-dd
-    const { min_latitude, max_latitude, min_longitude, max_longitude, min_date, max_date } = req.query;
-    try {
-      const spots = await Spot.findAll({
+    await Spot.sync();
+    let args = req.query
+    let conditionQuery = {}
+    if ('min_date' in req.query && 'max_date' in req.query)
+    {
+      conditionQuery = {
         where: {
           latitude: {
-             [Op.between]: [Number(min_latitude), Number(max_latitude)],
+             [Op.between]: [Number(args.min_latitude), Number(args.max_latitude)],
           },
           longitude: {
-            [Op.between]: [Number(min_longitude), Number(max_longitude)],
+            [Op.between]: [Number(args.min_longitude), Number(args.max_longitude)],
          },
         },
-        include: { model: Album, where: {
-          takenAt: {
-            [Op.between]: [new Date(min_date), new Date(max_date)],
+        include: { 
+          model: Album,
+          where: {
+            takenAt: {
+              [Op.between]: [new Date(args.min_date), new Date(args.max_date)],
+            }
           }
-        }}
-      });
-
-      res.json(spots);
-    } catch (error) {
-      res.json(error);
+        }
+      }
+    } else {
+      conditionQuery = {
+        where: {
+          latitude: {
+             [Op.between]: [Number(args.min_latitude), Number(args.max_latitude)],
+          },
+          longitude: {
+            [Op.between]: [Number(args.min_longitude), Number(args.max_longitude)],
+         },
+        },
+        include: { 
+          model: Album
+        }
+      }
     }
-  }
+    try {
+      const spots = await Spot.findAll(conditionQuery);
+      return res.json(spots);
+    } catch (error) {
+        return res.json(error);
+    }
+}
 
 const getSpotById = async (req, res) => {
     try {
-        const spot = await Spot.findByPk(req.params.id);
+        const { id } = req.params;
+        const spot = await Spot.findByPk(id);
         if (!spot) {
             throw Error;
         }
-        res.json(spot);
+        return res.json(spot);
     } catch (error) {
-        res.status(404).send(
+        return res.status(404).send(
         {
             "message": error.message || "Could not find spot for the provided id."
         });
@@ -48,16 +82,16 @@ const getSpotById = async (req, res) => {
 
 const getSpotByName = async (req, res) => {
     try {
+        const { name } = req.params;
         const spots = await Spot.findAll({
-        where: { name: req.params.name }
+          where: { name: name }
         });
-        console.log(spots.lenght);
         if (spots.length === 0) {
-        throw Error;
+          throw Error;
         }
-        res.json(spots);
+        return res.json(spots);
     } catch (error) {
-        res.status(404).send(
+        return res.status(404).send(
         {
             "message": error.message || "Could not find spot for the provided name."
         });
@@ -65,62 +99,74 @@ const getSpotByName = async (req, res) => {
 }
 
 const createSpot = async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw Error;
-    }
     const { name, latitude, longitude } = req.body; 
     await Spot.sync();
+    // const errors = validationResult(req);
+    //   if (!errors.isEmpty()) {
+    //     return res.status(400).json({ errors: errors.array() });
+    //   }
     try {
-      console.log(name, latitude, longitude);
       const createdSpot = await Spot.create({
         name,
         latitude,
         longitude
       });
-      console.log(createdSpot);
-      res.status(201).json({spot: createdSpot});
+      if (!createdSpot) {
+        throw Error;
+      }
+      return res.status(201).json({spot: createdSpot});
     } catch (error) {
-      res.status(422).send(
+        return res.status(422).send(
         {
           "message": error.message || "Could not create spot, name already exists."
         });
-      }
+    }
 }
 
 const updateSpot = async (req, res) => {
     const { name, latitude, longitude } = req.body; 
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     try {
-      const updatedSpot = await Spot.findByPk(req.params.id);
+      const { id } = req.params;
+      const updatedSpot = await Spot.findByPk(id);
       if (!updatedSpot) {
-        res.send('Spot not found');
+        throw new Error("Spot not found.");
       } else {
         await updatedSpot.update({
           name,
           latitude,
           longitude
         });
-        res.status(201).json({place: updatedSpot});
+        return res.status(201).json({place: updatedSpot});
       }
     } catch(error) {
-      res.status(422).send(
+        return res.status(422).send(
         {
           "message": error.message || "Invalid inputs passed, please check your data."
         });
     }
 }
 
-const deleteSpot = (req, res) => {
-    Spot.destroy({
-      where: { id: req.params.id }
-    })
-      .then(spot => {
-        res.status(201).json({ message: 'Deleted spot.' });
-      })
-      .catch(err => res.json(err));
-}
+const deleteSpot = async (req, res) => {
+  try {
+      const { id } = req.params;
+      const deletedSpot = await Spot.destroy({
+        where: { id: id }
+      });
+      if (deletedSpot) {
+        return res.status(201).json({message: 'Spot deleted!'});
+      }
+      throw new Error("Spot not found.");
+  } catch (error) {
+      return res.status(422).send(error.message);
+  }
+};
 
 module.exports = {
+    getSpotsT,
     getSpots,
     getSpotById,
     getSpotByName,
