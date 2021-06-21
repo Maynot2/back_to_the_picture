@@ -6,7 +6,7 @@ function Uploader({ url, success, setSuccess }) {
 
   function handleUpload() {
     // Loop on all pictures added
-    for (const [key, value] of Object.entries(uploadInput.files)) {
+    for (const value of Object.values(uploadInput.files)) {
       let file = value;
       // Split the filename to get the name and type
       let fileParts = value.name.split(".");
@@ -21,7 +21,12 @@ function Uploader({ url, success, setSuccess }) {
           fileType: fileType,
         }),
       };
-      fetch("http://localhost:5000/api/sign_s3", requestOptions)
+      fetch(
+        `http://${
+          process.env === "production" ? "" : "localhost:5000/"
+        }api/sign_s3`,
+        requestOptions
+      )
         .then((res) => res.json())
         .then((response) => {
           var returnData = response.data.returnData;

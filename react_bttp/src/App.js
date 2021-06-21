@@ -54,12 +54,6 @@ function App() {
     setIsNewSpot(false);
   }
 
-  // Helper function to change Spot mode
-  function updateSetNewSpot() {
-    setIsNewSpot(true);
-    setIsExistingSpot(false);
-  }
-
   // Google Map spot-marker object created in upload mode
   const spotCreated = useRef(null);
 

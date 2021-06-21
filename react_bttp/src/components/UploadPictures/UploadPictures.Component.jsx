@@ -43,7 +43,7 @@ function AddPictures({
   imgUrl,
   imgUrlSuccess,
   setImgUrlSuccess,
-  albums
+  albums,
 }) {
   const [albumName, setAlbumName] = useState(null);
   let albumIdCreated = useRef(null);
@@ -124,7 +124,7 @@ function AddPictures({
             onSubmit={(e) => {
               e.preventDefault();
               const dateTakenAtAlbum = datePicked.taken;
-              if (spotSelectedObject.current["id"] == undefined) {
+              if (spotSelectedObject.current["id"] === undefined) {
                 alert("Please select a spot to create an album");
               } else {
                 /// Create album and add image only if the user has uploaded the picture
@@ -143,13 +143,18 @@ function AddPictures({
                       }),
                     };
                     // Create album
-                    fetch("http://localhost:5000/api/albums", requestOptions)
+                    fetch(
+                      `http://${
+                        process.env === "production" ? "" : "localhost:5000/"
+                      }api/albums`,
+                      requestOptions
+                    )
                       .then((response) => {
                         return response.json();
                       })
                       .then((res) => {
                         albumIdCreated.current = res.album.id;
-                        imgUrl.current.map((url) => {
+                        imgUrl.current.forEach((url) => {
                           const options = {
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
@@ -158,26 +163,32 @@ function AddPictures({
                               url: url,
                             }),
                           };
-                          
-                            // Add picture to album created
-                            fetch(
-                              "http://localhost:5000/api/pictures/upload",
-                              options
-                            ).then((response) => {
+
+                          // Add picture to album created
+                          fetch(
+                            `http://${
+                              process.env === "production"
+                                ? ""
+                                : "localhost:5000/"
+                            }api/pictures/upload`,
+                            options
+                          )
+                            .then((response) => {
                               return response.json();
-                            }).catch((err) => {
-                              alert(err)
+                            })
+                            .catch((err) => {
+                              alert(err);
                             });
-                            setIsNewSpot(null);
-                            setIsExistingSpot(null);
-                            // setImgUrl("");
-                            setImgUrlSuccess(false);
-                            imgUrl.current = [];
-                          });
+                          setIsNewSpot(null);
+                          setIsExistingSpot(null);
+                          // setImgUrl("");
+                          setImgUrlSuccess(false);
+                          imgUrl.current = [];
                         });
+                      });
                   } else if (isAddPicture) {
                     console.log("rentre stp!!!");
-                    imgUrl.current.map((url) => {
+                    imgUrl.current.forEach((url) => {
                       const options = {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
@@ -186,17 +197,20 @@ function AddPictures({
                           url: url,
                         }),
                       };
-                      
-                        // Add picture to album created
-                        fetch(
-                          "http://localhost:5000/api/pictures/upload",
-                          options
-                        ).then((response) => {
+
+                      // Add picture to album created
+                      fetch(
+                        `http://${
+                          process.env === "production" ? "" : "localhost:5000/"
+                        }api/pictures/upload`,
+                        options
+                      )
+                        .then((response) => {
                           return response.json();
-                        }).catch((err) => {
-                          alert(err)
+                        })
+                        .catch((err) => {
+                          alert(err);
                         });
-                        
                     });
                     setIsNewSpot(null);
                     setIsExistingSpot(null);
@@ -233,7 +247,7 @@ function UploadPictures({
   imgUrl,
   imgUrlSuccess,
   setImgUrlSuccess,
-  albums
+  albums,
 }) {
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 var stylesArray = [
@@ -139,9 +139,13 @@ const GMap = (props) => {
         let url;
         // the case in upload mode, fetch all spots without filtering with date
         if (props.isUploadPic) {
-          url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}`;
+          url = `http://${
+            process.env === "production" ? "" : "localhost:5000/"
+          }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}`;
         } else {
-          url = `http://localhost:5000/api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
+          url = `http://${
+            process.env === "production" ? "" : "localhost:5000/"
+          }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
         }
 
         createMarkersCluster(url);

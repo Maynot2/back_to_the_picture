@@ -9,7 +9,9 @@ function Albums({ id }) {
     async function fetchData() {
       try {
         const res = await fetch(
-          `http://localhost:5000/api/albums/${id}/pictures`
+          `http://${
+            process.env === "production" ? "" : "localhost:5000/"
+          }api/albums/${id}/pictures`
         );
         const pics = await res.json();
         setPictures(pics.map((picture) => picture.url));

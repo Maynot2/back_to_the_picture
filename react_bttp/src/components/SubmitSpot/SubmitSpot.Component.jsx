@@ -26,7 +26,12 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
                 name: spotName,
               }),
             };
-            fetch("http://localhost:5000/api/spots", requestOptions)
+            fetch(
+              `http://${
+                process.env === "production" ? "" : "localhost:5000/"
+              }api/spots`,
+              requestOptions
+            )
               .then((response) => response.json())
               .then((newSpot) => {
                 spotCreated.current = null;
