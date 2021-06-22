@@ -6,12 +6,14 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import { Auth0Provider } from "@auth0/auth0-react";
 import Albums from "./components/Albums/Index";
 
+const redirectUrl =`${if process.env.NODE_ENV === "production" ? "https://backtothepicture.me" : "http://localhost:3000"}`
+
 ReactDOM.render(
   <React.StrictMode>
   <Auth0Provider
     domain={process.env.REACT_APP_AUTH0_DOMAIN}
     clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
-    redirectUri="http://localhost:3000"
+    redirectUri={redirectUrl}
   >
     <BrowserRouter >
       <Switch>
