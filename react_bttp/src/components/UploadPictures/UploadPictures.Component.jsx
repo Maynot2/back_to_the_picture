@@ -146,7 +146,7 @@ function AddPictures({
                     fetch(
                       `${
                         process.env.NODE_ENV === "production"
-                          ? "https://"
+                          ? ""
                           : "http://localhost:5000/"
                       }api/albums`,
                       requestOptions
@@ -170,7 +170,7 @@ function AddPictures({
                           fetch(
                             `${
                               process.env.NODE_ENV === "production"
-                                ? "https://"
+                                ? ""
                                 : "http://localhost:5000/"
                             }api/pictures/upload`,
                             options
@@ -204,7 +204,7 @@ function AddPictures({
                       fetch(
                         `${
                           process.env.NODE_ENV === "production"
-                            ? "https://"
+                            ? ""
                             : "http://localhost:5000/"
                         }api/pictures/upload`,
                         options

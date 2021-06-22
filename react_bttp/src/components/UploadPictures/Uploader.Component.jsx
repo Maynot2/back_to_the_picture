@@ -23,9 +23,7 @@ function Uploader({ url, success, setSuccess }) {
       };
       fetch(
         `${
-          process.env.NODE_ENV === "production"
-            ? "https://"
-            : "http://localhost:5000/"
+          process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/"
         }api/sign_s3`,
         requestOptions
       )

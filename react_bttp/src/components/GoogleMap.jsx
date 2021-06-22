@@ -141,13 +141,13 @@ const GMap = (props) => {
         if (props.isUploadPic) {
           url = `${
             process.env.NODE_ENV === "production"
-              ? "https://"
+              ? ""
               : "http://localhost:5000/"
           }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}`;
         } else {
           url = `${
             process.env.NODE_ENV === "production"
-              ? "https://"
+              ? ""
               : "http://localhost:5000/"
           }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
         }
