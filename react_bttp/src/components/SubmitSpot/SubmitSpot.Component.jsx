@@ -28,7 +28,7 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
             };
             fetch(
               `http://${
-                process.env === "production" ? "" : "localhost:5000/"
+                process.env.NODE_ENV === "production" ? "" : "localhost:5000/"
               }api/spots`,
               requestOptions
             )

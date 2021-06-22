@@ -140,11 +140,11 @@ const GMap = (props) => {
         // the case in upload mode, fetch all spots without filtering with date
         if (props.isUploadPic) {
           url = `http://${
-            process.env === "production" ? "" : "localhost:5000/"
+            process.env.NODE_ENV === "production" ? "" : "localhost:5000/"
           }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}`;
         } else {
           url = `http://${
-            process.env === "production" ? "" : "localhost:5000/"
+            process.env.NODE_ENV === "production" ? "" : "localhost:5000/"
           }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}&min_date=${minDate}&max_date=${maxDate}`;
         }
 

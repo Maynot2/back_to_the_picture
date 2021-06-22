@@ -10,7 +10,7 @@ function Albums({ id }) {
       try {
         const res = await fetch(
           `http://${
-            process.env === "production" ? "" : "localhost:5000/"
+            process.env.NODE_ENV === "production" ? "" : "localhost:5000/"
           }api/albums/${id}/pictures`
         );
         const pics = await res.json();
