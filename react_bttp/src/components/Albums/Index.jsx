@@ -9,8 +9,10 @@ function Albums({ id }) {
     async function fetchData() {
       try {
         const res = await fetch(
-          `http://${
-            process.env.NODE_ENV === "production" ? "" : "localhost:5000/"
+          `${
+            process.env.NODE_ENV === "production"
+              ? "https://"
+              : "http://localhost:5000/"
           }api/albums/${id}/pictures`
         );
         const pics = await res.json();

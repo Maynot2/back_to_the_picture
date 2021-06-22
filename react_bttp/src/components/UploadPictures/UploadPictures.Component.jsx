@@ -144,10 +144,10 @@ function AddPictures({
                     };
                     // Create album
                     fetch(
-                      `http://${
+                      `${
                         process.env.NODE_ENV === "production"
-                          ? ""
-                          : "localhost:5000/"
+                          ? "https://"
+                          : "http://localhost:5000/"
                       }api/albums`,
                       requestOptions
                     )
@@ -168,10 +168,10 @@ function AddPictures({
 
                           // Add picture to album created
                           fetch(
-                            `http://${
-                              process.env === "production"
-                                ? ""
-                                : "localhost:5000/"
+                            `${
+                              process.env.NODE_ENV === "production"
+                                ? "https://"
+                                : "http://localhost:5000/"
                             }api/pictures/upload`,
                             options
                           )
@@ -202,10 +202,10 @@ function AddPictures({
 
                       // Add picture to album created
                       fetch(
-                        `http://${
+                        `${
                           process.env.NODE_ENV === "production"
-                            ? ""
-                            : "localhost:5000/"
+                            ? "https://"
+                            : "http://localhost:5000/"
                         }api/pictures/upload`,
                         options
                       )
