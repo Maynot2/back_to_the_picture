@@ -139,6 +139,7 @@ const GMap = (props) => {
         let url;
         // the case in upload mode, fetch all spots without filtering with date
         if (props.isUploadPic) {
+          console.log(process.env.NODE_ENV);
           url = `http://${
             process.env.NODE_ENV === "production" ? "" : "localhost:5000/"
           }api/spots?min_latitude=${minLatitude}&max_latitude=${maxLatitude}&min_longitude=${minLongitude}&max_longitude=${maxLongitude}`;
