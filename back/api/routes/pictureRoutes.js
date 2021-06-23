@@ -44,8 +44,8 @@ module.exports = function(router) {
     await Spot.sync();
     try {
       const createdPicture = await Picture.create({
-        albumId,
-        url
+        albumId: Number(albumId),
+        url: String(url)
       });
       res.status(201).json({picture: createdPicture});
     } catch (error) {
