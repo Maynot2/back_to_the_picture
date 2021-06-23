@@ -1,12 +1,10 @@
 var aws = require('aws-sdk');
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV.trim() === "production") {
   require('dotenv').config({
     path: "/home/ubuntu/back_to_the_picture/back/api/.env"
   }); // loads .env file variables in production
 } else {
-  require('dotenv').config({
-    path: "/home/ubuntu/back_to_the_picture/back/api/.env"
-  }); // loads .env file variables in dev
+  require('dotenv').config(); // loads .env file variables in dev
 }
 
 aws.config.update({
