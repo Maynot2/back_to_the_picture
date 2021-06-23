@@ -17,7 +17,7 @@ function Albums({ id }) {
               : "http://localhost:5000/"
           }api/albums/${id}/pictures`
         );
-        pics = await res.json();
+        pics = await res[url];
         setPictures(await pics.map((picture) => picture.url));
       } catch (err) {
         console.log(res);
