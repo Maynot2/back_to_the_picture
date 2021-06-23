@@ -148,7 +148,7 @@ function AddPictures({
                         process.env.NODE_ENV === "production"
                           ? ""
                           : "http://localhost:5000/"
-                      }api/foo/albums`,
+                      }api/albums`,
                       requestOptions
                     )
                       .then((response) => {
