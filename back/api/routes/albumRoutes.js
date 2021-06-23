@@ -109,9 +109,9 @@ module.exports = function(router) {
       .catch(err => res.json(err));
   });
 
-  router.get("/api/albums/:id/pictures", (req, res) => {
-     Album.sync();
-     Picture.sync();
+  router.get("/api/albums/:id/pictures", async (req, res) => {
+     await Album.sync();
+     await Picture.sync();
      try {
          const album = await Album.findOne({
            where: {
