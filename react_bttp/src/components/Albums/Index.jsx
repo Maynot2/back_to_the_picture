@@ -5,6 +5,7 @@ import Images from "./Images";
 function Albums({ id }) {
   const [pictures, setPictures] = useState([]);
   var res;
+  var pics;
 
   useEffect(() => {
     async function fetchData() {
@@ -16,10 +17,11 @@ function Albums({ id }) {
               : "http://localhost:5000/"
           }api/albums/${id}/pictures`
         );
-        const pics = await res.json();
+        pics = await res.json();
         setPictures(pics.map((picture) => picture.url));
       } catch (err) {
         console.log(res);
+        console.log(pics);
       }
     }
     fetchData();
