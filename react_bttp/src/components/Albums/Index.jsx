@@ -8,12 +8,21 @@ function Albums({ id }) {
   useEffect(() => {
     async function fetchData() {
       try {
+        const options = {
+          method: "GET",
+          mode: "cors", // or without this line
+          redirect: "follow",
+          headers: {
+            "content-type": "application/json",
+          },
+        };
         const res = await fetch(
           `${
             process.env.NODE_ENV === "production"
               ? ""
               : "http://localhost:5000/"
-          }api/albums/${id}/pictures`
+          }api/albums/${id}/pictures`,
+          options
         );
         console.log(res);
         const pics = await res.json();
