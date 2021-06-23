@@ -9,7 +9,10 @@ function SubmitFormAlbum({ name, set, isNewAlbum }) {
           type="text"
           placeholder="Album Name"
           value={name}
-          onChange={(e) => set(e.target.value)}
+          onChange={(e) => {
+            console.log("target:", e.target.value);
+            set(e.target.value)}
+          }
         />
       ) : (
         ""
