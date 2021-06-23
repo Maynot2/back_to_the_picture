@@ -109,27 +109,27 @@ module.exports = function(router) {
       .catch(err => res.json(err));
   });
 
-  router.get("/api/albums/:id/pictures", (req, res) => {
-    Album.sync();
-    Picture.sync();
-    try {
-        const album = await Album.findOne({
-          where: {
-            id: {
-              [Op.eq]: req.params.id
-            }
-          },
-          include: Picture
-        });
-        if (!album) {
-          throw Error;
-        }
-        res.json(album.pictures);
-    } catch (error) {
-      res.status(404).send(
-        {
-          "message": error.message || "Could not find album for the provided id."
-        });
-    }
-  });
+  // router.get("/api/albums/:id/pictures", (req, res) => {
+  //   Album.sync();
+  //   Picture.sync();
+  //   try {
+  //       const album = await Album.findOne({
+  //         where: {
+  //           id: {
+  //             [Op.eq]: req.params.id
+  //           }
+  //         },
+  //         include: Picture
+  //       });
+  //       if (!album) {
+  //         throw Error;
+  //       }
+  //       res.json(album.pictures);
+  //   } catch (error) {
+  //     res.status(404).send(
+  //       {
+  //         "message": error.message || "Could not find album for the provided id."
+  //       });
+  //   }
+  // });
 };
