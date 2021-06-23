@@ -41,7 +41,6 @@ module.exports = function(router) {
     //   throw Error;
     // }
     const { albumId, url } = req.body;
-    console.log(albumId);
     await Spot.sync();
     try {
       const createdPicture = await Picture.create({
@@ -52,7 +51,7 @@ module.exports = function(router) {
     } catch (error) {
       res.status(422).send(
         {
-          "message": error.message || "Could not create picture."
+          "message": `albumid: ${albumId}; URL: ${url}`
         });
       }
     });
