@@ -4,11 +4,12 @@ import Images from "./Images";
 
 function Albums({ id }) {
   const [pictures, setPictures] = useState([]);
+  var res;
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await fetch(
+        res = await fetch(
           `${
             process.env.NODE_ENV === "production"
               ? ""
@@ -18,8 +19,7 @@ function Albums({ id }) {
         const pics = await res.json();
         setPictures(pics.map((picture) => picture.url));
       } catch (err) {
-        console.log("res", res);
-        console.log("pics", pics);
+        console.log(res);
       }
     }
     fetchData();
