@@ -17,9 +17,8 @@ function Albums({ id }) {
               : "http://localhost:5000/"
           }api/albums/${id}/pictures`
         );
-        const resCopy = res.clone();
-        pics = await resCopy.json();
-        setPictures(pics.map((picture) => picture.url));
+        pics = await res.json();
+        setPictures(await pics.map((picture) => picture.url));
       } catch (err) {
         console.log(res);
         console.log(pics);
