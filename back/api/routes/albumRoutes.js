@@ -57,7 +57,7 @@ module.exports = function(router) {
     // if (!errors.isEmpty()) {
     //   throw Error;
     // }
-    const { name, userId, spotId, takenAt } = req.body; 
+    const { name, userId, spotId, takenAt } = req.body;
     await Album.sync();
     try {
       const createdAlbum = await Album.create({
