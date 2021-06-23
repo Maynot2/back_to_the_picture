@@ -1,6 +1,7 @@
 var aws = require('aws-sdk');
+const path = require('path')
 require('dotenv').config({
-  path: `${__dirname}/.env`
+  path: path.resolve(__dirname, '../.env')
 }); // loads .env file in current dir
 
 aws.config.update({
