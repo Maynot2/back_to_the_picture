@@ -26,11 +26,16 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
                 name: spotName,
               }),
             };
+            //  `${
+            //    process.env.NODE_ENV === "production"
+            //      ? ""
+            //      : "http://localhost:5000/"
+            //  }api/spots`,
             fetch(
-              `${
-                process.env.NODE_ENV === "production"
-                  ? ""
-                  : "http://localhost:5000/"
+            `${
+            	process.env.NODE_ENV === "production"
+                 ? ""
+                 : "http://localhost:5000/"
               }api/spots`,
               requestOptions
             )

@@ -22,12 +22,11 @@ function Uploader({ url, success, setSuccess }) {
         }),
       };
       fetch(
-        `${
+      `${
           process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/"
-        }api/sign_s3`,
-        requestOptions
+        }api/sign_s3` , requestOptions
       )
-        .then((res) => res.json())
+        .then((res) => console.log(res.json()))
         .then((response) => {
           var returnData = response.data.returnData;
           var signedRequest = returnData.signedRequest;
@@ -52,6 +51,7 @@ function Uploader({ url, success, setSuccess }) {
             });
         })
         .catch((error) => {
+	  alert(error);
           alert(JSON.stringify(error));
         });
     }
