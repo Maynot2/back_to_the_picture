@@ -64,7 +64,7 @@ module.exports = function(router) {
         name,
         userId,
         spotId,
-        takenAt
+        takenAt: new Date(takenAt)
       });
       res.status(201).json({album: createdAlbum});
     } catch (error) {

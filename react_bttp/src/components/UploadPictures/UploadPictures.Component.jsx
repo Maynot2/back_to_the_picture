@@ -131,7 +131,6 @@ function AddPictures({
                 if (imgUrlSuccess) {
                   // Check an album name has been send
                   if (albumName && isNewAlbum) {
-                    console.log("env:", process.env.NODE_ENV);
                     const requestOptions = {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
