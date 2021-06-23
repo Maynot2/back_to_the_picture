@@ -26,7 +26,7 @@ function Uploader({ url, success, setSuccess }) {
           process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/"
         }api/sign_s3` , requestOptions
       )
-        .then((res) => res.json())
+        .then((res) => console.log(res.json()))
         .then((response) => {
           var returnData = response.data.returnData;
           var signedRequest = returnData.signedRequest;
