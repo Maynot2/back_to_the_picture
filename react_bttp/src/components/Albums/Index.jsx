@@ -18,7 +18,7 @@ function Albums({ id }) {
         const pics = await res.json();
         setPictures(pics.map((picture) => picture.url));
       } catch (err) {
-        console.log(err);
+        console.log(id);
       }
     }
     fetchData();
