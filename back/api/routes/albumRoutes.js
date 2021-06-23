@@ -125,7 +125,7 @@ module.exports = function(router) {
           throw Error;
         }
         res.status(400).send({msg: album.pictures});
-        res.json(album.pictures);
+        //res.json(album.pictures);
     } catch (error) {
       res.status(404).send(
         {
