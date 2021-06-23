@@ -53,10 +53,10 @@ module.exports = function(router) {
   });
 
   router.post("/api/albums", async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      throw Error;
-    }
+    // const errors = validationResult(req);
+    // if (!errors.isEmpty()) {
+    //   throw Error;
+    // }
     const { name, userId, spotId, takenAt } = req.body; 
     await Album.sync();
     try {
