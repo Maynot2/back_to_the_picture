@@ -1,5 +1,11 @@
-var aws = require('aws-sdk'); 
-require('dotenv').config(); // loads .env file variables
+var aws = require('aws-sdk');
+if (process.env.NODE_ENV === "production") {
+  require('dotenv').config({
+    path: "/home/ubuntu/back_to_the_picture/back/api/.env"
+  }); // loads .env file variables in production
+} else {
+  require('dotenv').config(); // loads .env file variables in dev
+}
 aws.config.update({
   region: 'eu-west-3',
   accessKeyId: process.env.AWSAccessKeyId,
