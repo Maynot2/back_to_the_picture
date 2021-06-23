@@ -6,11 +6,13 @@ if (process.env.NODE_ENV === "production") {
 } else {
   require('dotenv').config(); // loads .env file variables in dev
 }
+
 aws.config.update({
   region: 'eu-west-3',
   accessKeyId: process.env.AWSAccessKeyId,
   secretAccessKey: process.env.AWSSecretKey
 })
+
 const S3_BUCKET = process.env.bucket
 
 module.exports = function(router) {
