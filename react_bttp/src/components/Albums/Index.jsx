@@ -4,24 +4,31 @@ import Images from "./Images";
 
 function Albums({ id }) {
   const [pictures, setPictures] = useState([]);
-  var pics;
 
   useEffect(() => {
     async function fetchData() {
       try {
+        const options = {
+          method: "GET",
+          mode: "no-cors", // or without this line
+          headers: {
+            "content-type": "application/json",
+          },
+        };
         const res = await fetch(
           `${
             process.env.NODE_ENV === "production"
               ? ""
               : "http://localhost:5000/"
-          }api/albums/${id}/pictures`
+          }api/albums/${id}/pictures`,
+          options
         );
         console.log(res);
-        pics = await res.json();
+        const pics = await res.json();
         console.log(pics);
         setPictures(pics.map((picture) => picture.url));
       } catch (err) {
-        console.log(pics);
+        console.log(err);
       }
     }
     fetchData();
