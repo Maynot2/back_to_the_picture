@@ -109,9 +109,9 @@ module.exports = function(router) {
       .catch(err => res.json(err));
   });
 
-  router.get("/api/albums/:id/pictures", async (req, res) => {
-    await Album.sync();
-    await Picture.sync();
+  router.get("/api/albums/:id/pictures", (req, res) => {
+    Album.sync();
+    Picture.sync();
     try {
         const album = await Album.findOne({
           where: {
@@ -124,8 +124,7 @@ module.exports = function(router) {
         if (!album) {
           throw Error;
         }
-        res.status(400).send({msg: album.pictures});
-        //res.json(album.pictures);
+        res.json(album.pictures);
     } catch (error) {
       res.status(404).send(
         {
