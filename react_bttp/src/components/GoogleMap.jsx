@@ -120,6 +120,7 @@ const GMap = (props) => {
       "bounds_changed",
       function () {
         // props.setAddressPlaceSelected({})
+        console.log(googleMap.current.getBounds());
         const minLatitude = googleMap.current.getBounds().lc.g;
         const maxLatitude = googleMap.current.getBounds().lc.i;
         const minLongitude = googleMap.current.getBounds().Eb.g;
