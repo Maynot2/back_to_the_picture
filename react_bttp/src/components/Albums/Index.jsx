@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import NavBar from "../NavBar";
 import Images from "./Images";
+import Footer from "../Footer/Footer.Component";
 
-function Albums({ id }) {
+function Albums({ id, isSearchPic }) {
   const [pictures, setPictures] = useState([]);
 
   useEffect(() => {
@@ -35,9 +36,10 @@ function Albums({ id }) {
   }, []);
 
   return (
-    <div className="h-auto bg-primary w-full text-white">
+    <div className="bg-primary w-full text-white flex flex-col min-h-screen">
       <NavBar />
       <Images pictures={pictures} />
+      <Footer />
     </div>
   );
 }

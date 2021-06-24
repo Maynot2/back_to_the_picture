@@ -5,7 +5,7 @@ function ViewAlbums({ albums }) {
   return (
     <div
       className={
-        "bg-tertiary grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 p-4 place-content-start"
+        "bg-tertiary grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-4 p-4 place-content-start overflow-y-scroll"
       }
     >
       {albums.map((album) => {

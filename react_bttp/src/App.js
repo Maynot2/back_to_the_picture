@@ -6,6 +6,7 @@ import ModeChoice from "./components/ModeChoice/ModeChoice.Component";
 import ViewAlbums from "./components/viewAlbums/viewAlbums.Component";
 import UploadPictures from "./components/UploadPictures/UploadPictures.Component";
 import SubmitSpot from "./components/SubmitSpot/SubmitSpot.Component";
+import Footer from "./components/Footer/Footer.Component";
 
 function App() {
   // Address selected by the user send/update by FilterSearch Component (ButtonSearch OnClick())
@@ -72,7 +73,7 @@ function App() {
   }
   return (
     <>
-      <div className="bg-primary">
+      <div className="bg-primary flex flex-col h-full">
         <NavBar />
         <main className="px-4 mt-4 sm:mt-8">
           <div
@@ -145,6 +146,7 @@ function App() {
             </div>
           </div>
         </main>
+        <Footer isUploadPic={isUploadPic}/>
       </div>
     </>
   );
