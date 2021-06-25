@@ -14,9 +14,6 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
           if (spotCreated.current && spotName) {
             const lat = spotCreated.current.internalPosition.lat();
             const lng = spotCreated.current.internalPosition.lng();
-            console.log("lat marker :", Number(lat.toFixed(4)));
-            console.log("lng marker :", lng);
-
             const requestOptions = {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -32,10 +29,10 @@ function SubmitSpot({ isNewSpot, spotCreated, spotID, updateSetExistingSpot }) {
             //      : "http://localhost:5000/"
             //  }api/spots`,
             fetch(
-            `${
-            	process.env.NODE_ENV === "production"
-                 ? ""
-                 : "http://localhost:5000/"
+              `${
+                process.env.NODE_ENV === "production"
+                  ? ""
+                  : "http://localhost:5000/"
               }api/spots`,
               requestOptions
             )

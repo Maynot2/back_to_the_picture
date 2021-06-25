@@ -12,7 +12,7 @@ function Uploader({ url, success, setSuccess }) {
       let fileParts = value.name.split(".");
       let fileName = fileParts[0];
       let fileType = fileParts[1];
-      console.log("Preparing the upload");
+      // console.log("Preparing the upload");
       const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -22,9 +22,10 @@ function Uploader({ url, success, setSuccess }) {
         }),
       };
       fetch(
-      `${
+        `${
           process.env.NODE_ENV === "production" ? "" : "http://localhost:5000/"
-        }api/sign_s3` , requestOptions
+        }api/sign_s3`,
+        requestOptions
       )
         .then((res) => res.json())
         .then((response) => {
@@ -33,7 +34,7 @@ function Uploader({ url, success, setSuccess }) {
           var imgUrl = returnData.url;
           url.current.push(imgUrl);
           //setUrl(url);
-          console.log("Recieved a signed request " + signedRequest);
+          // console.log("Recieved a signed request " + signedRequest);
 
           const requestOptions = {
             method: "PUT",
@@ -43,7 +44,7 @@ function Uploader({ url, success, setSuccess }) {
 
           fetch(signedRequest, requestOptions)
             .then(() => {
-              console.log("Response from s3");
+              // console.log("Response from s3");
               setSuccess(true);
             })
             .catch((error) => {
@@ -51,7 +52,7 @@ function Uploader({ url, success, setSuccess }) {
             });
         })
         .catch((error) => {
-	  alert(error);
+          alert(error);
           alert(JSON.stringify(error));
         });
     }

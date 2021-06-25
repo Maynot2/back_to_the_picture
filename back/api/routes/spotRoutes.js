@@ -111,8 +111,7 @@ module.exports = function(router) {
     //   throw Error;
     // }
     const { name, latitude, longitude } = req.body;
-    console.log('ici');
-    console.log(name, latitude, longitude);
+
     await Spot.sync();
     try {
       const createdSpot = await Spot.create({
@@ -120,7 +119,6 @@ module.exports = function(router) {
         latitude,
         longitude,
       });
-      console.log('->', createdSpot)
       res.status(201).json({spot: createdSpot});
     } catch (error) {
       res.status(422).send(

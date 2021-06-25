@@ -67,7 +67,7 @@ function App() {
   // Image upload states
   const imgUrl = useRef([]);
   const [imgUrlSuccess, setImgUrlSuccess] = useState(false);
-  console.log(imgUrl.current)
+
   if (isSearchPic) {
     spotID.current = null;
   }

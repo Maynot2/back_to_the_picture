@@ -24,9 +24,9 @@ function Albums({ id, isSearchPic }) {
           }api/albums/${id}/pictures`,
           options
         );
-        console.log(res);
+
         const pics = await res.json();
-        console.log(pics);
+
         setPictures(pics.map((picture) => picture.url));
       } catch (err) {
         console.log(err);

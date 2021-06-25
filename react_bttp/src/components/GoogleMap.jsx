@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 var stylesArray = [
   {
@@ -21,7 +21,7 @@ const GMap = (props) => {
   const googleMapRef = useRef(null);
   let googleMap = useRef(null);
   /** Get spots and create cluster of markers */
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
 
   function createMarkersCluster(apiUrl) {
     const spots = [];
@@ -52,7 +52,7 @@ const GMap = (props) => {
             id: obj.id,
             name: obj.name,
             icon: {
-              url: undefined,
+              url: undefined, // To be fixed  GoogleMap.jsx:132 InvalidValueError: setIcon: not a string; and not an instance of PinView; and no url property; and no path property
             },
           };
           // Case there is albums for the spot at the date picked
@@ -90,7 +90,6 @@ const GMap = (props) => {
             } else {
               // Save the id of the selected spot in upload mode
               if (props.isExistingSpot) {
-                console.log("Spot selected id", this.id);
                 props.spotSelectedObject.current["id"] = this.id;
                 props.spotSelectedObject.current["name"] = this.name;
               }
@@ -129,13 +128,11 @@ const GMap = (props) => {
         if (props.isSearchPic) {
           minDate = props.datePicked.from.toISOString().split("T")[0];
           maxDate = props.datePicked.to.toISOString().split("T")[0];
-          console.log(maxDate);
         }
         // } else {
         //   minDate = new Date(0).toISOString().split("T")[0];
         //   maxDate = new Date().toISOString().split("T")[0];
         // }
-        const takenAt = props.datePicked.taken.toISOString().split("T")[0];
         let url;
         // the case in upload mode, fetch all spots without filtering with date
         if (props.isUploadPic) {

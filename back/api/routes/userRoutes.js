@@ -57,8 +57,9 @@ module.exports = function(router) {
     if (!errors.isEmpty()) {
       throw Error;
     }
+
     const { name, email, password, role } = req.body; 
-    console.log(req.body);
+
     await User.sync();
     try {
       const createdUser = await User.create({
