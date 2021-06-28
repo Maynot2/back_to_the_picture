@@ -34,13 +34,13 @@ function ModeChoice({
               : "transform scale-90 border-primary text-primary bg-neutralW hover:scale-100 hover:shadow-2xl"
           }`}
           onClick={() => {
-            // if (!isAuthenticated) {
-            //   alert("Please connect");
-            // } else {
+             if (!isAuthenticated) {
+               alert("Please connect");
+             } else {
               updateSetIsUploadPic();
               setAlbums([]);
               spotSelectedObject.current = {};
-            // }
+             }
           }}
         >
           Upload Pictures
