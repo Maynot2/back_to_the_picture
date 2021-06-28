@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "../NavBar";
 import Footer from "../Footer/Footer.Component";
-import { ReactComponent as ReactLogoFull } from "../BTTP-logo-full-white.svg";
+import { ReactComponent as ReactLogoFull } from "../BTTP-logo-full-navy.svg";
 import { Link } from "react-router-dom";
 
 function About() {
@@ -15,10 +15,10 @@ function About() {
         <p className="pb-4 leading-loose">
           Have you ever surfed great waves and were dying to see what the
           photographers captured from the beach!? Have you ever landed a massive
-          trick at the snowpark and were like "where is that guy!?"", I am sure
-          he took a killer shot. Have you ever been to a great festival or
+          trick at the snowpark and were like "where is that guy? I am sure he
+          took a killer shot!". Have you ever been to a great festival or
           concert and took picies with your new best friends of the day and were
-          like "Jeez I wish I could see those!?"
+          like "Jeez I wish I could see those!?".
           <div className=""></div>
         </p>
         <p className="pb-10 leading-loose">well now it's possible with</p>
