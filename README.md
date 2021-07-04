@@ -30,6 +30,11 @@ The other challenge was to work together and be productive so in order to be pro
 * Hosting / Devops
   - AWS S3 bucket (upload pictures)
   - AWS EC2 (Container production)
+ 
+* APIs
+  - Auth0
+  - AWS (S3 bucket)
+  - Google Map (Places API, Maps JavaScript API, Geocoding api)
 # :gear: Installation
 * You need to be on ubuntu 20.04
 * 1) Install all the prerequisite
