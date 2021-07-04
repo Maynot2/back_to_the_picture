@@ -30,8 +30,22 @@ The other challenge was to work together and be productive so in order to be pro
 * Hosting / Devops
   - AWS S3 bucket (upload pictures)
   - AWS EC2 (Container production)
-  
-  
+# :gear: Installation
+* You need to be on ubuntu 20.04
+* 1) Install all the prerequisite
+  * Read the file instruction in config/setup
+* 2) Create a .env file at the root of the folder back/api with inside it
+  * AWSAccessKeyId=yourAccessKey
+  * AWSSecretKey=youSecretKey
+  * bucket=bucketName
+* 3) Execute ``npm install`` at the root of back/api
+* 4) Create a .env file at the root of the folder react_bttp with inside it
+  * REACT_APP_GOOGLE_MAP_API_KEY=
+  * REACT_APP_AUTH0_DOMAIN=
+  * REACT_APP_AUTH0_CLIENT_ID=
+* 5) Execute ``npm install`` at the root of react_bttp
+* 6) Start the api and the react app
+ 
 # :handshake:	Contribution
 If you want to contribute, please contact one of us
 
